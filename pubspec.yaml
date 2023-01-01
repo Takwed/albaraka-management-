@@ -23,6 +23,7 @@ dependencies:
   hexcolor:
   sizer:
   flutter_svg:
+  device_preview:
   # bloc
   bloc:
   flutter_bloc:
