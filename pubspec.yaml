@@ -22,6 +22,7 @@ dependencies:
   get_it:
   hexcolor:
   sizer:
+  flutter_svg:
   # bloc
   bloc:
   flutter_bloc:
