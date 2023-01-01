@@ -50,9 +50,9 @@ class LoginScreen extends StatelessWidget {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(15.sp)),
                       prefixIcon: const Icon(Icons.email_outlined),
-                      labelText: 'الإيميل'),
+                      labelText: 'الإيميل' , ),
                 ),
                 SizedBox(
                   height: 20.sp,
@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.sp)),
+                          borderRadius: BorderRadius.circular(15.sp)),
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                           onPressed: () {},
@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                   elevation: 5,
                   child: Text(
                     'تسجيل الدخول',
-                    style: TextStyle(color: Colors.white, fontSize: 20.sp),
+                    style: TextStyle(color: Colors.white, fontSize: 18.sp),
                   ),
                 )
                 //     : const CircularProgressIndicator(

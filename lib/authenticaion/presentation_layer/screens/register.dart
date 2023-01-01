@@ -94,7 +94,7 @@ class RegisterScreen extends StatelessWidget {
                         obscureText: isvisible ? false : true,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15)),
+                                borderRadius: BorderRadius.circular(15.sp)),
                             prefixIcon: const Icon(Icons.lock_outline),
                             suffixIcon: IconButton(
                                 onPressed: () {
@@ -129,7 +129,7 @@ class RegisterScreen extends StatelessWidget {
                         child: Text(
                           'تسجيل الحساب',
                           style:
-                              TextStyle(color: Colors.white, fontSize: 20.sp),
+                              TextStyle(color: Colors.white, fontSize: 18.sp),
                         ),
                       )
                     ]),
