@@ -22,46 +22,45 @@ class RegisterScreen extends StatelessWidget {
         ),
         body: Center(
           child: SingleChildScrollView(
-            child: Padding (
-              padding:  EdgeInsets.all(20.0.sp),
-              child: Form (
+            child: Padding(
+              padding: EdgeInsets.all(20.0.sp),
+              child: Form(
                 key: formKey,
-                child: Column
-                  (
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         radius: 45.sp,
-                        backgroundImage: const AssetImage('assets/images/logo.svg'),
+                        backgroundImage: AssetImage('assets/images/logo.svg'),
                       ),
-                      const SizedBox(
-                        height: 30,
+                      SizedBox(
+                        height: 20.sp,
                       ),
-                      const Text(
+                      Text(
                         'اكونت جديد',
-                        style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                        style: TextStyle(
+                            fontSize: 20.sp, fontWeight: FontWeight.w900),
                       ),
-                    SizedBox(
-                        height: 2.5.sp,
+                      SizedBox(
+                        height: 20.sp,
                       ),
                       TextFormField(
                         controller: registerEmailController,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          if (value!.isEmpty){
+                          if (value!.isEmpty) {
                             return 'لازم تكتب ايميل';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15)),
+                                borderRadius: BorderRadius.circular(15.sp)),
                             prefixIcon: const Icon(Icons.email_outlined),
                             labelText: 'الايميل'),
                       ),
-                       SizedBox(
-                        height: 20.h,
+                      SizedBox(
+                        height: 20.sp,
                       ),
                       TextFormField(
                         controller: registerPasswordController,
@@ -80,7 +79,7 @@ class RegisterScreen extends StatelessWidget {
                                     : const Icon(Icons.visibility)),
                             labelText: 'الباسورد'),
                         validator: (value) {
-                          if (value!.isEmpty){
+                          if (value!.isEmpty) {
                             return 'لازم تكتب باسورد';
                           }
                           return null;
@@ -93,9 +92,9 @@ class RegisterScreen extends StatelessWidget {
                         controller: confirmRegisterPasswordController,
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: isvisible ? false : true,
-                        decoration: InputDecoration (
+                        decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15)),
+                                borderRadius: BorderRadius.circular(15.sp)),
                             prefixIcon: const Icon(Icons.lock_outline),
                             suffixIcon: IconButton(
                                 onPressed: () {
@@ -106,19 +105,18 @@ class RegisterScreen extends StatelessWidget {
                                     : const Icon(Icons.visibility)),
                             labelText: 'اكتب الباسورد تاني'),
                         validator: (value) {
-                          if (value!.isEmpty){
+                          if (value!.isEmpty) {
                             return 'من فضلك اكتب الباسورد تاني';
                           }
                           return null;
                         },
                       ),
-                       SizedBox
-                        (
+                      SizedBox(
                         height: 2.5.h,
-                        ),
-                      MaterialButton (
+                      ),
+                      MaterialButton(
                         onPressed: () {
-                          if (formKey.currentState!.validate())  {
+                          if (formKey.currentState!.validate()) {
                             // ShopCubit.get(context).userLogin(
                             //     email: emailController.text,
                             //     password: passwordController.text, context: context);
@@ -128,10 +126,11 @@ class RegisterScreen extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 1.h,
                         elevation: 5,
-                        child:  Text(
+                        child: Text(
                           'تسجيل الحساب',
                           style:
-                          TextStyle(color: Colors.white, fontSize: 20.sp),),
+                              TextStyle(color: Colors.white, fontSize: 18.sp),
+                        ),
                       )
                     ]),
               ),
