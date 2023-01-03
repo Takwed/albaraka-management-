@@ -22,6 +22,7 @@ dependencies:
   shared_preferences:
   get_it:
   hexcolor:
+  equatable:
   sizer:
   flutter_svg:
   device_preview:
