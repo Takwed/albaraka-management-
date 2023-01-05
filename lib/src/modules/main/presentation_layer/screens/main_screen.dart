@@ -3,6 +3,7 @@ import 'package:albaraka_management/src/modules/main/presentation_layer/componen
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

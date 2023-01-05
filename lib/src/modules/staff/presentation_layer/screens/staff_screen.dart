@@ -9,7 +9,6 @@ class StaffScreen extends StatelessWidget {
       appBar: AppBar(),
     body: Column(
       children: [
-
       ],
     )
     );

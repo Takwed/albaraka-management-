@@ -98,6 +98,7 @@ class LoginScreen extends StatelessWidget {
                   elevation: 5,
                   child: Text(
                     'تسجيل الدخول',
+
                     style: TextStyle(color: Colors.white, fontSize: 18.sp),
                   ),
                 )

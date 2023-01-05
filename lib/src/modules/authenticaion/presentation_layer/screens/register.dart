@@ -1,4 +1,3 @@
-// ignore_for_file: dead_code
 
 import 'package:albaraka_management/core/utils/color_manager.dart';
 import 'package:flutter/material.dart';
