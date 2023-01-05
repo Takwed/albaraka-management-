@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class StaffScreen extends StatelessWidget {
-  const StaffScreen({Key? key}) : super(key: key);
+class MenuScreen extends StatelessWidget {
+  const MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

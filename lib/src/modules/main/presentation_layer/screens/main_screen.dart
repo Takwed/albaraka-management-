@@ -8,7 +8,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var bloc = MainBloc.get(context);
     return BlocProvider(
-      create: (context) => MainBloc(MainInitial()),
+      create: (context) => bloc,
     child: BlocBuilder<MainBloc,MainState>(
       builder: (context, state) {
         return Scaffold(

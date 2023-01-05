@@ -5,8 +5,9 @@ abstract class MainEvent extends Equatable {
 }
 class ChangeGridMainEvent extends MainEvent {
   final int index;
+  final BuildContext context;
 
-  ChangeGridMainEvent({required this.index});
+  ChangeGridMainEvent({required this.index,required this.context});
   @override
   List<Object?> get props => [index];
 }
