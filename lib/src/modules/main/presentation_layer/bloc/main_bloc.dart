@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:albaraka_management/core/utils/navigation_manager.dart';
 import 'package:albaraka_management/src/modules/offers/presentation_layer/screens/offers_screen.dart';
 import 'package:albaraka_management/src/modules/orders/presentation_layer/screens/orders_screen.dart';
 import 'package:albaraka_management/src/modules/staff/presentation_layer/screens/staff_screen.dart';
@@ -9,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/navigation_manager.dart';
 import '../../../menu/presentation_layer/screens/menu_screen.dart';
 
 part 'main_event.dart';

@@ -1,12 +1,15 @@
 import 'package:albaraka_management/src/modules/main/presentation_layer/screens/main_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'src/modules/main/presentation_layer/bloc/main_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget

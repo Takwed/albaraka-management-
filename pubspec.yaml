@@ -29,6 +29,10 @@ dependencies:
   # bloc
   bloc:
   flutter_bloc:
+  #fire base
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

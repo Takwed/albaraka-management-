@@ -1,7 +1,8 @@
 
-import 'package:albaraka_management/core/utils/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../core/utils/color_manager.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class RegisterScreen extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'لازم تكتب ايميل';
+                            return 'من فضلك اكتب الايميل';
                           }
                           return null;
                         },

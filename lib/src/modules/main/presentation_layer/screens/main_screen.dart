@@ -41,19 +41,3 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
-
-
-class Item {
-  Item({required this.title,required this.index, required this.image});
-  final String title;
-  final String image ;
-  final int index ;
-}
-
-List<Item> item=[
-  Item(title: "الأعضاء",image: "",index: 0),
-  Item(title: "المنيو",image: "",index: 1),
-  Item(title: "العروض",image: "",index: 2),
-  Item(title: "طلبات اليوم",image: "",index: 3),
-  Item(title: "فاضية مؤثتا ",image: "",index: 4),
-];

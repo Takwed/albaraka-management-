@@ -1,8 +1,10 @@
-import 'package:albaraka_management/core/utils/color_manager.dart';
-import 'package:albaraka_management/core/utils/navigation_manager.dart';
+
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../core/utils/color_manager.dart';
+import '../../../../core/utils/navigation_manager.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
