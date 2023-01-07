@@ -9,5 +9,5 @@ class ChangeGridMainEvent extends MainEvent {
 
   ChangeGridMainEvent({required this.index,required this.context});
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [index , context ];
 }

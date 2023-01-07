@@ -1,3 +1,7 @@
+import 'package:albaraka_management/src/core/local/shared_prefrences.dart';
+import 'package:albaraka_management/src/core/services/dep_injection.dart';
+import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/bloc/auth_bloc.dart';
+import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/screens/login.dart';
 import 'package:albaraka_management/src/modules/main/presentation_layer/screens/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,20 +12,26 @@ import 'src/modules/main/presentation_layer/bloc/main_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  ServiceLocator().init();
+  await  Firebase.initializeApp();
+  await  CacheHelper.init();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget
 {
   const MyApp({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context)
   {
     return Sizer(builder: (context , orientaion , deviceType){
       return MultiBlocProvider(
         providers: [
+          BlocProvider<AuthBloc>(
+            create: (BuildContext context) => AuthBloc(AuthInitial()),
+          ),
           BlocProvider<MainBloc>(
             create: (BuildContext context) => MainBloc(MainInitial()),
           ),
@@ -39,7 +49,7 @@ class MyApp extends StatelessWidget
           supportedLocales: const [
             Locale('ar', 'AE'), // English, no country code
           ],
-          home: MainScreen() ,
+          home: LoginScreen() ,
 
         ),
       ) ;

@@ -26,6 +26,8 @@ dependencies:
   sizer:
   flutter_svg:
   device_preview:
+  fluttertoast:
+  dartz:
   # bloc
   bloc:
   flutter_bloc:

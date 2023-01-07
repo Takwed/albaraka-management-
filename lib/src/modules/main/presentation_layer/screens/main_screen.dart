@@ -27,7 +27,8 @@ class MainScreen extends StatelessWidget {
                     shrinkWrap: true,
                     crossAxisCount: 2,
                     crossAxisSpacing: 4.0,
-                    children: List.generate(item.length,(index) {
+                    children: List.generate(item.length,(index)
+                    {
                       return ItemGrid(item[index],context);
                     }),
                   ),
