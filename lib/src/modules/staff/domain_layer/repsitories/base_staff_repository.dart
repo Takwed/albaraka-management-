@@ -14,5 +14,5 @@ abstract class BaseStaffRepository {
       {required String email,
         required String password,});
 
-  Future<Either<FirebaseAuthException, List<MemberModel>>?> getStaff();
+  Future<Either<FirebaseAuthException, List<MemberModel>>> getStaff();
 }

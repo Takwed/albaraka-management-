@@ -26,9 +26,7 @@ class StaffRepository extends BaseStaffRepository{
   }
 
   @override
-  Future<Either<FirebaseAuthException, List<MemberModel>>?> getStaff()async {
-    dynamic res = await baseStaffRemoteDataSource.getStaff();
-    print(res);
+  Future<Either<FirebaseAuthException, List<MemberModel>>> getStaff()async {
     return await baseStaffRemoteDataSource.getStaff();
   }
 

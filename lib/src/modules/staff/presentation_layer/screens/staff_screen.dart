@@ -1,4 +1,5 @@
 import 'package:albaraka_management/src/modules/staff/presentation_layer/bloc/staff_bloc.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -165,6 +166,7 @@ class StaffScreen extends StatelessWidget {
                                   name: nameController.text,
                                   phone: phoneController.text));
                             }
+                            bloc.add(GetAllStaffEvent());
                             Navigator.pop(context);
                             emailController.clear();
                             confirmPasswordController.clear();
@@ -179,7 +181,9 @@ class StaffScreen extends StatelessWidget {
                   ),);
           },
               child: Icon(Icons.person_add)),
-          body: SingleChildScrollView(
+          body: ConditionalBuilder(
+            condition: state is! GetAllLoadingStaffState,
+            builder: (context) => SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Form(
@@ -200,6 +204,8 @@ class StaffScreen extends StatelessWidget {
               ),
             ),
           ),
+            fallback: (context) => Center(child: CircularProgressIndicator()),
+        )
         );
       },
     );

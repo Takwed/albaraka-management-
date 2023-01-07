@@ -48,6 +48,13 @@ class GetAllStaffState extends StaffState {
   @override
   List<Object?> get props => [staffModel];
 }
+
+class GetAllLoadingStaffState extends StaffState {
+
+  GetAllLoadingStaffState();
+  @override
+  List<Object?> get props => [];
+}
 class DeleteMemberState extends StaffState {
   final String email;
   final String password;

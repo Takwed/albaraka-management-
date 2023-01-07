@@ -67,17 +67,27 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context) {
               ),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    emailController.clear();
+                    passwordController.clear();
+                    },
+                  child: const Text('الفاء'),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'OK'),
-                  child: const Text('OK'),
+                  onPressed: () {
+                    bloc.add(DeleteMemberEvent(email: emailController.text,password: passwordController.text));
+                    bloc.add(GetAllStaffEvent());
+                    Navigator.pop(context);
+                    emailController.clear();
+                    passwordController.clear();
+                  },
+                  child: const Text('حذف'),
                 ),
               ],
             ),
           );
-         //bloc.add(ChangeGridStaffEvent(index: item.index));
+
         },
         child: Padding(
           padding: EdgeInsets.all(10.0),
@@ -132,16 +142,3 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context) {
     },
   );
 }
-
-class ItemStaff {
-  ItemStaff({required this.name, required this.index, required this.phone,});
-
-  final String name;
-  final String phone;
-  final int index;
-}
-
-List<ItemStaff> item = [
-  ItemStaff(name: "محمد اشرف", phone: "01551677738", index: 0,),
-  ItemStaff(name: "محمود عاطف", phone: "01028499657", index: 1,),
-];

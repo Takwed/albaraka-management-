@@ -52,23 +52,27 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
           print(l);
           errorToast(msg: l.message!);
         }, (r)  {
-
           defaultToast(msg: "Account Created Successfully");
           emit(AddMemberSuccessfulStaffState());
         });
       }
       else if (event is DeleteMemberEvent){
-        RemoveMemberWithEmailAndPassUseCase(sl()).excute(email: event.email, password: event.password);
-        emit(DeleteMemberState(email: event.email,password: event.email));
+       final result = await RemoveMemberWithEmailAndPassUseCase(sl()).excute(email: event.email, password: event.password);
+       result.fold((l){
+         errorToast(msg: l.message!);
+         print(l.message.toString()+"jjjjjjjjjjjj");
+       } , (r) {
+         defaultToast(msg: "Account Deleted Successfully");
+         emit(DeleteMemberState(email: event.email,password: event.email));
+       });
       }
       else if (event is GetAllStaffEvent){
+        emit(GetAllLoadingStaffState());
       final result = await GetStaffUseCase(sl()).excute();
-      result!.fold((l) {
+      result.fold((l) {
         errorToast(msg: l.message!);
-        print(l.toString());
       } , (r){
         members = r;
-        print(r.toString());
         emit(GetAllStaffState(staffModel: r));
       });
       }

@@ -14,7 +14,7 @@ abstract class BaseStaffRemoteDataSource {
       {required String email,
         required String password,});
   Future createUser({required String name,required String phone, required String uid});
-  Future<Either<FirebaseAuthException, List<MemberModel>>?> getStaff();
+  Future<Either<FirebaseAuthException, List<MemberModel>>> getStaff();
 
 }
 class StaffRemoteDataSource extends BaseStaffRemoteDataSource{
@@ -55,28 +55,31 @@ class StaffRemoteDataSource extends BaseStaffRemoteDataSource{
       final user = FirebaseAuth.instance.currentUser;
       AuthCredential credentials =
       EmailAuthProvider.credential(email: email, password: password);
-      print(user);
       final result = await user!.reauthenticateWithCredential(credentials);
       await result.user!.delete();
-      return Right(true);
+      FirebaseFirestore.instance
+          .collection('members').doc(user.uid).delete();
+      return const Right(true);
     } on FirebaseAuthException catch (error) {
       return Left(error);
     }
   }
+
   @override
-  Future<Either<FirebaseAuthException, List<MemberModel>>?> getStaff() async{
-    List<MemberModel> members = [];
-    try {
-      await FirebaseFirestore.instance
-          .collection('members')
-          .get().then((value) {
-        value.docs.forEach((element) {
-          members.add(MemberModel.fromJson(element.data()));
+    Future<Either<FirebaseAuthException, List<MemberModel>>> getStaff() async{
+       List<MemberModel> members = [];
+      try {
+         await FirebaseFirestore.instance
+            .collection('members')
+            .get().then((value) {
+          value.docs.forEach((element) {
+            members.add(MemberModel.fromJson(element.data()));
+          });
         });
-        return Right(members??[]);
-      });
-    } on FirebaseAuthException catch (error) {
-      return Left(error);
-    }
+         return Right(members);
+      }
+      on FirebaseAuthException catch (error) {
+        return Left(error);
+      }
   }
 }

@@ -10,8 +10,6 @@ class GetStaffUseCase {
 
   GetStaffUseCase(this.baseStaffRepository);
 
-  Future<Either<FirebaseAuthException, List<MemberModel>>?> excute() async {
-    //return await baseStaffRepository.getStaff();
-    dynamic res = await baseStaffRepository.getStaff();
-    return res;
+  Future<Either<FirebaseAuthException, List<MemberModel>>> excute() async {
+    return await baseStaffRepository.getStaff();
   }}
