@@ -128,7 +128,6 @@ class RegisterScreen extends StatelessWidget {
                               prefixIcon: const Icon(Icons.lock_outline),
                               suffixIcon: IconButton(
                                   onPressed: () {
-
                                   bloc.add(ChangeVisibilityEvent(isVisible));
                                   },
                                   icon: isVisible

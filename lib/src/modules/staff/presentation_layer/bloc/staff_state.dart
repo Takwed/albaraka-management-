@@ -15,3 +15,44 @@ class ChangeGridStaffState extends StaffState {
   @override
   List<Object?> get props => [index];
 }
+class AddMemberState extends StaffState {
+  String email;
+  String password;
+  String name;
+  String phone;
+
+  AddMemberState({required this.email,required this.password,required this.name,required this.phone,});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [email,password,name,phone];
+}
+
+class AddMemberSuccessfulStaffState extends StaffState {
+  AddMemberSuccessfulStaffState();
+  @override
+  List<Object?> get props =>  [];
+}
+
+class ChangeVisibilityStaffState extends StaffState {
+  final bool isVisible;
+
+  ChangeVisibilityStaffState({required this.isVisible});
+
+  @override
+  List<Object> get props => [isVisible];
+}
+class GetAllStaffState extends StaffState {
+  List<MemberModel> staffModel;
+
+  GetAllStaffState({required this.staffModel});
+  @override
+  List<Object?> get props => [staffModel];
+}
+class DeleteMemberState extends StaffState {
+  final String email;
+  final String password;
+
+  DeleteMemberState({required this.email,required this.password});
+  @override
+  List<Object?> get props => [email,password];
+}

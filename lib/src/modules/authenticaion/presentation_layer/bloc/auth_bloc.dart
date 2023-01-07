@@ -1,6 +1,8 @@
 import 'package:albaraka_management/src/core/local/shared_prefrences.dart';
+import 'package:albaraka_management/src/core/utils/navigation_manager.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/components/components.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/screens/login.dart';
+import 'package:albaraka_management/src/modules/main/presentation_layer/screens/main_screen.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,10 +44,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         currentPages = pages[event.index];
         currentIndex = event.index;
         emit(ChangeButtonAuthState(index: event.index));
-      } else if (event is ChangeVisibilityEvent) {
+      }
+      else if (event is ChangeVisibilityEvent) {
         changeVisibility();
         emit(ChangeVisibilityAuthState(isVisible: currentVisibility));
-      } else if (event is LoginEvent) {
+      }
+      else if (event is LoginEvent) {
         emit(LoginLoadingAuthState());
         final result = await LoginWithEmailAndPassUseCase(sl()).excute(
           email: event.email,
@@ -53,12 +57,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         String ? id = await CacheHelper.getData(key: 'uid');
         result.fold((l) {
-
           errorToast(msg: l.message!);
           emit(LoginErrorAuthState());
         }, (r)  {
+          NavigationManager.push(event.context, MainScreen());
           defaultToast(msg: "Login Successfully");
-
           // await    CacheHelper.saveData(key: 'uid', value: r!.user!.uid);
           emit(LoginSuccessfulAuthState(context: event.context , uid: id!));
         });
@@ -74,9 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(RegisterErrorAuthState());
         }, (r)  {
           defaultToast(msg: "Account Created Successfully");
-
           emit(RegisterSuccessfulAuthState(context: event.context ,  uid: id));
-
         });
       } else if (event is ForgetPasswordAuthEvent)
       {

@@ -3,6 +3,7 @@ import 'package:albaraka_management/src/core/services/dep_injection.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/bloc/auth_bloc.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/screens/login.dart';
 import 'package:albaraka_management/src/modules/main/presentation_layer/screens/main_screen.dart';
+import 'package:albaraka_management/src/modules/staff/presentation_layer/bloc/staff_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget
           BlocProvider<MainBloc>(
             create: (BuildContext context) => MainBloc(MainInitial()),
           ),
+          BlocProvider<StaffBloc>(
+            create: (BuildContext context) => StaffBloc(StaffInitial()),
+          ),
         ],
         child: MaterialApp (
           debugShowCheckedModeBanner: false,
@@ -49,7 +53,7 @@ class MyApp extends StatelessWidget
           supportedLocales: const [
             Locale('ar', 'AE'), // English, no country code
           ],
-          home: LoginScreen() ,
+          home: MainScreen() ,
 
         ),
       ) ;

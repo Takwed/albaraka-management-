@@ -1,4 +1,5 @@
 import 'package:albaraka_management/src/modules/staff/presentation_layer/bloc/staff_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -10,30 +11,50 @@ class StaffScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isvisible = false;
-    var registerEmailController = TextEditingController();
-    var registerPasswordController = TextEditingController();
-    var confirmRegisterPasswordController = TextEditingController();
+    var bloc = StaffBloc.get(context);
+    var nameController = TextEditingController();
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
+    var confirmPasswordController = TextEditingController();
+    var phoneController = TextEditingController();
     var formKey = GlobalKey<FormState>();
-    return BlocProvider(
-      create: (context) => StaffBloc(StaffInitial()),
-      child: BlocBuilder<StaffBloc, StaffState>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("الاعضاء"),
-            ),
-            floatingActionButton: FloatingActionButton(onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) =>
-                    AlertDialog(
+    return BlocBuilder<StaffBloc, StaffState>(
+      builder: (context, state) {
+       bool isVisible = bloc.currentVisibility;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("الاعضاء"),
+          ),
+          floatingActionButton: FloatingActionButton(onPressed: () async{
+            showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  SingleChildScrollView(
+                    child: AlertDialog(
                       title: Text("اضافه عضو"),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextFormField(
-                            controller: registerEmailController,
+                            controller: nameController,
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'من فضلك اكتب اسمك';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.sp)),
+                                prefixIcon: const Icon(Icons.person_3_outlined),
+                                labelText: 'الاسم'),
+                          ),
+                          SizedBox(
+                            height: 20.sp,
+                          ),
+                          TextFormField(
+                            controller: emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -51,24 +72,43 @@ class StaffScreen extends StatelessWidget {
                             height: 20.sp,
                           ),
                           TextFormField(
-                            controller: registerPasswordController,
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: isvisible ? false : true,
+                            controller: phoneController,
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'من فضلك اكتب رقم الهاتف';
+                              }
+                              return null;
+                            },
                             decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.sp)),
+                                prefixIcon: const Icon(Icons.phone),
+                                labelText: 'الهاتف'),
+                          ),
+                          SizedBox(
+                            height: 20.sp,
+                          ),
+                          TextFormField(
+                            controller: passwordController,
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: isVisible,
+                            decoration: InputDecoration (
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15.sp)),
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                     onPressed: () {
-                                      isvisible = isvisible;
+                                      bloc.add(ChangeVisibilityWhenAddMemberEvent(isVisible)) ;
                                     },
-                                    icon: isvisible
-                                        ? const Icon(Icons.visibility_off)
-                                        : const Icon(Icons.visibility)),
+                                    icon: isVisible
+                                        ? Icon(Icons.visibility_off)
+                                        : Icon(Icons.visibility)),
                                 labelText: 'الباسورد'),
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'لازم تكتب باسورد';
+                              if (value!.isEmpty)
+                              {
+                                return 'من فضلك اكتب الباسورد';
                               }
                               return null;
                             },
@@ -77,21 +117,21 @@ class StaffScreen extends StatelessWidget {
                             height: 2.5.h,
                           ),
                           TextFormField(
-                            controller: confirmRegisterPasswordController,
+                            controller: confirmPasswordController,
                             keyboardType: TextInputType.visiblePassword,
-                            obscureText: isvisible ? false : true,
+                            obscureText: isVisible ,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15.sp)),
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                     onPressed: () {
-                                      isvisible = isvisible;
+                                     bloc.add(ChangeVisibilityWhenAddMemberEvent(!isVisible));
                                     },
-                                    icon: isvisible
+                                    icon: isVisible
                                         ? const Icon(Icons.visibility_off)
                                         : const Icon(Icons.visibility)),
-                                labelText: 'اكتب الباسورد تاني'),
+                                labelText: 'تأكيد الباسورد'),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'من فضلك اكتب الباسورد تاني';
@@ -99,45 +139,68 @@ class StaffScreen extends StatelessWidget {
                               return null;
                             },
                           ),
+                          SizedBox(
+                            height: 2.5.h,
+                          ),
                         ],
                       ),
                       actions: [
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: Text('Cancel'),
+                          onPressed: (){
+                            Navigator.pop(context);
+                            emailController.clear();
+                            confirmPasswordController.clear();
+                            passwordController.clear();
+                            nameController.clear();
+                            phoneController.clear();
+                            },
+                          child: Text('الغاء'),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
-                          child: Text('OK'),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              bloc.add(AddMemberEvent(email: emailController.text,
+                                  password: passwordController.text,
+                                  name: nameController.text,
+                                  phone: phoneController.text));
+                            }
+                            Navigator.pop(context);
+                            emailController.clear();
+                            confirmPasswordController.clear();
+                            passwordController.clear();
+                            nameController.clear();
+                            phoneController.clear();
+                          },
+                          child: Text('اضافة'),
                         ),
                       ],
-                    ),);
-            },
-                child: Icon(Icons.person_add)),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      GridView.count(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 4.0,
-                        children: List.generate(item.length, (index) {
-                          return ItemStaffGrid(item[index], context);
-                        }),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ),);
+          },
+              child: Icon(Icons.person_add)),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    GridView.count(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4.0,
+                      children: List.generate(item.length, (index) {
+                        return ItemStaffGrid(bloc.members[index], context);
+                      }),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

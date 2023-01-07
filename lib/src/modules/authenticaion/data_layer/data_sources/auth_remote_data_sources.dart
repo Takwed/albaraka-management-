@@ -85,6 +85,7 @@ import '../../../../core/local/shared_prefrences.dart';
       void response =
           await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return Right(response);
+
     } on FirebaseAuthException catch (error) {
       return Left(error);
       print(error.message);

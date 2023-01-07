@@ -8,9 +8,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bloc = MainBloc.get(context);
-    return BlocProvider(
-      create: (context) => bloc,
-    child: BlocBuilder<MainBloc,MainState>(
+    return BlocBuilder<MainBloc,MainState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(),
@@ -38,7 +36,6 @@ class MainScreen extends StatelessWidget {
           ),
         );
       }
-    ,)
-    );
+    ,);
   }
 }

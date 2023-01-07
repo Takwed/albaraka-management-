@@ -21,15 +21,13 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     OffersScreen(),
     OrdersScreen(),
   ];
-  int currentIndex = 0;
-  Widget currentPages = StaffScreen();
+  //Widget currentPages = StaffScreen();
   MainBloc(MainInitial mainInitial) : super(MainInitial()) {
     on<MainEvent>((event, emit) {
       if (event is ChangeGridMainEvent) {
         NavigationManager.push(event.context,
-        pages[event.index ]);
-        currentPages = pages[event.index];
-        currentIndex = event.index ;
+        pages[event.index]);
+        //currentPages = pages[event.index];
         emit(ChangeGridMainState(index: event.index));
       }
     });
