@@ -27,7 +27,6 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       if (event is ChangeGridMainEvent) {
         NavigationManager.push(event.context,
         pages[event.index]);
-        //currentPages = pages[event.index];
         emit(ChangeGridMainState(index: event.index));
       }
     });

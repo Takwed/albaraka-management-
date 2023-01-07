@@ -65,8 +65,10 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
       final result = await GetStaffUseCase(sl()).excute();
       result!.fold((l) {
         errorToast(msg: l.message!);
+        print(l.toString());
       } , (r){
         members = r;
+        print(r.toString());
         emit(GetAllStaffState(staffModel: r));
       });
       }

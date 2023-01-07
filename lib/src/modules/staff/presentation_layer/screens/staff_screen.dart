@@ -21,6 +21,7 @@ class StaffScreen extends StatelessWidget {
     return BlocBuilder<StaffBloc, StaffState>(
       builder: (context, state) {
        bool isVisible = bloc.currentVisibility;
+       bloc.add(GetAllStaffEvent());
         return Scaffold(
           appBar: AppBar(
             title: Text("الاعضاء"),
@@ -190,7 +191,7 @@ class StaffScreen extends StatelessWidget {
                       shrinkWrap: true,
                       crossAxisCount: 2,
                       crossAxisSpacing: 4.0,
-                      children: List.generate(item.length, (index) {
+                      children: List.generate(bloc.members.length, (index) {
                         return ItemStaffGrid(bloc.members[index], context);
                       }),
                     ),

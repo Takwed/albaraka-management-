@@ -78,7 +78,6 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context) {
             ),
           );
          //bloc.add(ChangeGridStaffEvent(index: item.index));
-          bloc.add(GetAllStaffEvent());
         },
         child: Padding(
           padding: EdgeInsets.all(10.0),

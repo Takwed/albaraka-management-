@@ -73,11 +73,10 @@ class StaffRemoteDataSource extends BaseStaffRemoteDataSource{
         value.docs.forEach((element) {
           members.add(MemberModel.fromJson(element.data()));
         });
-        return Right(members);
+        return Right(members??[]);
       });
     } on FirebaseAuthException catch (error) {
       return Left(error);
     }
-    return null;
   }
 }
