@@ -67,12 +67,13 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
        });
       }
       else if (event is GetAllStaffEvent){
-        emit(GetAllLoadingStaffState());
+      //  emit(GetAllLoadingStaffState());
       final result = await GetStaffUseCase(sl()).excute();
       result.fold((l) {
         errorToast(msg: l.message!);
       } , (r){
         members = r;
+        print(r.toString());
         emit(GetAllStaffState(staffModel: r));
       });
       }

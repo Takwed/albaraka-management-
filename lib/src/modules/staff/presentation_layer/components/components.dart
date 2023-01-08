@@ -4,16 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import '../bloc/staff_bloc.dart';
 
-Widget ItemStaffGrid(MemberModel item, BuildContext context) {
+Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
   var bloc = StaffBloc.get(context);
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   bool isVisible = bloc.currentVisibility;
+  emailController.text = bloc.members[index].email;
   return BlocBuilder<StaffBloc, StaffState>(
     builder: (context, state) {
       return InkWell(
         onLongPress: () {
-          showDialog<String>(
+          print(index);
+          showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
               title: const Text('هل تريد حذف هذا الحساب ؟'),
@@ -22,6 +24,7 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context) {
                 children: [
                   TextFormField(
                     controller: emailController,
+                    enabled: false,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value!.isEmpty) {

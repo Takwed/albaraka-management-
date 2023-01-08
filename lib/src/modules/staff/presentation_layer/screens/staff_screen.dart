@@ -181,9 +181,7 @@ class StaffScreen extends StatelessWidget {
                   ),);
           },
               child: Icon(Icons.person_add)),
-          body: ConditionalBuilder(
-            condition: state is! GetAllLoadingStaffState,
-            builder: (context) => SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Form(
@@ -196,7 +194,7 @@ class StaffScreen extends StatelessWidget {
                       crossAxisCount: 2,
                       crossAxisSpacing: 4.0,
                       children: List.generate(bloc.members.length, (index) {
-                        return ItemStaffGrid(bloc.members[index], context);
+                        return ItemStaffGrid(bloc.members[index], context,index);
                       }),
                     ),
                   ],
@@ -204,8 +202,6 @@ class StaffScreen extends StatelessWidget {
               ),
             ),
           ),
-            fallback: (context) => Center(child: CircularProgressIndicator()),
-        )
         );
       },
     );

@@ -13,7 +13,7 @@ abstract class BaseStaffRemoteDataSource {
   Future<Either<FirebaseAuthException, bool>> removeMember(
       {required String email,
         required String password,});
-  Future createUser({required String name,required String phone, required String uid});
+  Future createUser({required String name,required String phone, required String uid,required String email});
   Future<Either<FirebaseAuthException, List<MemberModel>>> getStaff();
 
 }
@@ -27,7 +27,7 @@ class StaffRemoteDataSource extends BaseStaffRemoteDataSource{
         email: email,
         password: password,)
           .then((value) {
-        createUser(name: name, phone: phone ,uid: value.user!.uid);
+        createUser(name: name, phone: phone ,uid: value.user!.uid,email: email);
         CacheHelper.saveData(key: 'uid', value: value.user!.uid);
       });
       return Right(response);
@@ -39,11 +39,11 @@ class StaffRemoteDataSource extends BaseStaffRemoteDataSource{
 
 
   @override
-  Future createUser({required String name, required String uid,required String phone,}) async{
+  Future createUser({required String name, required String uid,required String phone,required String email}) async{
     await FirebaseFirestore.instance
         .collection('members')
         .doc(uid)
-        .set({"name": name,"phone" : phone}).then((value) {
+        .set({"name": name,"phone" : phone , "email" : email}).then((value) {
     }).catchError((error) {
       print(error.toString());
     });
