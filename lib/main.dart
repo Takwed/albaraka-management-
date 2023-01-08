@@ -16,7 +16,7 @@ void main() async {
   ServiceLocator().init();
   await  Firebase.initializeApp();
   await  CacheHelper.init();
-
+ // firebase.firestore().settings({ experimentalForceLongPolling: true });
   runApp(MyApp());
 }
 

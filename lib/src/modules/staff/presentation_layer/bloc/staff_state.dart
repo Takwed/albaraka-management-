@@ -41,10 +41,10 @@ class ChangeVisibilityStaffState extends StaffState {
   @override
   List<Object> get props => [isVisible];
 }
-class GetAllStaffState extends StaffState {
+class GetAllStaffSuccessfulState extends StaffState {
   List<MemberModel> staffModel;
 
-  GetAllStaffState({required this.staffModel});
+  GetAllStaffSuccessfulState({required this.staffModel});
   @override
   List<Object?> get props => [staffModel];
 }

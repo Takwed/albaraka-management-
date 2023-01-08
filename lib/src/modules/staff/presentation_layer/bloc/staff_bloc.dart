@@ -25,14 +25,11 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
   bool currentVisibility = false;
   IconData currentSuffix = Icons.visibility;
   TextInputType type = TextInputType.visiblePassword;
-
-  void changeVisibility()
-  {
+  void changeVisibilityVoid() {
     currentVisibility = !currentVisibility;
     currentSuffix = currentVisibility ? Icons.visibility : Icons.visibility_off;
     type = currentVisibility ? TextInputType.text : TextInputType.visiblePassword;
   }
-
   StaffBloc(StaffInitial staffInitial) : super(StaffInitial()) {
     on<StaffEvent>((event, emit) async{
       if (event is ChangeGridStaffEvent) {
@@ -41,15 +38,15 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
         emit(ChangeGridStaffState(index: event.index));
       }
       else if (event is ChangeVisibilityWhenAddMemberEvent) {
-        changeVisibility();
-        emit(ChangeVisibilityStaffState(isVisible: currentVisibility));
+        changeVisibilityVoid();
+        event.isVisible = currentVisibility;
+        emit(ChangeVisibilityStaffState(isVisible: event.isVisible));
       }
       else if (event is AddMemberEvent) {
         final result = await addMemberWithEmailAndPassUseCase(sl()).excute(
             email: event.email, password: event.password, name: event.name, phone: event.phone);
 
         result.fold((l) {
-          print(l);
           errorToast(msg: l.message!);
         }, (r)  {
           defaultToast(msg: "Account Created Successfully");
@@ -67,14 +64,13 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
        });
       }
       else if (event is GetAllStaffEvent){
-      //  emit(GetAllLoadingStaffState());
+       emit(GetAllLoadingStaffState());
       final result = await GetStaffUseCase(sl()).excute();
       result.fold((l) {
         errorToast(msg: l.message!);
       } , (r){
         members = r;
-        print(r.toString());
-        emit(GetAllStaffState(staffModel: r));
+        emit(GetAllStaffSuccessfulState(staffModel: r));
       });
       }
     });

@@ -8,82 +8,85 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
   var bloc = StaffBloc.get(context);
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  bool isVisible = bloc.currentVisibility;
+  var formKey = GlobalKey<FormState>();
   emailController.text = bloc.members[index].email;
   return BlocBuilder<StaffBloc, StaffState>(
     builder: (context, state) {
+      bool isVisible = bloc.currentVisibility;
       return InkWell(
         onLongPress: () {
-          print(index);
           showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
               title: const Text('هل تريد حذف هذا الحساب ؟'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextFormField(
-                    controller: emailController,
-                    enabled: false,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'من فضلك اكتب الايميل ';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.sp)),
-                        prefixIcon: const Icon(Icons.email_outlined),
-                        labelText: 'الايميل'),
-                  ),
-                  SizedBox(
-                    height: 20.sp,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: isVisible,
-                    decoration: InputDecoration (
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.sp)),
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              bloc.add(ChangeVisibilityWhenAddMemberEvent(isVisible)) ;
-                            },
-                            icon: isVisible
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility)),
-                        labelText: 'الباسورد'),
-                    validator: (value) {
-                      if (value!.isEmpty)
-                      {
-                        return 'من فضلك اكتب الباسورد';
-                      }
-                      return null;
-                    },
-                  ),
+              content: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      controller: emailController,
+                      enabled: false,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'من فضلك اكتب الايميل ';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.sp)),
+                          prefixIcon: const Icon(Icons.email_outlined),
+                          labelText: 'الايميل'),
+                    ),
+                    SizedBox(
+                      height: 20.sp,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: isVisible,
+                      decoration: InputDecoration (
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.sp)),
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                bloc.add(ChangeVisibilityWhenAddMemberEvent(isVisible)) ;
+                              },
+                              icon: isVisible
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility)),
+                          labelText: 'الباسورد'),
+                      validator: (value) {
+                        if (value!.isEmpty)
+                        {
+                          return 'من فضلك اكتب الباسورد';
+                        }
+                        return null;
+                      },
+                    ),
 
-                ],
+                  ],
+                ),
               ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    emailController.clear();
                     passwordController.clear();
                     },
-                  child: const Text('الفاء'),
+                  child: const Text('الغاء'),
                 ),
                 TextButton(
                   onPressed: () {
-                    bloc.add(DeleteMemberEvent(email: emailController.text,password: passwordController.text));
-                    bloc.add(GetAllStaffEvent());
-                    Navigator.pop(context);
-                    emailController.clear();
-                    passwordController.clear();
+                    if (formKey.currentState!.validate()) {
+                      bloc.add(DeleteMemberEvent(email: emailController.text,password: passwordController.text));
+                      bloc.add(GetAllStaffEvent());
+                      passwordController.clear();
+                      Navigator.pop(context);
+                    }
                   },
                   child: const Text('حذف'),
                 ),
