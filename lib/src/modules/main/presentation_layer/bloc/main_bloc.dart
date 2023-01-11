@@ -21,7 +21,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     OffersScreen(),
     OrdersScreen(),
   ];
-  //Widget currentPages = StaffScreen();
+  /// Widget currentPages = StaffScreen();
   MainBloc(MainInitial mainInitial) : super(MainInitial()) {
     on<MainEvent>((event, emit) {
       if (event is ChangeGridMainEvent) {

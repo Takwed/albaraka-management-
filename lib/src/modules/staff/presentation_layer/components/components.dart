@@ -1,26 +1,26 @@
+import 'package:albaraka_management/src/core/utils/color_manager.dart';
 import 'package:albaraka_management/src/modules/staff/data_layer/models/staff_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import '../bloc/staff_bloc.dart';
 
-Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
+Widget memberItem (MemberModel item, BuildContext context, int index)
+{
   var bloc = StaffBloc.get(context);
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   emailController.text = bloc.members[index].email;
-  return BlocBuilder<StaffBloc, StaffState>(
+  return BlocBuilder <StaffBloc, StaffState>
+    (
     builder: (context, state) {
       bool isVisible = bloc.currentVisibility;
-      return InkWell(
+      return   InkWell(
         onLongPress: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) =>
-             BlocBuilder<StaffBloc, StaffState>(
-              builder: (context, state) {
-                    return AlertDialog(
+            builder: (BuildContext context) => AlertDialog(
               title: const Text('هل تريد حذف هذا الحساب ؟'),
               content: Form(
                 key: formKey,
@@ -32,8 +32,9 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                       enabled: false,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'من فضلك اكتب الايميل ';
+                        if (value!.isEmpty)
+                        {
+                          return 'من فضلك اكتب الايميل';
                         }
                         return null;
                       },
@@ -48,27 +49,28 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                     ),
                     TextFormField(
                       controller: passwordController,
-                      keyboardType: bloc.type,
-                      obscureText: bloc.currentVisibility,
-                      decoration: InputDecoration (
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: isVisible,
+                      decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.sp)),
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                               onPressed: () {
-                                bloc.add(const ChangeVisibilityEvent()) ;
+                                bloc.add(ChangeVisibilityWhenAddMemberEvent(
+                                    isVisible));
                               },
-                              icon: Icon(bloc.currentSuffix)),
+                              icon: isVisible
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility)),
                           labelText: 'الباسورد'),
                       validator: (value) {
-                        if (value!.isEmpty)
-                        {
+                        if (value!.isEmpty) {
                           return 'من فضلك اكتب الباسورد';
                         }
                         return null;
                       },
                     ),
-
                   ],
                 ),
               ),
@@ -77,14 +79,16 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                   onPressed: () {
                     Navigator.pop(context);
                     passwordController.clear();
-                    },
+                  },
                   child: const Text('الغاء'),
                 ),
                 TextButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      bloc.add(DeleteMemberEvent(email: emailController.text,password: passwordController.text));
-                      bloc.add(const GetAllStaffEvent());
+                      bloc.add(DeleteMemberEvent(
+                          email: emailController.text,
+                          password: passwordController.text));
+                      bloc.add(GetAllStaffEvent());
                       passwordController.clear();
                       Navigator.pop(context);
                     }
@@ -92,61 +96,65 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                   child: const Text('حذف'),
                 ),
               ],
-            );
-                    },
-                ),
+            ),
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
+          padding: const EdgeInsets.all(05.0),
+          child: Stack(
             children: [
-              Expanded(
-                child: Card(
-                  color: Colors.black12,
-                  elevation: 7,
-                  child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadiusDirectional.only(
-                            bottomEnd: Radius.circular(8),
-                            bottomStart: Radius.circular(8)
-                        ),
-                      ),
-                      alignment: Alignment.bottomCenter,
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            item.name,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 17.sp),
+              Column(
+                children: [
+                  Expanded(
+                    child: Card(
+                      color: Colors.black12,
+                      elevation: 7,
+                      child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadiusDirectional.only(
+                                bottomEnd: Radius.circular(8),
+                                bottomStart: Radius.circular(8)),
                           ),
-                          Text(
-                            item.phone,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 11.sp),
-                          ),
-                        ],
-                      )
+                          alignment: Alignment.bottomCenter,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.account_circle_rounded,
+                                  size: 60.sp, color: ColorManager.white),
+                              Text(
+                                '${item.name}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: ColorManager.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 17.sp),
+                              ),
+                              Text(
+                                '${item.phone}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: ColorManager.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13.sp),
+                              ),
+                            ],
+                          )),
+                    ),
                   ),
-                ),
+                ],
               ),
+
             ],
           ),
         ),
       );
+
     },
   );
 }

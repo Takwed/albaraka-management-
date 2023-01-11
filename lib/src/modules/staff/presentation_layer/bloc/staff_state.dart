@@ -11,7 +11,7 @@ class StaffInitial extends StaffState {
 class ChangeGridStaffState extends StaffState {
   final int index;
 
-  const ChangeGridStaffState({required this.index});
+  ChangeGridStaffState({required this.index});
   @override
   List<Object?> get props => [index];
 }
@@ -28,7 +28,7 @@ class AddMemberState extends StaffState {
 }
 
 class AddMemberSuccessfulStaffState extends StaffState {
-  const AddMemberSuccessfulStaffState();
+  AddMemberSuccessfulStaffState();
   @override
   List<Object?> get props =>  [];
 }
@@ -36,15 +36,7 @@ class AddMemberSuccessfulStaffState extends StaffState {
 class ChangeVisibilityStaffState extends StaffState {
   final bool isVisible;
 
-  const ChangeVisibilityStaffState({required this.isVisible});
-
-  @override
-  List<Object> get props => [isVisible];
-}
-class ConfirmChangeVisibilityStaffState extends StaffState {
-  final bool isVisible;
-
-  const ConfirmChangeVisibilityStaffState({required this.isVisible});
+  ChangeVisibilityStaffState({required this.isVisible});
 
   @override
   List<Object> get props => [isVisible];
@@ -59,7 +51,7 @@ class GetAllStaffSuccessfulState extends StaffState {
 
 class GetAllLoadingStaffState extends StaffState {
 
-  const GetAllLoadingStaffState();
+  GetAllLoadingStaffState();
   @override
   List<Object?> get props => [];
 }
@@ -67,7 +59,7 @@ class DeleteMemberState extends StaffState {
   final String email;
   final String password;
 
-  const DeleteMemberState({required this.email,required this.password});
+  DeleteMemberState({required this.email,required this.password});
   @override
   List<Object?> get props => [email,password];
 }
