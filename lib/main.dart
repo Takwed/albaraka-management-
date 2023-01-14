@@ -3,6 +3,7 @@ import 'package:albaraka_management/src/core/services/dep_injection.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/bloc/auth_bloc.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/screens/login.dart';
 import 'package:albaraka_management/src/modules/main/presentation_layer/screens/main_screen.dart';
+import 'package:albaraka_management/src/modules/menu/presentation_layer/bloc/menu_bloc.dart';
 import 'package:albaraka_management/src/modules/staff/presentation_layer/bloc/staff_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget
           ),
           BlocProvider<StaffBloc>(
             create: (BuildContext context) => StaffBloc(StaffInitial()),
+          ),
+          BlocProvider<MenuBloc>(
+            create: (BuildContext context) => MenuBloc(MenuInitial()),
           ),
         ],
         child: MaterialApp (

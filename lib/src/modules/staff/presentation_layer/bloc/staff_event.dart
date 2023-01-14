@@ -6,23 +6,27 @@ abstract class StaffEvent extends Equatable {
 class ChangeGridStaffEvent extends StaffEvent {
   final int index;
 
-  ChangeGridStaffEvent({required this.index,});
+  const ChangeGridStaffEvent({required this.index,});
   @override
   List<Object?> get props => [index];
 }
 
 
-class ChangeVisibilityWhenAddMemberEvent extends StaffEvent {
-  bool isVisible;
-  ChangeVisibilityWhenAddMemberEvent(this.isVisible);
+class ChangeVisibilityEvent extends StaffEvent {
+  const ChangeVisibilityEvent();
+  @override
+  List<Object?> get props => [];
+}
+class ConfirmChangeVisibilityEvent extends StaffEvent {
+  const ConfirmChangeVisibilityEvent();
   @override
   // TODO: implement props
-  List<Object?> get props => [isVisible];
+  List<Object?> get props => [];
 }
 
 class GetAllStaffEvent extends StaffEvent {
 
-  GetAllStaffEvent();
+  const GetAllStaffEvent();
   @override
   List<Object?> get props => [];
 }
@@ -43,7 +47,7 @@ class DeleteMemberEvent extends StaffEvent {
   final String email;
   final String password;
 
-  DeleteMemberEvent({required this.email,required this.password});
+  const DeleteMemberEvent({required this.email,required this.password});
   @override
   List<Object?> get props => [email,password];
 }

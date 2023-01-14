@@ -17,7 +17,10 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
         onLongPress: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AlertDialog(
+            builder: (BuildContext context) =>
+             BlocBuilder<StaffBloc, StaffState>(
+              builder: (context, state) {
+                    return AlertDialog(
               title: const Text('هل تريد حذف هذا الحساب ؟'),
               content: Form(
                 key: formKey,
@@ -45,19 +48,17 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                     ),
                     TextFormField(
                       controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: isVisible,
+                      keyboardType: bloc.type,
+                      obscureText: bloc.currentVisibility,
                       decoration: InputDecoration (
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.sp)),
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                               onPressed: () {
-                                bloc.add(ChangeVisibilityWhenAddMemberEvent(isVisible)) ;
+                                bloc.add(const ChangeVisibilityEvent()) ;
                               },
-                              icon: isVisible
-                                  ? Icon(Icons.visibility_off)
-                                  : Icon(Icons.visibility)),
+                              icon: Icon(bloc.currentSuffix)),
                           labelText: 'الباسورد'),
                       validator: (value) {
                         if (value!.isEmpty)
@@ -83,7 +84,7 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       bloc.add(DeleteMemberEvent(email: emailController.text,password: passwordController.text));
-                      bloc.add(GetAllStaffEvent());
+                      bloc.add(const GetAllStaffEvent());
                       passwordController.clear();
                       Navigator.pop(context);
                     }
@@ -91,12 +92,13 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                   child: const Text('حذف'),
                 ),
               ],
-            ),
+            );
+                    },
+                ),
           );
-
         },
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
               Expanded(
@@ -104,7 +106,7 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                   color: Colors.black12,
                   elevation: 7,
                   child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadiusDirectional.only(
                             bottomEnd: Radius.circular(8),

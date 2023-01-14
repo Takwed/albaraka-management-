@@ -25,10 +25,18 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
   bool currentVisibility = false;
   IconData currentSuffix = Icons.visibility;
   TextInputType type = TextInputType.visiblePassword;
+  bool confirmCurrentVisibility = false;
+  IconData confirmCurrentSuffix = Icons.visibility;
+  TextInputType confirmType = TextInputType.visiblePassword;
   void changeVisibilityVoid() {
     currentVisibility = !currentVisibility;
-    currentSuffix = currentVisibility ? Icons.visibility : Icons.visibility_off;
-    type = currentVisibility ? TextInputType.text : TextInputType.visiblePassword;
+    currentSuffix = !currentVisibility ? Icons.visibility : Icons.visibility_off;
+    type = !currentVisibility ? TextInputType.text : TextInputType.visiblePassword;
+  }
+  void confirmChangeVisibilityVoid() {
+    confirmCurrentVisibility = !confirmCurrentVisibility;
+    confirmCurrentSuffix = !confirmCurrentVisibility ? Icons.visibility : Icons.visibility_off;
+    confirmType = !confirmCurrentVisibility ? TextInputType.text : TextInputType.visiblePassword;
   }
   StaffBloc(StaffInitial staffInitial) : super(StaffInitial()) {
     on<StaffEvent>((event, emit) async{
@@ -37,10 +45,13 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
 
         emit(ChangeGridStaffState(index: event.index));
       }
-      else if (event is ChangeVisibilityWhenAddMemberEvent) {
+      else if (event is ChangeVisibilityEvent) {
         changeVisibilityVoid();
-        event.isVisible = currentVisibility;
-        emit(ChangeVisibilityStaffState(isVisible: event.isVisible));
+        emit(ChangeVisibilityStaffState(isVisible: currentVisibility));
+      }
+      else if (event is ConfirmChangeVisibilityEvent) {
+        confirmChangeVisibilityVoid();
+        emit(ConfirmChangeVisibilityStaffState(isVisible: confirmCurrentVisibility));
       }
       else if (event is AddMemberEvent) {
         final result = await addMemberWithEmailAndPassUseCase(sl()).excute(

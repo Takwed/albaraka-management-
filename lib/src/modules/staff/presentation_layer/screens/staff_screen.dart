@@ -22,23 +22,25 @@ class StaffScreen extends StatelessWidget {
     var formKey = GlobalKey<FormState>();
     return BlocBuilder<StaffBloc, StaffState>(
       builder: (context, state) {
-       bool isVisible = bloc.currentVisibility;
        if(i == 0) {
-         bloc.add(GetAllStaffEvent());
+         bloc.add(const GetAllStaffEvent());
        }
        i = 1;
        return Scaffold(
           appBar: AppBar(
-            title: Text("الاعضاء"),
+            title: const Text("الاعضاء"),
           ),
           floatingActionButton: FloatingActionButton(onPressed: (){
             showDialog(
               context: context,
-              builder: (BuildContext context) => SingleChildScrollView(
+              builder: (BuildContext context) =>
+               BlocBuilder<StaffBloc, StaffState>(
+                    builder: (context, state) {
+                      return SingleChildScrollView(
                 child: Form(
                   key: formKey,
                   child: AlertDialog(
-                    title: Text("اضافه عضو"),
+                    title: const Text("اضافه عضو"),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -54,7 +56,7 @@ class StaffScreen extends StatelessWidget {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon:  Icon(Icons.person_3_outlined),
+                              prefixIcon:  const Icon(Icons.person_3_outlined),
                               labelText: 'الاسم'),
                         ),
                         SizedBox(
@@ -72,7 +74,7 @@ class StaffScreen extends StatelessWidget {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon:  Icon(Icons.email_outlined),
+                              prefixIcon:  const Icon(Icons.email_outlined),
                               labelText: 'الايميل'),
                         ),
                         SizedBox(
@@ -90,7 +92,7 @@ class StaffScreen extends StatelessWidget {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon:  Icon(Icons.phone),
+                              prefixIcon:  const Icon(Icons.phone),
                               labelText: 'الهاتف'),
                         ),
                         SizedBox(
@@ -98,19 +100,18 @@ class StaffScreen extends StatelessWidget {
                         ),
                         TextFormField(
                           controller: passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: isVisible,
+                          keyboardType: bloc.type,
+                          obscureText: bloc.currentVisibility,
                           decoration: InputDecoration (
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon:  Icon(Icons.lock_outline),
+                              prefixIcon:  const Icon(Icons.lock_outline),
                               suffixIcon: IconButton(
                                   onPressed: () {
-                                     bloc.add(ChangeVisibilityWhenAddMemberEvent(isVisible)) ;
+                                     bloc.add(const ChangeVisibilityEvent()) ;
                                   },
-                                  icon: isVisible
-                                      ? const Icon(Icons.visibility_off)
-                                      : const Icon(Icons.visibility)),
+                                  icon: Icon(bloc.currentSuffix)
+                              ),
                               labelText: 'الباسورد'),
                           validator: (value) {
                             if (value!.isEmpty)
@@ -125,19 +126,18 @@ class StaffScreen extends StatelessWidget {
                         ),
                         TextFormField(
                           controller: confirmPasswordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: isVisible ,
+                          keyboardType: bloc.confirmType,
+                          obscureText: bloc.confirmCurrentVisibility,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon:  Icon(Icons.lock_outline),
+                              prefixIcon:  const Icon(Icons.lock_outline),
                               suffixIcon: IconButton(
                                   onPressed: () {
-                                    bloc.add(ChangeVisibilityWhenAddMemberEvent(isVisible));
+                                    bloc.add(const ConfirmChangeVisibilityEvent());
                                   },
-                                  icon: isVisible
-                                      ?  Icon(Icons.visibility_off)
-                                      :  Icon(Icons.visibility)),
+                                  icon: Icon(bloc.confirmCurrentSuffix)
+                              ),
                               labelText: 'تأكيد الباسورد'),
                           validator: (value) {
                             if (value!.isEmpty || passwordController != confirmPasswordController) {
@@ -161,7 +161,7 @@ class StaffScreen extends StatelessWidget {
                           nameController.clear();
                           phoneController.clear();
                         },
-                        child: Text('الغاء'),
+                        child: const Text('الغاء'),
                       ),
                       TextButton(
                         onPressed: () {
@@ -171,7 +171,7 @@ class StaffScreen extends StatelessWidget {
                                 password: passwordController.text,
                                 name: nameController.text,
                                 phone: phoneController.text));
-                            bloc.add(GetAllStaffEvent());
+                            bloc.add(const GetAllStaffEvent());
                             Navigator.pop(context);
                             emailController.clear();
                             confirmPasswordController.clear();
@@ -180,23 +180,25 @@ class StaffScreen extends StatelessWidget {
                             phoneController.clear();
                           }
                         },
-                        child: Text('اضافة'),
+                        child: const Text('اضافة'),
                       ),
                     ],
                   ),
                 ),
-              ),
+              );
+  },
+),
             );
           },
-              child: Icon(Icons.person_add)),
+              child: const Icon(Icons.person_add)),
           body: state is! GetAllLoadingStaffState ?
           SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
                   GridView.count(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     crossAxisCount: 2,
                     crossAxisSpacing: 4.0,
@@ -207,7 +209,7 @@ class StaffScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ) : Center(child: CircularProgressIndicator()),
+          ) : const Center(child: CircularProgressIndicator()),
         );
       },
     );
