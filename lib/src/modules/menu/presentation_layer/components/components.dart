@@ -15,7 +15,7 @@ Widget ItemProductGrid(ProductModel product,context,index) {
         },
         child: Card(
           elevation: 7,
-          color: ColorManager.black,
+          color: ColorManager.card,
           child: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [

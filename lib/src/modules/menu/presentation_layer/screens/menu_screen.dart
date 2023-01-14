@@ -15,7 +15,6 @@ class MenuScreen extends StatelessWidget {
     var describeProduct = TextEditingController();
     var priceProduct = TextEditingController();
     var formKey = GlobalKey<FormState>();
-
     var bloc = MenuBloc.get(context);
     return BlocBuilder<MenuBloc,MenuState>(
       builder: (context, state) {
