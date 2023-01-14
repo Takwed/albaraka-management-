@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repsitories/base_staff_repository.dart';
-
 class RemoveMemberWithEmailAndPassUseCase {
   final BaseStaffRepository baseStaffRepository;
 

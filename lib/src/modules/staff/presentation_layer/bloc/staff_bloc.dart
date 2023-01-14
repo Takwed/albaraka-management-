@@ -45,7 +45,6 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
       else if (event is AddMemberEvent) {
         final result = await addMemberWithEmailAndPassUseCase(sl()).excute(
             email: event.email, password: event.password, name: event.name, phone: event.phone);
-
         result.fold((l) {
           errorToast(msg: l.message!);
         }, (r)  {

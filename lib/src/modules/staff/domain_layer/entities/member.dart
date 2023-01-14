@@ -4,7 +4,6 @@ class Members extends Equatable{
   late String name;
   late String phone;
   late String email;
-
   Members({
     required this.name,
     required this.phone,
@@ -12,7 +11,6 @@ class Members extends Equatable{
   });
 
   @override
-  // TODO: implement props
   List<Object?> get props => [name,phone,email];
 
 }

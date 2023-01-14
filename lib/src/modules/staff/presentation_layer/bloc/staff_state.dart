@@ -32,7 +32,6 @@ class AddMemberSuccessfulStaffState extends StaffState {
   @override
   List<Object?> get props =>  [];
 }
-
 class ChangeVisibilityStaffState extends StaffState {
   final bool isVisible;
 

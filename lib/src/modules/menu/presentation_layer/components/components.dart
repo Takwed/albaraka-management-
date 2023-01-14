@@ -1,24 +1,22 @@
 import 'package:albaraka_management/src/modules/menu/data_layer/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/utils/color_manager.dart';
 import '../bloc/menu_bloc.dart';
-import '../screens/menu_screen.dart';
 
 Widget ItemProductGrid(ProductModel product,context,index) {
+  var bloc = MenuBloc.get(context);
   return BlocBuilder<MenuBloc, MenuState>(
     builder: (context, state) {
-      bool isSelected = false;
       return InkWell(
         onLongPress: (){
-
+          print(bloc.isSelected);
+          bloc.add(SelectProductEvent());
         },
         child: Card(
           elevation: 7,
-          color: ColorManager.card,
+            color: ColorManager.card,
           child: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [
@@ -26,7 +24,7 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 decoration: BoxDecoration(
                   color: ColorManager.white,
-                  borderRadius: BorderRadiusDirectional.only(
+                  borderRadius: const BorderRadiusDirectional.only(
                       bottomEnd: Radius.circular(8),
                       bottomStart: Radius.circular(8)
                   ),),
@@ -68,9 +66,8 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                   ],
                 ),
               ),
-              isSelected? IconButton(
+              bloc.isSelected ? IconButton(
                 onPressed: (){
-
                 },
                 icon: Icon(Icons.check_box_outline_blank_rounded),
               ) : Container(),

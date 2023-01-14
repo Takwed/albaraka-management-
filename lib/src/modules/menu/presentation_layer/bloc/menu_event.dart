@@ -25,3 +25,8 @@ class GetProductEvent extends MenuEvent {
   @override
   List<Object?> get props => [];
 }
+class SelectProductEvent extends MenuEvent {
+    SelectProductEvent();
+  @override
+  List<Object?> get props => [];
+}

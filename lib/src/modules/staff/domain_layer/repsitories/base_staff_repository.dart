@@ -5,6 +5,7 @@ import '../../data_layer/models/staff_model.dart';
 import '../entities/member.dart';
 
 abstract class BaseStaffRepository {
+
   Future<Either<FirebaseAuthException, UserCredential?>> addMemberWithEmailAndPass(
       {required String email,
         required String password,

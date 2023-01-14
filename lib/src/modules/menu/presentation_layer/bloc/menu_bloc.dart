@@ -20,8 +20,8 @@ part 'menu_state.dart';
 class MenuBloc extends Bloc<MenuEvent, MenuState> {
   static MenuBloc get(BuildContext context) =>
       BlocProvider.of<MenuBloc>(context);
-  String? imageUrl;
   File? imageFile;
+  bool isSelected = false;
   List<ProductModel> products = [];
   MenuBloc(MenuInitial menuInitial) : super(MenuInitial()) {
     on<MenuEvent>((event, emit)async {
@@ -52,6 +52,10 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
           products = r;
           emit(const GetProductErrorState());
         });
+      }
+      else if (event is SelectProductEvent){
+        isSelected = !isSelected;
+        emit(SelectProductState(isSelected: isSelected));
       }
     });
   }

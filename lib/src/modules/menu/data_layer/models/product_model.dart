@@ -1,5 +1,4 @@
 import '../../domain_layer/entities/product.dart';
-
 class ProductModel extends Product {
   const ProductModel(
       {required super.image,

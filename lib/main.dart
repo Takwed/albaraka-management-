@@ -16,10 +16,8 @@ void main() async {
   ServiceLocator().init();
   await  Firebase.initializeApp();
   await  CacheHelper.init();
- // firebase.firestore().settings({ experimentalForceLongPolling: true });
   runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget
 {
   const MyApp({super.key});

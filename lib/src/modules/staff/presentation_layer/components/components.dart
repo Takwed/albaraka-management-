@@ -38,6 +38,7 @@ Widget memberItem (MemberModel item, BuildContext context, int index)
                         }
                         return null;
                       },
+
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.sp)),
