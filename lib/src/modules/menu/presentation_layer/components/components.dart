@@ -12,11 +12,10 @@ Widget ItemProductGrid(ProductModel product,context,index) {
       return InkWell(
         onLongPress: (){
           print(bloc.isSelected);
-          bloc.add(SelectProductEvent());
         },
         child: Card(
           elevation: 7,
-            color: ColorManager.card,
+          color: ColorManager.black,
           child: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [
@@ -68,8 +67,9 @@ Widget ItemProductGrid(ProductModel product,context,index) {
               ),
               bloc.isSelected ? IconButton(
                 onPressed: (){
+
                 },
-                icon: Icon(Icons.check_box_outline_blank_rounded),
+                icon:  Icon(Icons.check_box_outline_blank_rounded),
               ) : Container(),
             ],
           ),

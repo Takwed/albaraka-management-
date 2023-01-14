@@ -11,6 +11,7 @@ class ChangeGridStaffEvent extends StaffEvent {
   List<Object?> get props => [index];
 }
 
+
 class ChangeVisibilityEvent extends StaffEvent {
   const ChangeVisibilityEvent();
   @override

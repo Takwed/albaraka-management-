@@ -36,9 +36,3 @@ class GetProductErrorState extends MenuState {
   @override
   List<Object?> get props => [];
 }
-class SelectProductState extends MenuState {
-  final bool isSelected;
-  const SelectProductState({required this.isSelected});
-  @override
-  List<Object?> get props => [];
-}

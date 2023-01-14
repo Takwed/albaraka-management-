@@ -53,10 +53,6 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
           emit(const GetProductErrorState());
         });
       }
-      else if (event is SelectProductEvent){
-        isSelected = !isSelected;
-        emit(SelectProductState(isSelected: isSelected));
-      }
     });
   }
 }
