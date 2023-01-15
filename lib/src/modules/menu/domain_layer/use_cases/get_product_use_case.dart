@@ -6,7 +6,7 @@ import '../repsitories/base_menu_repository.dart';
 class GetProductsUseCase{
   final BaseMenuRepository baseMenuRepository;
   GetProductsUseCase(this.baseMenuRepository);
-  Future<Either<FirebaseAuthException,  List<ProductModel>>> get()async{
+  Future<Either<Exception,  List<ProductModel>>> get()async{
     return await baseMenuRepository.getProducts();
   }
 }

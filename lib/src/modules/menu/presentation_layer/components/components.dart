@@ -11,7 +11,8 @@ Widget ItemProductGrid(ProductModel product,context,index) {
     builder: (context, state) {
       return InkWell(
         onLongPress: (){
-          print(bloc.isSelected);
+          bloc.add(ChangeIsSelectedEvent());
+          bloc.selectProducts = [];
         },
         child: Card(
           elevation: 7,
@@ -67,9 +68,19 @@ Widget ItemProductGrid(ProductModel product,context,index) {
               ),
               bloc.isSelected ? IconButton(
                 onPressed: (){
-
+                  if(bloc.selectProducts.contains(product)) {
+                    bloc.selectProducts.remove(product);
+                    bloc.productsId.remove(index);
+                  }
+                  else {
+                    bloc.selectProducts.add(product);
+                    bloc.productsId.add(index);
+                  }
+                  bloc.add(IsSelectedProductEvent());
                 },
-                icon:  Icon(Icons.check_box_outline_blank_rounded),
+                icon: bloc.selectProducts.contains(product) ?
+                Icon(Icons.check_box) :
+                Icon(Icons.check_box_outline_blank),
               ) : Container(),
             ],
           ),

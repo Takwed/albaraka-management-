@@ -1,13 +1,14 @@
 import 'package:albaraka_management/src/modules/menu/presentation_layer/bloc/menu_bloc.dart';
+import 'package:albaraka_management/src/modules/products/domain_layer/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import '../../data_layer/models/product_model.dart';
 import '../components/components.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     int i = 0;
@@ -23,11 +24,40 @@ class MenuScreen extends StatelessWidget {
         }
         i = 1;
         return DefaultTabController(
-          initialIndex: 1,  //optional, starts from 0, select the tab by default
+          initialIndex: 0,  //optional, starts from 0, select the tab by default
           length: 3,
           child: Scaffold(
               appBar: AppBar(
-                title: const Text("المنيو"),
+                leading: bloc.isSelected ?IconButton(
+                  icon: Icon(Icons.arrow_back_sharp),
+                  onPressed: () {
+                    bloc.add(BackToDefaultBeforeSelectEvent());
+                    },
+                ) : IconButton(
+                  icon: Icon(Icons.arrow_back_sharp),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    bloc.isSelected = false;
+                  },
+                ),
+                title: Row(
+                  children: [
+                    if(!bloc.isSelected)Text("المنيو")
+                    else Text("${bloc.selectProducts.length} / ${bloc.products.length}"),
+                    Spacer(),
+                    if(bloc.selectProducts.isNotEmpty)
+                    if(bloc.isSelected) IconButton(
+                        onPressed: (){
+                          bloc.add(DeleteProductEvent());
+                        },
+                        icon: Icon(Icons.delete)),
+                    if(bloc.isSelected) IconButton(
+                        onPressed: (){
+                          bloc.add(SelectAllProductEvent());
+                        },
+                        icon: Icon(Icons.select_all)),
+                  ],
+                ),
                 bottom: const TabBar(tabs : [
                   Tab(text: 'كشري'),
                   Tab( text: 'مشويات'),
@@ -135,6 +165,7 @@ class MenuScreen extends StatelessWidget {
                                  ));
                                  bloc.add(const GetProductEvent());
                                  describeProduct.clear();
+                                 bloc.imageFile = null;
                                  priceProduct.clear();
                                  nameProduct.clear();
                                  Navigator.pop(context);
@@ -142,7 +173,7 @@ class MenuScreen extends StatelessWidget {
                              }, child: const Text("اضافة")),
                            ],
                          ),);
-                           },
+                      },
                    );
                   }
                 );

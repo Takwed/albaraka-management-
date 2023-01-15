@@ -11,11 +11,11 @@ class MenuRepository extends BaseMenuRepository{
   MenuRepository(this.baseMenuRemoteDataSource);
 
   @override
-  Future<Either<FirebaseAuthException, File>> addImagePicker(source,context) async{
+  Future<Either<Exception, File>> addImagePicker(source,context) async{
    return await baseMenuRemoteDataSource.addImagePicker(source,context);
   }
   @override
-  Future<Either<FirebaseAuthException, void>> addProductToJson({
+  Future<Either<Exception, void>> addProductToJson({
     required String name,
     required String describe,
     required int price,}) async{
@@ -23,8 +23,13 @@ class MenuRepository extends BaseMenuRepository{
   }
 
   @override
-  Future<Either<FirebaseAuthException,  List<ProductModel>>> getProducts()async {
+  Future<Either<Exception,  List<ProductModel>>> getProducts()async {
     return await baseMenuRemoteDataSource.getProducts();
+  }
+
+  @override
+  Future<Either<Exception, bool>> deleteProducts(List<int> ids) async{
+    return await baseMenuRemoteDataSource.deleteProducts(ids);
   }
 
 }

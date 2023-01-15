@@ -25,3 +25,29 @@ class GetProductEvent extends MenuEvent {
   @override
   List<Object?> get props => [];
 }
+class ChangeIsSelectedEvent extends MenuEvent {
+   ChangeIsSelectedEvent();
+  @override
+  List<Object?> get props => [];
+}
+class IsSelectedProductEvent extends MenuEvent {
+  IsSelectedProductEvent();
+  @override
+  List<Object?> get props => [];
+}
+class SelectAllProductEvent extends MenuEvent {
+  SelectAllProductEvent();
+  @override
+  List<Object?> get props => [];
+}
+class DeleteProductEvent extends MenuEvent {
+  //final List<int> ids;
+  DeleteProductEvent();
+  @override
+  List<Object?> get props => [];
+}
+class BackToDefaultBeforeSelectEvent extends MenuEvent {
+  BackToDefaultBeforeSelectEvent();
+  @override
+  List<Object?> get props => [];
+}

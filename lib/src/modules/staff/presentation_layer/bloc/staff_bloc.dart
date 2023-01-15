@@ -68,7 +68,6 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
        final result = await RemoveMemberWithEmailAndPassUseCase(sl()).excute(email: event.email, password: event.password);
        result.fold((l){
          errorToast(msg: l.message!);
-         print(l.message.toString()+"jjjjjjjjjjjj");
        } , (r) {
          defaultToast(msg: "Account Deleted Successfully");
          emit(DeleteMemberState(email: event.email,password: event.email));

@@ -9,33 +9,33 @@ import 'package:image_picker/image_picker.dart';
 import '../models/product_model.dart';
 
 abstract class BaseMenuRemoteDataSource {
-  Future<Either<FirebaseAuthException, File>> addImagePicker(source,context);
-  Future<Either<FirebaseAuthException, String>> uploadProductImage();
-  Future<Either<FirebaseAuthException, void>> addProductToJson({required String name,
+  Future<Either<Exception, File>> addImagePicker(source,context);
+  Future<Either<Exception, String>> uploadProductImage();
+  Future<Either<Exception, void>> addProductToJson({required String name,
     required String describe,
     required int price,});
-  Future<Either<FirebaseAuthException,  List<ProductModel>>> getProducts();
-
+  Future<Either<Exception,  List<ProductModel>>> getProducts();
+  Future<Either<Exception,  bool>> deleteProducts(List<int> ids);
 
 }
 class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
   File? imageFiled;
   String? uploadImage;
   @override
-  Future<Either<FirebaseAuthException, File>> addImagePicker(source,context) async {
+  Future<Either<Exception, File>> addImagePicker(source,context) async {
     try{
       final image = await ImagePicker().pickImage(source: source);
       if(image != null) {
         imageFiled = File(image.path);
       }
       return Right(imageFiled!);
-    }on FirebaseAuthException catch(error) {
+    }on Exception catch(error) {
       print('Failed to pick image: $error');
       return Left(error);
     }
   }
   @override
-  Future<Either<FirebaseAuthException, String>> uploadProductImage() async
+  Future<Either<Exception, String>> uploadProductImage() async
   {
     try {
       Reference ref = firebase_storage.FirebaseStorage.instance.ref()
@@ -46,14 +46,14 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
          print(value);
       });
       return Right(uploadImage!);
-    }on FirebaseAuthException catch(error) {
+    }on Exception catch(error) {
       print('Failed to pick image: $error');
       return Left(error);
     }
   }
 
   @override
-  Future<Either<FirebaseAuthException, void>> addProductToJson({
+  Future<Either<Exception, void>> addProductToJson({
     required String name,
     required String describe,
     required int price,})async {
@@ -68,23 +68,41 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
      await FirebaseFirestore.instance
          .collection("products").doc().set(productModel.toJson()).then((value) {});
      return const Right('true');
-   }on FirebaseAuthException catch(error) {
+   }on Exception catch(error) {
      return Left(error);
    }
   }
+  List<String> productsId = [];
+  List<ProductModel> products = [];
 
   @override
-  Future<Either<FirebaseAuthException, List<ProductModel>>> getProducts() async{
-    List<ProductModel> products = [];
+  Future<Either<Exception, List<ProductModel>>> getProducts() async{
+    productsId = [];
+    products = [];
     try {
      await FirebaseFirestore.instance
          .collection("products").get().then((value) {
        value.docs.forEach((element) {
          products.add(ProductModel.fromJson(element.data()));
+         productsId.add(element.id);
        });
      });
      return Right(products);
-   }on FirebaseAuthException catch(error) {
+   }on Exception catch(error) {
+     return Left(error);
+   }
+  }
+
+  @override
+  Future<Either<Exception, bool>> deleteProducts(List<int> ids)async {
+   try{
+    var collection = FirebaseFirestore.instance
+         .collection("products");
+       ids.forEach((id) {
+           collection.doc(productsId[id]).delete();
+       });
+     return Right(true);
+   }on Exception catch(error) {
      return Left(error);
    }
   }
