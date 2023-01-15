@@ -29,12 +29,12 @@ class MenuScreen extends StatelessWidget {
           child: Scaffold(
               appBar: AppBar(
                 leading: bloc.isSelected ?IconButton(
-                  icon: Icon(Icons.arrow_back_sharp),
+                  icon: const Icon(Icons.arrow_back_sharp),
                   onPressed: () {
                     bloc.add(BackToDefaultBeforeSelectEvent());
                     },
                 ) : IconButton(
-                  icon: Icon(Icons.arrow_back_sharp),
+                  icon: const Icon(Icons.arrow_back_sharp),
                   onPressed: () {
                     Navigator.of(context).pop();
                     bloc.isSelected = false;
@@ -42,20 +42,42 @@ class MenuScreen extends StatelessWidget {
                 ),
                 title: Row(
                   children: [
-                    if(!bloc.isSelected)Text("المنيو")
+                    if(!bloc.isSelected)const Text("المنيو")
                     else Text("${bloc.selectProducts.length} / ${bloc.products.length}"),
-                    Spacer(),
+                    const Spacer(),
                     if(bloc.selectProducts.isNotEmpty)
                     if(bloc.isSelected) IconButton(
                         onPressed: (){
-                          bloc.add(DeleteProductEvent());
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return BlocBuilder<MenuBloc,MenuState>(
+                                    builder: (context, state) {
+                                      return AlertDialog(
+                                        content: bloc.selectProducts.length > 1 ?
+                                        const Text("سيتم حذف هذه المنتجات ؟") :
+                                        const Text("سيتم حذف هذا المنتج ؟"),
+                                        actions: [
+                                          TextButton(onPressed: (){
+                                            Navigator.pop(context);
+                                          }, child: const Text("الغاء")),
+                                          TextButton(onPressed: (){
+                                            bloc.add(DeleteProductEvent());
+                                          }, child: const Text("حذف")),
+                                        ],
+                                      );
+
+                                      }
+                                );
+                              }
+                          );
                         },
-                        icon: Icon(Icons.delete)),
+                        icon: const Icon(Icons.delete)),
                     if(bloc.isSelected) IconButton(
                         onPressed: (){
                           bloc.add(SelectAllProductEvent());
                         },
-                        icon: Icon(Icons.select_all)),
+                        icon: const Icon(Icons.select_all)),
                   ],
                 ),
                 bottom: const TabBar(tabs : [
@@ -172,7 +194,8 @@ class MenuScreen extends StatelessWidget {
                                }
                              }, child: const Text("اضافة")),
                            ],
-                         ),);
+                         ),
+                           );
                       },
                    );
                   }
@@ -192,7 +215,7 @@ class MenuScreen extends StatelessWidget {
                     return ItemProductGrid(bloc.products[index],context,index);
                   }),
                 ),
-              ):Center(child: CircularProgressIndicator(),)
+              ):const Center(child: CircularProgressIndicator(),)
           ),
         );
       }

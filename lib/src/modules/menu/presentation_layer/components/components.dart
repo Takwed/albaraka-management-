@@ -11,8 +11,17 @@ Widget ItemProductGrid(ProductModel product,context,index) {
     builder: (context, state) {
       return InkWell(
         onLongPress: (){
+          print(bloc.productsId.length);
+
           bloc.add(ChangeIsSelectedEvent());
-          bloc.selectProducts = [];
+          if(!bloc.isSelected) {
+            bloc.selectProducts.add(product);
+            bloc.productsId.add(index);
+          }
+          else {
+            bloc.selectProducts = [];
+            bloc.productsId = [];
+          }
         },
         child: Card(
           elevation: 7,

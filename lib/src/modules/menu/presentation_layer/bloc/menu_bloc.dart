@@ -52,7 +52,10 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   void determineSelectAllProduct() {
     if (selectProducts.length == products.length) {
       selectProducts.clear();
+      productsId.clear();
     } else {
+      selectProducts.clear();
+      productsId.clear();
       for (int i = 0; i < products.length; i++) {
         selectProducts.add(products[i]);
       }
@@ -100,6 +103,8 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         emit(DeleteProductState(deleteProduct: deleteProduct));
       } else if (event is BackToDefaultBeforeSelectEvent) {
         isSelected = false;
+        selectProducts.clear();
+        productsId.clear();
         emit(BackToDefaultBeforeSelectState(isSelected));
       } else if (event is SelectAllProductEvent) {
         determineSelectAllProduct();
