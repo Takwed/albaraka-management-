@@ -16,9 +16,15 @@ class ImagePickedState extends MenuState {
 }
 
 class AddProductSuccessfulState extends MenuState {
-  const AddProductSuccessfulState();
+  final String name;
+  final String describe;
+  final int price;
+
+  const AddProductSuccessfulState(
+      {required this.name, required this.describe, required this.price});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [name, describe, price];
 }
 
 class AddProductErrorState extends MenuState {
@@ -78,4 +84,45 @@ class SelectAllProductStates extends MenuState {
   const SelectAllProductStates({required this.selectAllProduct,required this.length});
   @override
   List<Object?> get props => [selectAllProduct,length];
+}
+class NavagationToProductsDetailsStates extends MenuState {
+  final BuildContext context;
+  final ProductModel product;
+  final int index;
+  const NavagationToProductsDetailsStates({required this.context,required this.product,required this.index});
+  @override
+  List<Object?> get props => [context,product,index];
+}
+class EditProductSuccessfullyStates extends MenuState {
+  final String name;
+  final String describe;
+  final int price;
+  final int id;
+  const EditProductSuccessfullyStates({required this.name,required this.price,required this.describe,required this.id});
+
+  @override
+  List<Object?> get props => [name,describe,price,id];
+}
+class EditProductErrorStates extends MenuState {
+  // final String error;
+  const EditProductErrorStates();
+  @override
+  List<Object?> get props => [];
+}
+class EditProductLoadingStates extends MenuState {
+  const EditProductLoadingStates();
+  @override
+  List<Object?> get props => [];
+}
+class IsEditProductStates extends MenuState {
+  final bool isEdit;
+  const IsEditProductStates(this.isEdit);
+  @override
+  List<Object?> get props => [isEdit];
+}
+class ChooseCollectionState extends MenuState {
+  final String value;
+  ChooseCollectionState(this.value);
+  @override
+  List<Object?> get props => [value];
 }

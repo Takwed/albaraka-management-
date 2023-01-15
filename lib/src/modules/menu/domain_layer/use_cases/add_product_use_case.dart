@@ -9,7 +9,7 @@ class AddProductToJsonUseCase{
       {required String name,
         required String describe,
         required int price,}){
-    return baseMenuRepository.addProductToJson(price: price,describe: describe,name: name);
+    return baseMenuRepository.addProduct(price: price,describe: describe,name: name);
   }
 
 }

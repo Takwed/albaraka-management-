@@ -11,10 +11,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/services/dep_injection.dart';
+import '../../../../core/utils/navigation_manager.dart';
 import '../../data_layer/models/product_model.dart';
 import '../../domain_layer/use_cases/add_image_use_case.dart';
 import '../../domain_layer/use_cases/add_product_use_case.dart';
 import '../../domain_layer/use_cases/delete_products_use_case.dart';
+import '../../domain_layer/use_cases/edit_product_use_case.dart';
+import '../screens/product_details_screen.dart';
 
 part 'menu_event.dart';
 part 'menu_state.dart';
@@ -24,13 +27,13 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       BlocProvider.of<MenuBloc>(context);
   File? imageFile;
   bool isSelected = false;
+  bool isEdit = false;
   bool selectProduct = false;
   bool deleteProduct = false;
   bool selectAllProduct = false;
   List<ProductModel> products = [];
   List<ProductModel> selectProducts = [];
   List<int> productsId = [];
-  ProductModel? product;
   void changeIsSelected() {
     isSelected = !isSelected;
   }
@@ -61,7 +64,9 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       }
     }
   }
-
+  void changeIsEditProduct() {
+    isEdit = !isEdit;
+  }
   MenuBloc(MenuInitial menuInitial) : super(MenuInitial()) {
     on<MenuEvent>((event, emit) async {
       if (event is ImagePickedEvent) {
@@ -77,7 +82,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         result.fold((l) {
           emit(const AddProductErrorState());
         }, (r) {
-          emit(const AddProductSuccessfulState());
+          emit(AddProductSuccessfulState(describe: event.describe,price: event.price,name: event.name));
         });
       } else if (event is GetProductEvent) {
         emit(const GetProductLoadingState());
@@ -108,7 +113,39 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         emit(BackToDefaultBeforeSelectState(isSelected));
       } else if (event is SelectAllProductEvent) {
         determineSelectAllProduct();
-        emit(SelectAllProductStates(length: selectProducts.length,selectAllProduct: selectAllProduct));
+        emit(SelectAllProductStates(
+            length: selectProducts.length, selectAllProduct: selectAllProduct));
+      } else if (event is NavagationToProductsDetailsEvent) {
+
+        NavigationManager.push(event.context, ProductDetails(event.index,event.product));
+        emit(NavagationToProductsDetailsStates(index: event.index,
+            product: event.product, context: event.context));
+      }
+      else if (event is EditProductEvent) {
+        emit(EditProductLoadingStates());
+        final res = await EditProductUseCase(sl()).edit(
+            id: event.id,
+            name: event.name,
+            describe: event.describe,
+            price: event.price);
+        res.fold((l) {
+          errorToast(msg: 'msg');
+          emit(const EditProductErrorStates());
+        }, (r) {
+          isEdit = true;
+          defaultToast(msg: "Product Updated Successfully");
+          add(const GetProductEvent());
+          NavigationManager.pop(event.context);
+          emit(EditProductSuccessfullyStates(
+              name: event.name,
+              price: event.price,
+              describe: event.describe,
+              id: event.id));
+        });
+      }
+      else if (event is IsEditProductEvent) {
+        changeIsEditProduct();
+        emit(IsEditProductStates(isEdit));
       }
     });
   }

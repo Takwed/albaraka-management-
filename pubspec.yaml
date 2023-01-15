@@ -29,7 +29,6 @@ dependencies:
   fluttertoast:
   dartz:
   image_picker: ^0.8.6
-  http:
 
   # bloc
   bloc:

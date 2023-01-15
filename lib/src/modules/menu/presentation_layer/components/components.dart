@@ -11,8 +11,6 @@ Widget ItemProductGrid(ProductModel product,context,index) {
     builder: (context, state) {
       return InkWell(
         onLongPress: (){
-          print(bloc.productsId.length);
-
           bloc.add(ChangeIsSelectedEvent());
           if(!bloc.isSelected) {
             bloc.selectProducts.add(product);
@@ -22,6 +20,12 @@ Widget ItemProductGrid(ProductModel product,context,index) {
             bloc.selectProducts = [];
             bloc.productsId = [];
           }
+        },
+        onTap: (){
+          bloc.isSelected = false ;
+          bloc.selectProducts = [];
+          bloc.productsId = [];
+          bloc.add(NavagationToProductsDetailsEvent(index: index,product: product,context: context));
         },
         child: Card(
           elevation: 7,
@@ -44,7 +48,7 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                      height: 105.sp,
                      width: double.infinity,
                      decoration: BoxDecoration(
-                       color: Colors.grey[400],
+                       color: ColorManager.card,
                        image: DecorationImage(
                          image: NetworkImage(product.image!,),
                          fit: BoxFit.cover,
@@ -88,8 +92,8 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                   bloc.add(IsSelectedProductEvent());
                 },
                 icon: bloc.selectProducts.contains(product) ?
-                Icon(Icons.check_box) :
-                Icon(Icons.check_box_outline_blank),
+                const Icon(Icons.check_box) :
+                const Icon(Icons.check_box_outline_blank),
               ) : Container(),
             ],
           ),

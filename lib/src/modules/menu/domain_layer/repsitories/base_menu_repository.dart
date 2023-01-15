@@ -4,11 +4,18 @@ import 'dart:io';
 import '../../data_layer/models/product_model.dart';
 
 abstract class BaseMenuRepository {
-  Future<Either<Exception, File>> addImagePicker(source,context);
-  Future<Either<Exception, void>> addProductToJson({required String name,
+  Future<Either<Exception, File>> addImagePicker(source, context);
+  Future<Either<Exception, void>> addProduct({
+    required String name,
     required String describe,
-    required int price,});
-  Future<Either<Exception,  List<ProductModel>>> getProducts();
-  Future<Either<Exception,  bool>> deleteProducts(List<int> ids);
-
+    required int price,
+  });
+  Future<Either<Exception, List<ProductModel>>> getProducts();
+  Future<Either<Exception, void>> editProduct({
+    required int id,
+    required String name,
+    required String describe,
+    required int price,
+  });
+  Future<Either<Exception, bool>> deleteProducts(List<int> ids);
 }

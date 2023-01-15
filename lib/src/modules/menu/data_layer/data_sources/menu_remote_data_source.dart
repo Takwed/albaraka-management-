@@ -11,16 +11,22 @@ import '../models/product_model.dart';
 abstract class BaseMenuRemoteDataSource {
   Future<Either<Exception, File>> addImagePicker(source,context);
   Future<Either<Exception, String>> uploadProductImage();
-  Future<Either<Exception, void>> addProductToJson({required String name,
+  Future<Either<Exception, void>> addProduct({required String name,
     required String describe,
     required int price,});
   Future<Either<Exception,  List<ProductModel>>> getProducts();
   Future<Either<Exception,  bool>> deleteProducts(List<int> ids);
+  Future<Either<Exception,  void>> editProduct({required int id,
+    required String name,
+    required String describe,
+    required int price,});
+
 
 }
 class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
   File? imageFiled;
   String? uploadImage;
+  List<String>? oldUploadImage= [];
   @override
   Future<Either<Exception, File>> addImagePicker(source,context) async {
     try{
@@ -53,12 +59,14 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
   }
 
   @override
-  Future<Either<Exception, void>> addProductToJson({
+  Future<Either<Exception, void>> addProduct({
     required String name,
     required String describe,
     required int price,})async {
    try{
-     await uploadProductImage();
+     if(imageFiled != null) {
+       await uploadProductImage();
+     }
      ProductModel productModel = ProductModel(
        name: name,
        image: uploadImage!,
@@ -86,6 +94,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
          products.add(ProductModel.fromJson(element.data()));
          productsId.add(element.id);
        });
+       products.forEach((element) {
+         oldUploadImage!.add(element.image!);
+       });
      });
      return Right(products);
    }on Exception catch(error) {
@@ -101,9 +112,31 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource{
        ids.forEach((id) {
            collection.doc(productsId[id]).delete();
        });
-     return Right(true);
+     return const Right(true);
    }on Exception catch(error) {
      return Left(error);
    }
+  }
+
+  @override
+  Future<Either<Exception, void>> editProduct({required int id,
+  required String name,
+  required String describe,
+  required int price,}) async {
+    try{
+      if(imageFiled != null) {
+        await uploadProductImage();
+      }
+      ProductModel productUpdate = ProductModel(
+          name: name,
+          image: uploadImage??oldUploadImage![id],
+          describe: describe,
+          price: price,
+        );
+      FirebaseFirestore.instance.collection("products").doc(productsId[id]).update(productUpdate.toJson());
+      return Right(true);
+    }on Exception catch(error) {
+      return Left(error);
+    }
   }
 }

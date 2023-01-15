@@ -15,11 +15,11 @@ class MenuRepository extends BaseMenuRepository{
    return await baseMenuRemoteDataSource.addImagePicker(source,context);
   }
   @override
-  Future<Either<Exception, void>> addProductToJson({
+  Future<Either<Exception, void>> addProduct({
     required String name,
     required String describe,
     required int price,}) async{
-    return await baseMenuRemoteDataSource.addProductToJson(name: name,describe: describe,price: price);
+    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,price: price);
   }
 
   @override
@@ -30,6 +30,14 @@ class MenuRepository extends BaseMenuRepository{
   @override
   Future<Either<Exception, bool>> deleteProducts(List<int> ids) async{
     return await baseMenuRemoteDataSource.deleteProducts(ids);
+  }
+
+  @override
+  Future<Either<Exception, void>> editProduct({required int id,
+    required String name,
+    required String describe,
+    required int price,}) async{
+    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,price: price);
   }
 
 }

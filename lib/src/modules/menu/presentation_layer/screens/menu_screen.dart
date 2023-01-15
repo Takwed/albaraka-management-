@@ -29,7 +29,7 @@ class MenuScreen extends StatelessWidget {
           child: Scaffold(
               appBar: AppBar(
                 leading: bloc.isSelected ?IconButton(
-                  icon: const Icon(Icons.arrow_back_sharp),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     bloc.add(BackToDefaultBeforeSelectEvent());
                     },
@@ -108,7 +108,8 @@ class MenuScreen extends StatelessWidget {
                                    },
                                    child: bloc.imageFile == null? const Text("Add image "):
                                    Image.file(bloc.imageFile!)
-                                 ),SizedBox(
+                                 ),
+                                 SizedBox(
                                    height: 20.sp,
                                  ),
                                  TextFormField(
