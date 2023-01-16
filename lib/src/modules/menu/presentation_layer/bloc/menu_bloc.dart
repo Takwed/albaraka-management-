@@ -78,11 +78,11 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         emit(const ImagePickedState());
       } else if (event is AddProductEvent) {
         final result = await AddProductToJsonUseCase(sl()).send(
-            name: event.name, describe: event.describe, price: event.price);
+            name: event.name, describe: event.describe, oldPrice: event.oldPrice,newPrice: event.newPrice);
         result.fold((l) {
           emit(const AddProductErrorState());
         }, (r) {
-          emit(AddProductSuccessfulState(describe: event.describe,price: event.price,name: event.name));
+          emit(AddProductSuccessfulState(describe: event.describe,oldPrice: event.oldPrice,name: event.name,newPrice: event.newPrice));
         });
       } else if (event is GetProductEvent) {
         emit(const GetProductLoadingState());
@@ -127,7 +127,8 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
             id: event.id,
             name: event.name,
             describe: event.describe,
-            price: event.price);
+            newPrice: event.newPrice,
+            oldPrice: event.oldPrice);
         res.fold((l) {
           errorToast(msg: 'msg');
           emit(const EditProductErrorStates());
@@ -138,7 +139,8 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
           NavigationManager.pop(event.context);
           emit(EditProductSuccessfullyStates(
               name: event.name,
-              price: event.price,
+              oldPrice: event.oldPrice,
+              newPrice: event.newPrice,
               describe: event.describe,
               id: event.id));
         });

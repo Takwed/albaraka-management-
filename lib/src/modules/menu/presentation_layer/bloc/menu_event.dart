@@ -15,13 +15,17 @@ class ImagePickedEvent extends MenuEvent {
 class AddProductEvent extends MenuEvent {
   final String name;
   final String describe;
-  final int price;
+  final double oldPrice;
+  final double newPrice;
 
   const AddProductEvent(
-      {required this.name, required this.describe, required this.price});
+      {required this.name,
+        required this.describe,
+        required this.oldPrice,
+        required this.newPrice,});
 
   @override
-  List<Object?> get props => [name, describe, price];
+  List<Object?> get props => [name, describe, oldPrice,newPrice,];
 }
 
 class GetProductEvent extends MenuEvent {
@@ -67,27 +71,29 @@ class NavagationToProductsDetailsEvent extends MenuEvent {
   final int index;
 
   NavagationToProductsDetailsEvent(
-      {required this.context,required this.product,required this.index});
+      {required this.context, required this.product, required this.index});
 
   @override
-  List<Object?> get props => [context, product,index];
+  List<Object?> get props => [context, product, index];
 }
 
 class EditProductEvent extends MenuEvent {
   final String name;
   final String describe;
-  final int price;
+  final double oldPrice;
+  final double newPrice;
   final int id;
   final BuildContext context;
   EditProductEvent(
       {required this.name,
-      required this.price,
+      required this.oldPrice,
+      required this.newPrice,
       required this.describe,
       required this.id,
       required this.context});
 
   @override
-  List<Object?> get props => [name, describe, price, id,context];
+  List<Object?> get props => [name, describe, oldPrice, newPrice, id, context];
 }
 
 class IsEditProductEvent extends MenuEvent {

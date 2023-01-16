@@ -22,7 +22,7 @@ class ProductDetails extends StatelessWidget {
       builder: (context, state) {
     nameProduct.text = product.name;
     describeProduct.text = product.describe;
-    int k = product.price;
+    double k = product.oldPrice;
     priceProduct.text = k.toString();
     return SafeArea(
       child: Scaffold(
@@ -134,7 +134,7 @@ class ProductDetails extends StatelessWidget {
                     }
                     return null;
                   },
-                ): Text("${product.price}\$",
+                ): Text("${product.oldPrice}\$",
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800
@@ -170,11 +170,12 @@ class ProductDetails extends StatelessWidget {
                   width: double.infinity,
                   child: MaterialButton(
                     onPressed: (){
-                      int s = int.parse(priceProduct.text);
+                      double s = double.parse(priceProduct.text);
                       bloc.add(EditProductEvent(
                           context: context,
                           name:nameProduct.text,
-                          price: s,
+                          oldPrice: s,
+                          newPrice: s,
                           describe: describeProduct.text,
                           id: index,
                       ));

@@ -18,8 +18,9 @@ class MenuRepository extends BaseMenuRepository{
   Future<Either<Exception, void>> addProduct({
     required String name,
     required String describe,
-    required int price,}) async{
-    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,price: price);
+    required double oldPrice,
+    required double newPrice,}) async{
+    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice);
   }
 
   @override
@@ -36,8 +37,9 @@ class MenuRepository extends BaseMenuRepository{
   Future<Either<Exception, void>> editProduct({required int id,
     required String name,
     required String describe,
-    required int price,}) async{
-    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,price: price);
+    required double oldPrice,
+    required double newPrice,}) async{
+    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice);
   }
 
 }

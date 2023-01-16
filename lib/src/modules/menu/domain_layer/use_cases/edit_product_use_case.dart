@@ -7,7 +7,8 @@ class EditProductUseCase{
   Future<Either<Exception,  void>> edit({required int id,
     required String name,
     required String describe,
-    required int price,})async{
-    return await baseMenuRepository.editProduct(id: id, name: name, describe: describe, price: price);
+    required double oldPrice,
+    required double newPrice,})async{
+    return await baseMenuRepository.editProduct(id: id, name: name, describe: describe, oldPrice: oldPrice,newPrice: newPrice);
   }
 }

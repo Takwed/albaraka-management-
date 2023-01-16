@@ -8,8 +8,9 @@ class AddProductToJsonUseCase{
   Future<Either<Exception, void>> send(
       {required String name,
         required String describe,
-        required int price,}){
-    return baseMenuRepository.addProduct(price: price,describe: describe,name: name);
+        required double oldPrice,
+        required double newPrice,}){
+    return baseMenuRepository.addProduct(oldPrice: oldPrice,describe: describe,name: name,newPrice: newPrice);
   }
 
 }

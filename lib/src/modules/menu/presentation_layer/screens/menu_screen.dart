@@ -179,10 +179,11 @@ class MenuScreen extends StatelessWidget {
                              }, child: const Text("الغاء")),
                              TextButton(onPressed: (){
                                if (formKey.currentState!.validate()) {
-                                 int s = int.parse(
+                                 double s = double.parse(
                                      priceProduct.text);
                                  bloc.add(AddProductEvent(
-                                   price: s,
+                                   oldPrice: s,
+                                   newPrice: s,
                                    describe: describeProduct.text,
                                    name: nameProduct.text,
                                  ));

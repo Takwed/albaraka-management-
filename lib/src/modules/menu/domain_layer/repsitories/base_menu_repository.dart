@@ -8,14 +8,16 @@ abstract class BaseMenuRepository {
   Future<Either<Exception, void>> addProduct({
     required String name,
     required String describe,
-    required int price,
+    required double oldPrice,
+    required double newPrice,
   });
   Future<Either<Exception, List<ProductModel>>> getProducts();
   Future<Either<Exception, void>> editProduct({
     required int id,
     required String name,
     required String describe,
-    required int price,
+    required double oldPrice,
+    required double newPrice,
   });
   Future<Either<Exception, bool>> deleteProducts(List<int> ids);
 }

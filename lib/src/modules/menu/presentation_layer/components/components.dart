@@ -81,7 +81,7 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.sp,),
                       child: Text(
-                        "${product.price}\$",
+                        "${product.oldPrice}\$",
                         style: TextStyle(
                             color: ColorManager.black,
                             fontWeight: FontWeight.bold,

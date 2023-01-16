@@ -18,13 +18,17 @@ class ImagePickedState extends MenuState {
 class AddProductSuccessfulState extends MenuState {
   final String name;
   final String describe;
-  final int price;
+  final double oldPrice;
+  final double newPrice;
 
   const AddProductSuccessfulState(
-      {required this.name, required this.describe, required this.price});
+      {required this.name,
+        required this.describe,
+        required this.oldPrice,
+        required this.newPrice,});
 
   @override
-  List<Object?> get props => [name, describe, price];
+  List<Object?> get props => [name, describe, oldPrice,newPrice];
 }
 
 class AddProductErrorState extends MenuState {
@@ -96,12 +100,16 @@ class NavagationToProductsDetailsStates extends MenuState {
 class EditProductSuccessfullyStates extends MenuState {
   final String name;
   final String describe;
-  final int price;
+  final double oldPrice;
+  final double newPrice;
   final int id;
-  const EditProductSuccessfullyStates({required this.name,required this.price,required this.describe,required this.id});
+  const EditProductSuccessfullyStates({required this.name,
+    required this.oldPrice,
+    required this.newPrice,
+    required this.describe,required this.id});
 
   @override
-  List<Object?> get props => [name,describe,price,id];
+  List<Object?> get props => [name,describe,oldPrice,newPrice,id];
 }
 class EditProductErrorStates extends MenuState {
   // final String error;
