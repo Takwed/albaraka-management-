@@ -21,12 +21,24 @@ Widget ItemProductGrid(ProductModel product,context,index) {
             bloc.productsId = [];
           }
         },
-        onTap: (){
-          bloc.isSelected = false ;
-          bloc.selectProducts = [];
-          bloc.productsId = [];
-          bloc.add(NavagationToProductsDetailsEvent(index: index,product: product,context: context));
-        },
+          onTap: () {
+            if(!bloc.isSelected){
+            bloc.isSelected = false;
+            bloc.selectProducts = [];
+            bloc.productsId = [];
+            bloc.add(NavagationToProductsDetailsEvent(
+                index: index, product: product, context: context));}
+            else {
+            if(bloc.selectProducts.contains(product)) {
+            bloc.selectProducts.remove(product);
+            bloc.productsId.remove(index);
+            }
+            else {
+            bloc.selectProducts.add(product);
+            bloc.productsId.add(index);
+            }
+            bloc.add(IsSelectedProductEvent());}
+          },
         child: Card(
           elevation: 7,
           color: ColorManager.card,
