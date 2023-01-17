@@ -17,19 +17,30 @@ class AddProductEvent extends MenuEvent {
   final String describe;
   final double oldPrice;
   final double newPrice;
+  final int collectionIndex;
 
   const AddProductEvent(
       {required this.name,
         required this.describe,
         required this.oldPrice,
+        required this.collectionIndex,
         required this.newPrice,});
 
   @override
-  List<Object?> get props => [name, describe, oldPrice,newPrice,];
+  List<Object?> get props => [name, describe, oldPrice,collectionIndex,newPrice,];
 }
 
-class GetProductEvent extends MenuEvent {
-  const GetProductEvent();
+class GetMashweyatEvent extends MenuEvent {
+  const GetMashweyatEvent();
+  @override
+  List<Object?> get props => [];
+}
+class GetKosharyEvent extends MenuEvent {
+  const GetKosharyEvent();
+  @override
+  List<Object?> get props => [];
+}class GetHalaweyatEvent extends MenuEvent {
+  const GetHalaweyatEvent();
   @override
   List<Object?> get props => [];
 }
@@ -47,16 +58,19 @@ class IsSelectedProductEvent extends MenuEvent {
 }
 
 class SelectAllProductEvent extends MenuEvent {
-  SelectAllProductEvent();
+  final List<ProductModel> product;
+  SelectAllProductEvent(this.product);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [product];
 }
 
 class DeleteProductEvent extends MenuEvent {
-  //final List<int> ids;
-  DeleteProductEvent();
+  final List<ProductModel> product;
+  final int collectionIndex;
+
+  DeleteProductEvent(this.product,this.collectionIndex);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [product,collectionIndex];
 }
 
 class BackToDefaultBeforeSelectEvent extends MenuEvent {
@@ -69,12 +83,13 @@ class NavagationToProductsDetailsEvent extends MenuEvent {
   final BuildContext context;
   final ProductModel product;
   final int index;
+  final int collectionIndex;
 
   NavagationToProductsDetailsEvent(
-      {required this.context, required this.product, required this.index});
+      {required this.context, required this.product, required this.index,required this.collectionIndex});
 
   @override
-  List<Object?> get props => [context, product, index];
+  List<Object?> get props => [context, product, index,collectionIndex];
 }
 
 class EditProductEvent extends MenuEvent {
@@ -83,17 +98,19 @@ class EditProductEvent extends MenuEvent {
   final double oldPrice;
   final double newPrice;
   final int id;
+  final int collectionIndex;
   final BuildContext context;
   EditProductEvent(
       {required this.name,
       required this.oldPrice,
       required this.newPrice,
       required this.describe,
+      required this.collectionIndex,
       required this.id,
       required this.context});
 
   @override
-  List<Object?> get props => [name, describe, oldPrice, newPrice, id, context];
+  List<Object?> get props => [name, describe,collectionIndex, oldPrice, newPrice, id, context];
 }
 
 class IsEditProductEvent extends MenuEvent {
@@ -101,9 +118,9 @@ class IsEditProductEvent extends MenuEvent {
   @override
   List<Object?> get props => [];
 }
-// class ChooseCollectionEvent extends MenuEvent {
-//   final String value;
-//   ChooseCollectionEvent();
-//   @override
-//   List<Object?> get props => [];
-// }
+class ChooseCollectionEvent extends MenuEvent {
+  final String value;
+  ChooseCollectionEvent(this.value);
+  @override
+  List<Object?> get props => [value];
+}

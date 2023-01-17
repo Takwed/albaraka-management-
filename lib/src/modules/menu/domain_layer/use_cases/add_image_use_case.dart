@@ -7,7 +7,7 @@ import 'package:dartz/dartz.dart';
 class AddImageUseCase{
   final BaseMenuRepository baseMenuRepository;
   AddImageUseCase(this.baseMenuRepository);
-  Future<Either<Exception, File>> excute(source,context)async {
+  Future<Either<Exception, File>?> excute(source,context)async {
     return await baseMenuRepository.addImagePicker(source,context);
   }
 }

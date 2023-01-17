@@ -8,11 +8,17 @@ class MenuInitial extends MenuState {
   @override
   List<Object> get props => [];
 }
-
-class ImagePickedState extends MenuState {
-  const ImagePickedState();
+class ImagePickedSuccessfullyState extends MenuState {
+  final File imageFile;
+  const ImagePickedSuccessfullyState(this.imageFile);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [imageFile];
+}
+class ImagePickedErrorState extends MenuState {
+  final String error;
+  const ImagePickedErrorState(this.error);
+  @override
+  List<Object?> get props => [error];
 }
 
 class AddProductSuccessfulState extends MenuState {
@@ -20,15 +26,17 @@ class AddProductSuccessfulState extends MenuState {
   final String describe;
   final double oldPrice;
   final double newPrice;
+  final int collectionIndex;
 
   const AddProductSuccessfulState(
       {required this.name,
         required this.describe,
         required this.oldPrice,
-        required this.newPrice,});
+        required this.newPrice,
+        required this.collectionIndex,});
 
   @override
-  List<Object?> get props => [name, describe, oldPrice,newPrice];
+  List<Object?> get props => [name, describe, oldPrice,newPrice,collectionIndex];
 }
 
 class AddProductErrorState extends MenuState {
@@ -36,21 +44,22 @@ class AddProductErrorState extends MenuState {
   @override
   List<Object?> get props => [];
 }
-
-class GetProductErrorState extends MenuState {
-  const GetProductErrorState();
+//// Koshary
+class GetKosharyErrorState extends MenuState {
+  const GetKosharyErrorState();
   @override
   List<Object?> get props => [];
 }
 
-class GetProductSuccessfulState extends MenuState {
-  const GetProductSuccessfulState();
+class GetKosharySuccessfulState extends MenuState {
+  final List<ProductModel> Koshary;
+  const GetKosharySuccessfulState(this.Koshary);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [Koshary];
 }
 
-class GetProductLoadingState extends MenuState {
-  const GetProductLoadingState();
+class GetKosharyLoadingState extends MenuState {
+  const GetKosharyLoadingState();
   @override
   List<Object?> get props => [];
 }
@@ -61,6 +70,47 @@ class ChangeIsSelectedState extends MenuState {
   @override
   List<Object?> get props => [isSelected];
 }
+ // halaweyat
+
+class GetHalaweyatErrorState extends MenuState {
+  const GetHalaweyatErrorState();
+  @override
+  List<Object?> get props => [];
+}
+
+class GetHalaweyatSuccessfulState extends MenuState {
+  final List<ProductModel> halaweyat;
+
+  const GetHalaweyatSuccessfulState(this.halaweyat);
+  @override
+  List<Object?> get props => [halaweyat];
+}
+
+class GetHalaweyatLoadingState extends MenuState {
+  const GetHalaweyatLoadingState();
+  @override
+  List<Object?> get props => [];
+}
+ // mashweyat
+
+class GetMashweyatErrorState extends MenuState {
+  const GetMashweyatErrorState();
+  @override
+  List<Object?> get props => [];
+}
+
+class GetMashweyatSuccessfulState extends MenuState {
+  final List<ProductModel> mashweyat;
+  const GetMashweyatSuccessfulState(this.mashweyat);
+  @override
+  List<Object?> get props => [mashweyat];
+}
+
+class GetMashweyatLoadingState extends MenuState {
+  const GetMashweyatLoadingState();
+  @override
+  List<Object?> get props => [];
+}
 
 class IsSelectedProductState extends MenuState {
   final bool selectProduct;
@@ -70,10 +120,12 @@ class IsSelectedProductState extends MenuState {
 }
 
 class DeleteProductState extends MenuState {
-  final bool deleteProduct;
-  const DeleteProductState({required this.deleteProduct});
+  // final bool deleteProduct;
+  final int collectionIndex;
+  final List<ProductModel> product;
+  const DeleteProductState({required this.collectionIndex,required this.product});
   @override
-  List<Object?> get props => [deleteProduct];
+  List<Object?> get props => [collectionIndex,product];
 }
 
 class BackToDefaultBeforeSelectState extends MenuState {
@@ -85,9 +137,11 @@ class BackToDefaultBeforeSelectState extends MenuState {
 class SelectAllProductStates extends MenuState {
   final bool selectAllProduct;
   final int length;
-  const SelectAllProductStates({required this.selectAllProduct,required this.length});
+  final List<ProductModel> product;
+
+  const SelectAllProductStates({required this.product,required this.selectAllProduct,required this.length});
   @override
-  List<Object?> get props => [selectAllProduct,length];
+  List<Object?> get props => [product,selectAllProduct,length];
 }
 class NavagationToProductsDetailsStates extends MenuState {
   final BuildContext context;
@@ -103,13 +157,15 @@ class EditProductSuccessfullyStates extends MenuState {
   final double oldPrice;
   final double newPrice;
   final int id;
+  final int collectionIndex;
   const EditProductSuccessfullyStates({required this.name,
     required this.oldPrice,
     required this.newPrice,
+    required this.collectionIndex,
     required this.describe,required this.id});
 
   @override
-  List<Object?> get props => [name,describe,oldPrice,newPrice,id];
+  List<Object?> get props => [name,describe,oldPrice,newPrice,collectionIndex,id];
 }
 class EditProductErrorStates extends MenuState {
   // final String error;

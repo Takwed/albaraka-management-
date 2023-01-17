@@ -11,7 +11,7 @@ class MenuRepository extends BaseMenuRepository{
   MenuRepository(this.baseMenuRemoteDataSource);
 
   @override
-  Future<Either<Exception, File>> addImagePicker(source,context) async{
+  Future<Either<Exception, File>?> addImagePicker(source,context) async{
    return await baseMenuRemoteDataSource.addImagePicker(source,context);
   }
   @override
@@ -19,27 +19,35 @@ class MenuRepository extends BaseMenuRepository{
     required String name,
     required String describe,
     required double oldPrice,
+    required int collectionIndex,
     required double newPrice,}) async{
-    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice);
+    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex);
   }
 
   @override
-  Future<Either<Exception,  List<ProductModel>>> getProducts()async {
-    return await baseMenuRemoteDataSource.getProducts();
+  Future<Either<Exception,  List<ProductModel>>> getKoshary()async {
+    return await baseMenuRemoteDataSource.getKoshary();
+  }
+  Future<Either<Exception,  List<ProductModel>>> getHalaweyat()async {
+    return await baseMenuRemoteDataSource.getHalaweyat();
+  }
+  Future<Either<Exception,  List<ProductModel>>> getMashweyat()async {
+    return await baseMenuRemoteDataSource.getMashweyat();
   }
 
   @override
-  Future<Either<Exception, bool>> deleteProducts(List<int> ids) async{
-    return await baseMenuRemoteDataSource.deleteProducts(ids);
+  Future<Either<Exception, bool>> deleteProducts(List<int> ids,int collectionIndex) async{
+    return await baseMenuRemoteDataSource.deleteProducts(ids,collectionIndex);
   }
 
   @override
   Future<Either<Exception, void>> editProduct({required int id,
     required String name,
     required String describe,
+    required int collectionIndex,
     required double oldPrice,
     required double newPrice,}) async{
-    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice);
+    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex);
   }
 
 }

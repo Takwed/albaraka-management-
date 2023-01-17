@@ -11,7 +11,8 @@ import '../bloc/menu_bloc.dart';
 class ProductDetails extends StatelessWidget {
   ProductModel product;
   int index;
-  ProductDetails(this.index,this.product, {super.key});
+  int collectionIndex;
+  ProductDetails(this.index,this.product,this.collectionIndex,{super.key});
   @override
   Widget build(BuildContext context) {
     var bloc = MenuBloc.get(context);
@@ -42,7 +43,8 @@ class ProductDetails extends StatelessWidget {
                           height: 320.sp,
                           decoration: BoxDecoration(
                               color: ColorManager.card,
-                              image: bloc.imageFile == null?
+                              image: product.image == '' ? null :
+                              bloc.imageFile == null?
                               DecorationImage(
                                   image: NetworkImage(product.image!), fit: BoxFit.cover) :
                               DecorationImage(
@@ -64,7 +66,7 @@ class ProductDetails extends StatelessWidget {
                           onPressed: () {
                             bloc.isEdit = false;
                             bloc.imageFile = null;
-                            bloc.add(const GetProductEvent());
+                           // bloc.add(GetProductEvent());
                             NavigationManager.pop(context);
                           }
                           ),
@@ -83,6 +85,7 @@ class ProductDetails extends StatelessWidget {
                             color: ColorManager.white,
                             size: 17.sp,),
                           onPressed: () {
+                            bloc.imageFile = null;
                             bloc.add(ImagePickedEvent(
                                 source: ImageSource.gallery,
                                 context: context));
@@ -178,7 +181,9 @@ class ProductDetails extends StatelessWidget {
                           newPrice: s,
                           describe: describeProduct.text,
                           id: index,
+                          collectionIndex: collectionIndex,
                       ));
+                      bloc.isEdit = true;
                     },
                     child: Text("تم ",
                     style: TextStyle(

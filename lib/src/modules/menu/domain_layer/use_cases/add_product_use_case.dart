@@ -9,8 +9,9 @@ class AddProductToJsonUseCase{
       {required String name,
         required String describe,
         required double oldPrice,
+        required int collectionIndex,
         required double newPrice,}){
-    return baseMenuRepository.addProduct(oldPrice: oldPrice,describe: describe,name: name,newPrice: newPrice);
+    return baseMenuRepository.addProduct(oldPrice: oldPrice,describe: describe,name: name,newPrice: newPrice,collectionIndex: collectionIndex);
   }
 
 }
