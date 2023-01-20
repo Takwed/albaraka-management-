@@ -28,17 +28,18 @@ dependencies:
   device_preview:
   fluttertoast:
   dartz:
-  image_picker: ^0.8.6
+  image_picker:
+  contained_tab_bar_view:
 
   # bloc
   bloc:
   flutter_bloc:
   #fire base
-  firebase_core: ^2.4.1
+  firebase_core:
   firebase_auth:
   cloud_firestore:
-  firebase_storage: ^11.0.10
-  firebase_database: ^10.0.9
+  firebase_storage:
+  firebase_database:
 
 
 dev_dependencies:

@@ -10,6 +10,7 @@ abstract class BaseMenuRepository {
     required String describe,
     required double oldPrice,
     required double newPrice,
+    required double points,
     required int collectionIndex,
   });
   Future<Either<Exception, List<ProductModel>>> getKoshary();
@@ -21,6 +22,7 @@ abstract class BaseMenuRepository {
     required String describe,
     required int collectionIndex,
     required double oldPrice,
+    required double points,
     required double newPrice,
   });
   Future<Either<Exception, bool>> deleteProducts(List<int> ids,int collectionIndex);

@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../bloc/menu_bloc.dart';
 
-Widget ItemProductGrid(ProductModel product,context,index,ind) {
+Widget ItemProductGrid(ProductModel product,context,index) {
   var bloc = MenuBloc.get(context);
   return BlocBuilder<MenuBloc, MenuState>(
     builder: (context, state) {
@@ -26,8 +26,10 @@ Widget ItemProductGrid(ProductModel product,context,index,ind) {
             bloc.isSelected = false;
             bloc.selectProducts = [];
             bloc.productsId = [];
+            bloc.imageFile = null;
+            bloc.isEdit = false;
             bloc.add(NavagationToProductsDetailsEvent(
-              collectionIndex: ind,
+              collectionIndex: bloc.changeTab,
                 index: index, product: product, context: context));}
             else {
             if(bloc.selectProducts.contains(product)) {

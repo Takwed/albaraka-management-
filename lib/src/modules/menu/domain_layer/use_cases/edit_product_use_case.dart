@@ -8,8 +8,9 @@ class EditProductUseCase{
     required String name,
     required String describe,
     required double oldPrice,
+    required double points,
     required int collectionIndex,
     required double newPrice,})async{
-    return await baseMenuRepository.editProduct(id: id, name: name, describe: describe, oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex);
+    return await baseMenuRepository.editProduct(id: id, name: name, describe: describe, oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex,points: points);
   }
 }

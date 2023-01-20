@@ -19,9 +19,10 @@ class MenuRepository extends BaseMenuRepository{
     required String name,
     required String describe,
     required double oldPrice,
+    required double points,
     required int collectionIndex,
     required double newPrice,}) async{
-    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex);
+    return await baseMenuRemoteDataSource.addProduct(name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex,points: points);
   }
 
   @override
@@ -46,8 +47,9 @@ class MenuRepository extends BaseMenuRepository{
     required String describe,
     required int collectionIndex,
     required double oldPrice,
+    required double points,
     required double newPrice,}) async{
-    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex);
+    return await baseMenuRemoteDataSource.editProduct(id: id,name: name,describe: describe,oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex,points: points);
   }
 
 }

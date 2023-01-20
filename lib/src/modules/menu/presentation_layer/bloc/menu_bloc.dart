@@ -38,6 +38,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   List<ProductModel> selectProducts = [];
   List<int> productsId = [];
   String value = "كشري";
+  int changeTab = 0;
   void changeIsSelected() {
     isSelected = !isSelected;
   }
@@ -50,8 +51,6 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         product.remove(element);
       });
       isSelected = false;
-      print(selectProducts.length);
-      print(productsId.length);
   }
 
   void determineSelectAllProduct(List<ProductModel> product) {
@@ -86,6 +85,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       }
       else if (event is AddProductEvent) {
         final result = await AddProductToJsonUseCase(sl()).send(
+          points: event.points,
           collectionIndex: event.collectionIndex,
             name: event.name, describe: event.describe, oldPrice: event.oldPrice,newPrice: event.newPrice);
         result.fold((l) {
@@ -93,6 +93,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         }, (r) {
           emit(AddProductSuccessfulState(
               describe: event.describe,
+              points: event.points,
               collectionIndex: event.collectionIndex,
               oldPrice: event.oldPrice,name: event.name,newPrice: event.newPrice));
           imageFile = null;
@@ -148,14 +149,15 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         emit(IsSelectedProductState(selectProduct));
       }
       else if (event is DeleteProductEvent) {
-        deleteSelectProduct(event.product);
         final res = await DeleteProductsUseCase(sl()).delete(productsId,event.collectionIndex);
         res.fold((l) {
-        }, (r) {});
-        emit(DeleteProductState(product: event.product,collectionIndex: event.collectionIndex));
-        productsId.clear();
-        selectProducts.clear();
-        isSelected = false;
+        }, (r) {
+          deleteSelectProduct(event.product);
+          emit(DeleteProductState(product: event.product,collectionIndex: event.collectionIndex));
+          productsId.clear();
+          selectProducts.clear();
+          isSelected = false;
+        });
       }
       else if (event is BackToDefaultBeforeSelectEvent) {
         productsId.clear();
@@ -178,6 +180,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         emit(const EditProductLoadingStates());
         final res = await EditProductUseCase(sl()).edit(
             id: event.id,
+            points: event.points,
             collectionIndex: event.collectionIndex,
             name: event.name,
             describe: event.describe,
@@ -193,6 +196,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
               oldPrice: event.oldPrice,
               newPrice: event.newPrice,
               describe: event.describe,
+              points: event.points,
               collectionIndex: event.collectionIndex,
               id: event.id));
         });
@@ -212,6 +216,10 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       else if (event is ChooseCollectionEvent) {
         value = event.value;
         emit(ChooseCollectionState(value));
+      }
+      else if (event is ChangeTabBarEvent) {
+        changeTab = event.changeTab;
+        emit(ChangeTabBarState(changeTab: changeTab));
       }
     });
   }

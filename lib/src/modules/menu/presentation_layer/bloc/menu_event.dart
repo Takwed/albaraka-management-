@@ -16,6 +16,7 @@ class AddProductEvent extends MenuEvent {
   final String name;
   final String describe;
   final double oldPrice;
+  final double points;
   final double newPrice;
   final int collectionIndex;
 
@@ -23,11 +24,12 @@ class AddProductEvent extends MenuEvent {
       {required this.name,
         required this.describe,
         required this.oldPrice,
+        required this.points,
         required this.collectionIndex,
         required this.newPrice,});
 
   @override
-  List<Object?> get props => [name, describe, oldPrice,collectionIndex,newPrice,];
+  List<Object?> get props => [name, describe, oldPrice,collectionIndex,newPrice,points];
 }
 
 class GetMashweyatEvent extends MenuEvent {
@@ -67,7 +69,6 @@ class SelectAllProductEvent extends MenuEvent {
 class DeleteProductEvent extends MenuEvent {
   final List<ProductModel> product;
   final int collectionIndex;
-
   DeleteProductEvent(this.product,this.collectionIndex);
   @override
   List<Object?> get props => [product,collectionIndex];
@@ -96,6 +97,7 @@ class EditProductEvent extends MenuEvent {
   final String name;
   final String describe;
   final double oldPrice;
+  final double points;
   final double newPrice;
   final int id;
   final int collectionIndex;
@@ -104,13 +106,14 @@ class EditProductEvent extends MenuEvent {
       {required this.name,
       required this.oldPrice,
       required this.newPrice,
+      required this.points,
       required this.describe,
       required this.collectionIndex,
       required this.id,
       required this.context});
 
   @override
-  List<Object?> get props => [name, describe,collectionIndex, oldPrice, newPrice, id, context];
+  List<Object?> get props => [name, describe,collectionIndex, oldPrice, newPrice, points,id, context];
 }
 
 class IsEditProductEvent extends MenuEvent {
@@ -124,3 +127,11 @@ class ChooseCollectionEvent extends MenuEvent {
   @override
   List<Object?> get props => [value];
 }
+class ChangeTabBarEvent extends MenuEvent {
+  final int changeTab;
+  ChangeTabBarEvent(
+      {required this.changeTab});
+  @override
+  List<Object?> get props => [changeTab];
+}
+
