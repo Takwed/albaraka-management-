@@ -40,9 +40,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
   File? imageFiled;
   String? uploadImage;
   String? imagePaths;
-  List<String>? oldUploadImageKoshary = [];
-  List<String>? oldUploadImageMashweyat = [];
-  List<String>? oldUploadImageHalaweyat = [];
+  // List<String>? oldUploadImageKoshary = [];
+  // List<String>? oldUploadImageMashweyat = [];
+  // List<String>? oldUploadImageHalaweyat = [];
   @override
   Future<Either<Exception, File>?> addImagePicker(source, context) async {
     try {
@@ -115,10 +115,11 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
         await uploadProductImage(collectionIndex);
       } else {
         uploadImage = '';
+        imagePaths = '';
       }
       ProductModel productModel = ProductModel(
         points: points,
-        imagePaths: imagePaths,
+        imagePaths:  imageFiled != null ? imagePaths : '',
         newPrice: newPrice,
         name: name,
         image: imageFiled != null ? uploadImage : '',
@@ -168,9 +169,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           koshary.add(ProductModel.fromJson(element.data()));
           kosharyId.add(element.id);
         });
-        koshary.forEach((element) {
-          oldUploadImageKoshary!.add(element.image!);
-        });
       });
 
       return Right(koshary);
@@ -191,9 +189,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           mashweyat.add(ProductModel.fromJson(element.data()));
           mashweyatId.add(element.id);
         });
-        mashweyat.forEach((element) {
-          oldUploadImageMashweyat!.add(element.image!);
-        });
       });
 
       return Right(mashweyat);
@@ -213,9 +208,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
         value.docs.forEach((element) {
           halaweyat.add(ProductModel.fromJson(element.data()));
           halaweyatId.add(element.id);
-        });
-        halaweyat.forEach((element) {
-          oldUploadImageHalaweyat!.add(element.image!);
         });
       });
 
@@ -295,7 +287,7 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           points: points,
           newPrice: newPrice,
           name: name,
-          image: uploadImage ?? oldUploadImageKoshary![id],
+          image: uploadImage ?? koshary[id].image,
           describe: describe,
           oldPrice: oldPrice,
         );
@@ -308,7 +300,7 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           newPrice: newPrice,
           points: points,
           name: name,
-          image: uploadImage ?? oldUploadImageMashweyat![id],
+          image: uploadImage ?? mashweyat[id].image,
           describe: describe,
           oldPrice: oldPrice,
         );
@@ -321,7 +313,7 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           newPrice: newPrice,
           points: points,
           name: name,
-          image: uploadImage ?? oldUploadImageHalaweyat![id],
+          image: uploadImage ?? halaweyat[id].image,
           describe: describe,
           oldPrice: oldPrice,
         );
