@@ -1,12 +1,10 @@
 import 'package:albaraka_management/src/core/utils/color_manager.dart';
 import 'package:albaraka_management/src/modules/menu/presentation_layer/bloc/menu_bloc.dart';
-import 'package:albaraka_management/src/modules/products/domain_layer/entities/product.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
-import '../../data_layer/models/product_model.dart';
 import '../components/components.dart';
 
 const List<String> list = <String>['كشري', 'مشويات', 'حلويات'];
@@ -29,12 +27,7 @@ class MenuScreen extends StatelessWidget {
       length: 3,
       child: BlocBuilder<MenuBloc, MenuState>(
         builder: (context, state) {
-          if (i == 1) {
-            bloc.add(const GetKosharyEvent());
-            bloc.add(const GetMashweyatEvent());
-            bloc.add(const GetHalaweyatEvent());
-          }
-          i = 0;
+
           return Scaffold(
               appBar: AppBar(
                 leading: bloc.isSelected
@@ -328,8 +321,16 @@ class MenuScreen extends StatelessWidget {
           body: ContainedTabBarView(
             initialIndex: 0,
             onChange: (changeTab){
+              if(changeTab == 0) {
+                bloc.add(const GetKosharyEvent());
+              }
+              else if (changeTab == 1) {
+                bloc.add(const GetMashweyatEvent());
+              }
+              else {
+              bloc.add(const GetHalaweyatEvent());
+              }
               if (bloc.isSelected && bloc.changeTab >= 0) bloc.selectProducts = [];
-
               bloc.add(ChangeTabBarEvent(changeTab: changeTab));
             },
             tabs: [
