@@ -27,7 +27,10 @@ class MenuScreen extends StatelessWidget {
       length: 3,
       child: BlocBuilder<MenuBloc, MenuState>(
         builder: (context, state) {
-
+          if(i == 1){
+            bloc.add(const GetKosharyEvent());
+          }
+          i = 0;
           return Scaffold(
               appBar: AppBar(
                 leading: bloc.isSelected

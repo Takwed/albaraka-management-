@@ -179,7 +179,7 @@ class ProductDetails extends StatelessWidget {
                               labelText: 'النقاط ',
                             ),
                           )
-                        : Text("نحصل علي ${product.points} من النقاط عند حصولك علي ${product.name}",
+                        : Text("تحصل علي ${product.points} من النقاط عند حصولك علي ${product.name}",
                             style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                     SizedBox(

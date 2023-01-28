@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:albaraka_management/src/modules/menu/data_layer/models/product_model.dart';
+import 'package:albaraka_management/src/modules/menu/presentation_layer/screens/menu_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:dartz/dartz.dart';
@@ -40,9 +41,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
   File? imageFiled;
   String? uploadImage;
   String? imagePaths;
-  // List<String>? oldUploadImageKoshary = [];
-  // List<String>? oldUploadImageMashweyat = [];
-  // List<String>? oldUploadImageHalaweyat = [];
   @override
   Future<Either<Exception, File>?> addImagePicker(source, context) async {
     try {
@@ -238,9 +236,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
       else if (collectionIndex == 1) {
         collection = FirebaseFirestore.instance.collection("mashweyat");
         ids.forEach((id) async{
-
-          print('mashweyat  ${mashweyat.length}');
-          print('mashweyatId  ${mashweyatId.length}');
           collection.doc(mashweyatId[id]).delete();
           if(mashweyat[id].image != '') {
             await firebase_storage.FirebaseStorage.instance.ref()
@@ -282,20 +277,30 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
       if (imageFiled != null) {
         await uploadProductImage(collectionIndex);
       }
+
       if (collectionIndex == 0) {
         ProductModel productUpdate = ProductModel(
           points: points,
+          imagePaths:  imageFiled != null ? imagePaths : '',
           newPrice: newPrice,
           name: name,
           image: uploadImage ?? koshary[id].image,
           describe: describe,
           oldPrice: oldPrice,
         );
+        if(koshary[id].image != '') {
+          await firebase_storage.FirebaseStorage.instance.ref()
+              .child('koshary/${Uri
+              .file(koshary[id].imagePaths!)
+              .pathSegments
+              .last}').delete();
+        }
         FirebaseFirestore.instance
             .collection("koshary")
             .doc(kosharyId[id])
             .update(productUpdate.toJson());
-      } else if (collectionIndex == 1) {
+      }
+      else if (collectionIndex == 1) {
         ProductModel productUpdate = ProductModel(
           newPrice: newPrice,
           points: points,
@@ -304,11 +309,19 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           describe: describe,
           oldPrice: oldPrice,
         );
+        if(mashweyat[id].image != '') {
+          await firebase_storage.FirebaseStorage.instance.ref()
+              .child('mashweyat/${Uri
+              .file(mashweyat[id].imagePaths!)
+              .pathSegments
+              .last}').delete();
+        }
         FirebaseFirestore.instance
             .collection("mashweyat")
             .doc(mashweyatId[id])
             .update(productUpdate.toJson());
-      } else if (collectionIndex == 2) {
+      }
+      else if (collectionIndex == 2) {
         ProductModel productUpdate = ProductModel(
           newPrice: newPrice,
           points: points,
@@ -317,6 +330,13 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           describe: describe,
           oldPrice: oldPrice,
         );
+        if(halaweyat[id].image != '') {
+          await firebase_storage.FirebaseStorage.instance.ref()
+              .child('halaweyat/${Uri
+              .file(halaweyat[id].imagePaths!)
+              .pathSegments
+              .last}').delete();
+        }
         FirebaseFirestore.instance
             .collection("halaweyat")
             .doc(halaweyatId[id])
