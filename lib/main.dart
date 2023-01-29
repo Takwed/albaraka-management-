@@ -1,4 +1,4 @@
-
+// test git error
 import 'package:albaraka_management/src/core/local/shared_prefrences.dart';
 import 'package:albaraka_management/src/core/services/dep_injection.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/bloc/auth_bloc.dart';
