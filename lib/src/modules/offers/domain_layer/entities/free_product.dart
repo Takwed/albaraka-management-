@@ -2,11 +2,15 @@ import 'package:albaraka_management/src/modules/menu/data_layer/models/product_m
 import 'package:albaraka_management/src/modules/menu/domain_layer/entities/product.dart';
 import 'offer.dart';
 
-class FreeProduct extends Offer
-{
+class FreeProduct extends Offer {
   final ProductModel product;
-  final String offerDetails ;
-  int quantity ;
+  final String offerDetails;
+  int quantity;
 
-  FreeProduct ({required this.product,required this.quantity ,required super.state , required this.offerDetails});
+  FreeProduct(
+      {required this.product,
+      required this.quantity,
+      required String state,
+      required this.offerDetails})
+      : super(state: state);
 }

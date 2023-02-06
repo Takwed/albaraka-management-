@@ -6,6 +6,9 @@ import '../../modules/authenticaion/domain_layer/repsitories/base_auth_repositor
 import '../../modules/menu/data_layer/data_sources/menu_remote_data_source.dart';
 import '../../modules/menu/data_layer/repositories/menu_repository.dart';
 import '../../modules/menu/domain_layer/repsitories/base_menu_repository.dart';
+import '../../modules/offers/data_layer/data_sources/offers_remote_data_sources.dart';
+import '../../modules/offers/data_layer/repositories/offers_repositories.dart';
+import '../../modules/offers/domain_layer/repositories/base_offers_repository.dart';
 import '../../modules/staff/data_layer/data_sources/staff_remote_data_source.dart';
 import '../../modules/staff/data_layer/repositories/staff_repository.dart';
 import '../../modules/staff/domain_layer/repsitories/base_staff_repository.dart';
@@ -34,6 +37,13 @@ class ServiceLocator {
     sl.registerLazySingleton(() => baseMenuRemoteDataSource);
 
     BaseMenuRepository baseMenuRepository = MenuRepository(sl());
+    sl.registerLazySingleton(() => baseMenuRepository);
+
+    /// offers & coupons
+    BaseOffersRemoteDataSource  baseOffersRemoteDataSource=  OffersRemoteDataSource();
+    sl.registerLazySingleton(() => baseMenuRemoteDataSource);
+
+    BaseOffersRepository baseOffersRepository = OffersRepository(sl());
     sl.registerLazySingleton(() => baseMenuRepository);
   }
 }

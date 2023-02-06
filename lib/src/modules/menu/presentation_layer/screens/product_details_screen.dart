@@ -12,7 +12,7 @@ class ProductDetails extends StatelessWidget {
   ProductModel product;
   int index;
   int collectionIndex;
-  ProductDetails(this.index, this.product, this.collectionIndex, {super.key});
+  ProductDetails(this.index, this.product, this.collectionIndex, ) : super();
   @override
   Widget build(BuildContext context) {
     var bloc = MenuBloc.get(context);

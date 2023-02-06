@@ -128,7 +128,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
         await FirebaseFirestore.instance
             .collection("koshary")
             .doc()
-            .set(productModel.toJson());
+            .set(productModel.toJson()).then((value)
+        {
+        });
       } else if (collectionIndex == 1) {
         await FirebaseFirestore.instance
             .collection("mashweyat")
