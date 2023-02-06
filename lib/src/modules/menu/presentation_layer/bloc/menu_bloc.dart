@@ -31,7 +31,6 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   bool isSelected = false;
   bool isEdit = false;
   bool selectProduct = false;
-  bool selectAllProduct = false;
   List<ProductModel> koshary = [];
   List<ProductModel> mashweyat = [];
   List<ProductModel> halaweyat = [];
@@ -168,10 +167,9 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       else if (event is SelectAllProductEvent) {
         determineSelectAllProduct(event.product);
         emit(SelectAllProductStates(product: event.product,
-            length: selectProducts.length, selectAllProduct: selectAllProduct));
+            length: selectProducts.length));
       }
       else if (event is NavagationToProductsDetailsEvent) {
-
         NavigationManager.push(event.context, ProductDetails(event.index,event.product,event.collectionIndex));
         emit(NavagationToProductsDetailsStates(index: event.index,
             product: event.product, context: event.context));

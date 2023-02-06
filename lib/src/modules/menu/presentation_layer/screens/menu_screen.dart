@@ -59,8 +59,7 @@ class MenuScreen extends StatelessWidget {
                       Text(
                           "${bloc.selectProducts.length} / ${bloc.halaweyat.length}"),
                     const Spacer(),
-                    if (bloc.selectProducts.isNotEmpty)
-                      if (bloc.isSelected)
+                    if (bloc.selectProducts.isNotEmpty && bloc.isSelected)
                         IconButton(
                             onPressed: () {
                               showDialog(
@@ -321,7 +320,7 @@ class MenuScreen extends StatelessWidget {
                         });
                   },
                   child: const Icon(Icons.add)),
-          body: ContainedTabBarView(
+              body: ContainedTabBarView(
             initialIndex: 0,
             onChange: (changeTab){
               if(changeTab == 0) {

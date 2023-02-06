@@ -44,7 +44,7 @@ Widget ItemGrid(Item item,BuildContext context) {
                           style: TextStyle(
                               color: ColorManager.white,
                               fontWeight: FontWeight.w600,
-                              fontSize: 17),
+                              fontSize: 17.sp),
                         ),
                       ],
                     ),
@@ -69,7 +69,7 @@ class Item {
 List<Item> items=[
   Item(title: "الأعضاء",image: Icons.groups,index: 0),
   Item(title: "المنيو",image: Icons.fastfood ,index: 1),
-  Item(title: "العروض",image: Icons.local_offer_outlined,index: 2),
+  Item(title: "العروض",image: Icons.local_offer_rounded,index: 2),
   Item(title: "طلبات اليوم",image: Icons.edit_calendar_outlined,index: 3),
   Item(title: "ميزانية الشهر",image: Icons.insert_chart,index: 4),
 ];

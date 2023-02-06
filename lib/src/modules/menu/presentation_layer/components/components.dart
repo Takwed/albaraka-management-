@@ -5,43 +5,44 @@ import 'package:sizer/sizer.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../bloc/menu_bloc.dart';
 
-Widget ItemProductGrid(ProductModel product,context,index) {
+Widget ItemProductGrid(ProductModel product, context, index) {
   var bloc = MenuBloc.get(context);
   return BlocBuilder<MenuBloc, MenuState>(
     builder: (context, state) {
       return InkWell(
-        onLongPress: (){
+        onLongPress: () {
           bloc.add(ChangeIsSelectedEvent());
-          if(!bloc.isSelected) {
+          if (!bloc.isSelected) {
             bloc.selectProducts.add(product);
             bloc.productsId.add(index);
-          }
-          else{
+          } else {
             bloc.selectProducts = [];
             bloc.productsId = [];
           }
         },
-          onTap: () {
-            if(!bloc.isSelected){
+        onTap: () {
+          if (!bloc.isSelected) {
             bloc.isSelected = false;
             bloc.selectProducts = [];
             bloc.productsId = [];
             bloc.imageFile = null;
             bloc.isEdit = false;
             bloc.add(NavagationToProductsDetailsEvent(
-              collectionIndex: bloc.changeTab,
-                index: index, product: product, context: context));}
-            else {
-            if(bloc.selectProducts.contains(product)) {
-            bloc.selectProducts.remove(product);
-            bloc.productsId.remove(index);
+                collectionIndex: bloc.changeTab,
+                index: index,
+                product: product,
+                context: context));
+          } else {
+            if (bloc.selectProducts.contains(product)) {
+              bloc.selectProducts.remove(product);
+              bloc.productsId.remove(index);
+            } else {
+              bloc.selectProducts.add(product);
+              bloc.productsId.add(index);
             }
-            else {
-            bloc.selectProducts.add(product);
-            bloc.productsId.add(index);
-            }
-            bloc.add(IsSelectedProductEvent());}
-          },
+            bloc.add(IsSelectedProductEvent());
+          }
+        },
         child: Card(
           elevation: 7,
           color: ColorManager.card,
@@ -54,20 +55,26 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                   color: ColorManager.white,
                   borderRadius: const BorderRadiusDirectional.only(
                       bottomEnd: Radius.circular(8),
-                      bottomStart: Radius.circular(8)
-                  ),),
+                      bottomStart: Radius.circular(8)),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                     height: 105.sp,
-                     width: double.infinity,
-                     decoration: BoxDecoration(
-                       color: ColorManager.card,
-                       image: product.image == '' ? null : DecorationImage(image: NetworkImage(product.image!,),
-                         fit: BoxFit.cover,
-                       ),
-                     ),),
+                      height: 105.sp,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: ColorManager.card,
+                        image: product.image == ''
+                            ? null
+                            : DecorationImage(
+                                image: NetworkImage(
+                                  product.image!,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.sp),
                       child: Text(
@@ -81,7 +88,9 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.sp,),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.sp,
+                      ),
                       child: Text(
                         "${product.oldPrice}\$",
                         style: TextStyle(
@@ -93,22 +102,23 @@ Widget ItemProductGrid(ProductModel product,context,index) {
                   ],
                 ),
               ),
-              bloc.isSelected ? IconButton(
-                onPressed: (){
-                  if(bloc.selectProducts.contains(product)) {
-                    bloc.selectProducts.remove(product);
-                    bloc.productsId.remove(index);
-                  }
-                  else {
-                    bloc.selectProducts.add(product);
-                    bloc.productsId.add(index);
-                  }
-                  bloc.add(IsSelectedProductEvent());
-                },
-                icon: bloc.selectProducts.contains(product) ?
-                const Icon(Icons.check_box) :
-                const Icon(Icons.check_box_outline_blank),
-              ) : Container(),
+              bloc.isSelected
+                  ? IconButton(
+                      onPressed: () {
+                        if (bloc.selectProducts.contains(product)) {
+                          bloc.selectProducts.remove(product);
+                          bloc.productsId.remove(index);
+                        } else {
+                          bloc.selectProducts.add(product);
+                          bloc.productsId.add(index);
+                        }
+                        bloc.add(IsSelectedProductEvent());
+                      },
+                      icon: bloc.selectProducts.contains(product)
+                          ? const Icon(Icons.check_box)
+                          : const Icon(Icons.check_box_outline_blank),
+                    )
+                  : Container(),
             ],
           ),
         ),

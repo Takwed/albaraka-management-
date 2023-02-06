@@ -60,13 +60,12 @@ class IsSelectedProductState extends MenuState {
   List<Object?> get props => [selectProduct];
 }
 class SelectAllProductStates extends MenuState {
-  final bool selectAllProduct;
   final int length;
   final List<ProductModel> product;
 
-  const SelectAllProductStates({required this.product,required this.selectAllProduct,required this.length});
+  const SelectAllProductStates({required this.product,required this.length});
   @override
-  List<Object?> get props => [product,selectAllProduct,length];
+  List<Object?> get props => [product,length];
 }
 class ChooseCollectionState extends MenuState {
   final String value;
