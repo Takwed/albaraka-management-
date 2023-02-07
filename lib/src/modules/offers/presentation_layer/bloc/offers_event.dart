@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 part of 'offers_bloc.dart';
 
 @immutable
@@ -13,7 +15,7 @@ class AddCouponEvent extends OffersEvent {
 }
 
 class AddDiscountEvent extends OffersEvent {
-  //id: id, discount: discount, collectionIndex: collectionIndex
+
   int id;
   Discount discount;
   int collectionIndex;
@@ -27,8 +29,7 @@ class AddDiscountEvent extends OffersEvent {
 }
 
 class AddFreeProductEvent extends OffersEvent {
-  //freeProduct: freeProduct, id: id,
-  //         collectionIndex: collectionIndex)
+
   int id;
   FreeProduct freeProduct;
   int collectionIndex;
@@ -86,4 +87,20 @@ class RemoveOfferEvent extends OffersEvent {
       required this.collectionIndex});
   @override
   List<Object?> get props => [id, productModel, collectionIndex];
+}
+
+class ChangeTabBarEvent extends OffersEvent {
+  final int index;
+  ChangeTabBarEvent(
+      {required this.index});
+  @override
+  List<Object?> get props => [index];
+}
+
+class ChangeOfferTypeEvent extends OffersEvent {
+  final int index;
+  ChangeOfferTypeEvent(
+      {required this.index});
+  @override
+  List<Object?> get props => [index];
 }

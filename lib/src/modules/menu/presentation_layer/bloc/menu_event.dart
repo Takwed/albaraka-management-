@@ -41,7 +41,8 @@ class GetKosharyEvent extends MenuEvent {
   const GetKosharyEvent();
   @override
   List<Object?> get props => [];
-}class GetHalaweyatEvent extends MenuEvent {
+}
+class GetHalaweyatEvent extends MenuEvent {
   const GetHalaweyatEvent();
   @override
   List<Object?> get props => [];

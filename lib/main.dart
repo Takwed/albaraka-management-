@@ -4,6 +4,7 @@ import 'package:albaraka_management/src/core/services/dep_injection.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/bloc/auth_bloc.dart';
 import 'package:albaraka_management/src/modules/main/presentation_layer/screens/main_screen.dart';
 import 'package:albaraka_management/src/modules/menu/presentation_layer/bloc/menu_bloc.dart';
+import 'package:albaraka_management/src/modules/offers/presentation_layer/bloc/offers_bloc.dart';
 import 'package:albaraka_management/src/modules/staff/presentation_layer/bloc/staff_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return Sizer(builder: (context , orientaion , deviceType){
+    return Sizer(builder: (context , orientation , deviceType){
       return MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
@@ -40,6 +41,12 @@ class MyApp extends StatelessWidget
           ),
           BlocProvider<MenuBloc>(
             create: (BuildContext context) => MenuBloc(MenuInitial()),
+          ),
+          BlocProvider<MenuBloc>(
+            create: (BuildContext context) => MenuBloc(MenuInitial()),
+          ),
+          BlocProvider<OffersBloc>(
+            create: (BuildContext context) => OffersBloc(OffersInitial()),
           ),
         ],
         child: MaterialApp (
