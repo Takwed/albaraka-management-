@@ -8,7 +8,7 @@ abstract class AuthEvent extends Equatable {
 class ChangeButtonAuthenticationEvent extends AuthEvent {
   final int index;
 
-  ChangeButtonAuthenticationEvent({required this.index});
+  const ChangeButtonAuthenticationEvent({required this.index});
   @override
   List<Object?> get props => [index];
 }
@@ -39,16 +39,15 @@ class RegisterEvent extends AuthEvent {
 }
 
 class ChangeVisibilityEvent extends AuthEvent {
-  bool isVisible;
-  ChangeVisibilityEvent(this.isVisible);
+  const ChangeVisibilityEvent();
   @override
   // TODO: implement props
-  List<Object?> get props => [isVisible];
+  List<Object?> get props => [];
 }
 
 class ForgetPasswordAuthEvent extends AuthEvent {
   final String email;
-  ForgetPasswordAuthEvent({required this.email});
+  const ForgetPasswordAuthEvent({required this.email});
   @override
   List<Object?> get props => [email];
 }

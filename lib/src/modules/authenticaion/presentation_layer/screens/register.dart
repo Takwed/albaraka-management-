@@ -23,7 +23,6 @@ class RegisterScreen extends StatelessWidget {
     // TODO: implement listener
   },
   builder: (context, state) {
-    bool isVisible = bloc.currentVisibility;
     return Scaffold (
           appBar: AppBar(
             elevation: 0,
@@ -93,24 +92,21 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         TextFormField(
                           controller: passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: bloc.currentVisibility ? false : true,
-                          decoration: InputDecoration (
+                          keyboardType: bloc.type,
+                          obscureText: bloc.currentVisibility,
+                          decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
                               prefixIcon: const Icon(Icons.lock_outline),
                               suffixIcon: IconButton(
                                   onPressed: () {
-                                    bloc.add(ChangeVisibilityEvent(isVisible)) ;
+                                    bloc.add(ChangeVisibilityEvent());
                                   },
-                                  icon: isVisible
-                                      ? const Icon(Icons.visibility_off)
-                                      : const Icon(Icons.visibility)),
-                              labelText: 'الباسورد'),
+                                  icon: Icon(bloc.currentSuffix)),
+                              labelText: 'كلمة السر الجديده'),
                           validator: (value) {
-                            if (value!.isEmpty)
-                            {
-                              return 'من فضلك اكتب الباسورد';
+                            if (value!.isEmpty) {
+                              return 'من فضلك اكتب كلمة السر';
                             }
                             return null;
                           },
@@ -120,19 +116,11 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         TextFormField(
                           controller: confirmPasswordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: isVisible ? false : true,
+                          obscureText: true,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.sp)),
                               prefixIcon: const Icon(Icons.lock_outline),
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                  bloc.add(ChangeVisibilityEvent(isVisible));
-                                  },
-                                  icon: isVisible
-                                      ? const Icon(Icons.visibility_off)
-                                      : const Icon(Icons.visibility)),
                               labelText: 'تأكيد الباسورد'),
                           validator: (value) {
                             if (value!.isEmpty) {

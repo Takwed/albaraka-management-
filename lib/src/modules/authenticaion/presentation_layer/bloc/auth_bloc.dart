@@ -59,10 +59,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         result.fold((l) {
           errorToast(msg: l.message!);
           emit(LoginErrorAuthState());
-        }, (r)  {
+        }, (r) async {
           NavigationManager.push(event.context, MainScreen());
-          defaultToast(msg: "Login Successfully");
-          // await    CacheHelper.saveData(key: 'uid', value: r!.user!.uid);
+          defaultToast(msg: "تم تسجيل الدحول بنجاح");
           emit(LoginSuccessfulAuthState(context: event.context , uid: id!));
         });
       } else if (event is RegisterEvent)
@@ -76,7 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           errorToast(msg: l.message!);
           emit(RegisterErrorAuthState());
         }, (r)  {
-          defaultToast(msg: "Account Created Successfully");
+          defaultToast(msg: "تم إنشاء حساب بنجاح");
           emit(RegisterSuccessfulAuthState(context: event.context ,  uid: id));
         });
       } else if (event is ForgetPasswordAuthEvent)
@@ -88,7 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         result.fold((l) {
           errorToast(msg: l.message!);
         }, (r) {
-          defaultToast(msg: "Please Check Your Mail");
+          defaultToast(msg: "من فضلك تحقق من الايميل");
         });
       }
     });

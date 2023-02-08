@@ -132,6 +132,7 @@ class StaffScreen extends StatelessWidget {
                                 ),
                                 TextFormField(
                                   controller: confirmPasswordController,
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius:

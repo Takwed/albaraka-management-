@@ -18,13 +18,9 @@ class LoginScreen extends StatelessWidget {
     var formKey = GlobalKey<FormState>();
     var bloc = AuthBloc.get(context);
 
-
     return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        bool isVisible = bloc.currentVisibility;
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -35,124 +31,119 @@ class LoginScreen extends StatelessWidget {
             child: Center(
               child: SingleChildScrollView(
                   child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 45.sp,
-                          backgroundImage: AssetImage('assets/images/logo.svg'),
-                        ),
-                        SizedBox(
-                          height: 20.sp,
-                        ),
-                        const Text(
-                          'تسجيل الدخول',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w900),
-                        ),
-                        SizedBox(
-                          height: 20.sp,
-                        ),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'لازم تكتب ايميل';
-                            }
-                            return null;
-                          },
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.sp)),
-                            prefixIcon: const Icon(Icons.email_outlined),
-                            labelText: 'الإيميل',),
-                        ),
-                        SizedBox(
-                          height: 20.sp,
-                        ),
-                        TextFormField(
-                          controller: passwordController,
-                          keyboardType: isVisible
-                              ? TextInputType.text
-                              : TextInputType.visiblePassword,
-                          obscureText: isVisible ? false : true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'لازم تكتب باسورد';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration (
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon: const Icon(Icons.lock_outline),
-                              suffixIcon: IconButton(
-                              onPressed: () {
-                            print('bool isVisible = bloc.currentVisibility;');
-                        bloc.add(ChangeVisibilityEvent(isVisible));
-                        },
-                            icon: isVisible
-                                ? const Icon(Icons.visibility_off)
-                                : const Icon(Icons.visibility)),
-                              labelText: 'الباسورد'),
-                        ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                                onPressed: () {
-                                  NavigationManager.push(context, ForgetPassword());
-                                },
-                                child: Text(
-                                  'نسيت الباسورد ؟',
-                                  style: TextStyle(
-                                    color: ColorManager.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15,
-                                  ),
-                                ))),
-                        SizedBox(
-                          height:  10.sp,
-                        ),
-
-                        //     state is !ShopLoginLoadingState?
-                        if (State is! LoginLoadingAuthState) MaterialButton
-                          (
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              bloc.add(LoginEvent(email: emailController.text,
-                                  password: passwordController.text,
-                                  context: context));
-                            }
-                          },
-                          color: ColorManager.primary,
-                          minWidth: double.infinity,
-                          height: 25.sp,
-                          elevation: 5,
-                          child: Text(
-                            'تسجيل الدخول',
-                            style: TextStyle(color: Colors.white, fontSize: 18
-                                .sp),
-                          ),
-                        ) else
-                          const CircularProgressIndicator()
-
-                        ,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('معندكش أكونت ؟ '),
-                            TextButton(
-                                onPressed: () {
-                                  NavigationManager.push(
-                                      context, const RegisterScreen());
-                                },
-                                child: const Text('سجل دلوقت'))
-                          ],
-                        )
-                      ],
+                key: formKey,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 45.sp,
+                      backgroundImage:
+                          const AssetImage('assets/images/logo.svg'),
                     ),
-                  )),
+                    SizedBox(
+                      height: 20.sp,
+                    ),
+                    const Text(
+                      'تسجيل الدخول',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(
+                      height: 20.sp,
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'لازم تكتب ايميل';
+                        }
+                        return null;
+                      },
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.sp)),
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        labelText: 'الإيميل',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.sp,
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      keyboardType: bloc.type,
+                      obscureText: bloc.currentVisibility,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.sp)),
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                bloc.add(const ChangeVisibilityEvent());
+                              },
+                              icon: Icon(bloc.currentSuffix)),
+                          labelText: 'كلمة السر الجديده'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'من فضلك اكتب كلمة السر';
+                        }
+                        return null;
+                      },
+                    ),
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                            onPressed: () {
+                              NavigationManager.push(context, ForgetPassword());
+                            },
+                            child: Text(
+                              'نسيت كلمة السر ؟',
+                              style: TextStyle(
+                                color: ColorManager.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                              ),
+                            ))),
+                    SizedBox(
+                      height: 10.sp,
+                    ),
+                    if (State is! LoginLoadingAuthState)
+                      MaterialButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            bloc.add(LoginEvent(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                context: context));
+                          }
+                        },
+                        color: ColorManager.primary,
+                        minWidth: double.infinity,
+                        height: 25.sp,
+                        elevation: 5,
+                        child: Text(
+                          'تسجيل الدخول',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 18.sp),
+                        ),
+                      )
+                    else
+                      const CircularProgressIndicator(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('معندكش أكونت ؟ '),
+                        TextButton(
+                            onPressed: () {
+                              NavigationManager.push(
+                                  context, const RegisterScreen());
+                            },
+                            child: const Text('سجل دلوقت'))
+                      ],
+                    )
+                  ],
+                ),
+              )),
             ),
           ),
         );
