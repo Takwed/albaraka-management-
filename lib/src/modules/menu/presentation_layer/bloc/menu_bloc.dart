@@ -181,6 +181,9 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
             collectionIndex: event.collectionIndex,
             name: event.name,
             describe: event.describe,
+            offerDetails: event.offerDetails,
+            offerState: event.offerState,
+            quantity: event.quantity,
             newPrice: event.newPrice,
             oldPrice: event.oldPrice);
         res.fold((l) {
@@ -195,6 +198,9 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
               describe: event.describe,
               points: event.points,
               collectionIndex: event.collectionIndex,
+              offerDetails: event.offerDetails,
+              offerState: event.offerState,
+              quantity: event.quantity,
               id: event.id));
         });
         if (event.collectionIndex == 0) {

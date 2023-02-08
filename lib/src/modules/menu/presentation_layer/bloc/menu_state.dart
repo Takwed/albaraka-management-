@@ -164,19 +164,27 @@ class EditProductSuccessfullyStates extends MenuState {
   final String name;
   final String describe;
   final double oldPrice;
-  final double newPrice;
   final double points;
+  final double newPrice;
   final int id;
+  final String offerDetails;
+  final String offerState;
+  final int quantity;
   final int collectionIndex;
-  const EditProductSuccessfullyStates({required this.name,
-    required this.oldPrice,
-    required this.newPrice,
-    required this.points,
-    required this.collectionIndex,
-    required this.describe,required this.id});
+  EditProductSuccessfullyStates(
+      {required this.name,
+        required this.oldPrice,
+        required this.newPrice,
+        required this.points,
+        required this.describe,
+        required this.offerDetails,
+        required this.offerState,
+        required this.quantity,
+        required this.collectionIndex,
+        required this.id,});
 
   @override
-  List<Object?> get props => [name,describe,oldPrice,newPrice,collectionIndex,id,points];
+  List<Object?> get props => [name, describe,collectionIndex, oldPrice, newPrice, points,id,offerDetails,offerState,quantity];
 }
 class EditProductErrorStates extends MenuState {
   // final String error;

@@ -24,6 +24,9 @@ abstract class BaseMenuRepository {
     required double oldPrice,
     required double points,
     required double newPrice,
+    required String offerDetails,
+    required String offerState,
+    required int quantity,
   });
   Future<Either<Exception, bool>> deleteProducts(List<int> ids,int collectionIndex);
 }

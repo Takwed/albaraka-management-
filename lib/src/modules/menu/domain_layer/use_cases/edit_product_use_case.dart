@@ -10,7 +10,11 @@ class EditProductUseCase{
     required double oldPrice,
     required double points,
     required int collectionIndex,
+    required String offerDetails,
+    required String offerState,
+    required int quantity,
     required double newPrice,})async{
-    return await baseMenuRepository.editProduct(id: id, name: name, describe: describe, oldPrice: oldPrice,newPrice: newPrice,collectionIndex: collectionIndex,points: points);
+    return await baseMenuRepository.editProduct(id: id, name: name, describe: describe, collectionIndex: collectionIndex, oldPrice: oldPrice,
+        points: points, newPrice: newPrice, offerDetails: offerDetails, offerState: offerState, quantity: quantity);
   }
 }

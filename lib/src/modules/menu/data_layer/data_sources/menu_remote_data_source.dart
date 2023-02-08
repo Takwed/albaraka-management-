@@ -34,6 +34,9 @@ abstract class BaseMenuRemoteDataSource {
     required double points,
     required double newPrice,
     required int collectionIndex,
+    required String offerDetails,
+    required String offerState,
+    required int quantity,
   });
 }
 
@@ -274,6 +277,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
     required double oldPrice,
     required double points,
     required double newPrice,
+    required String offerDetails,
+    required String offerState,
+    required int quantity,
   }) async {
     try {
       if (imageFiled != null) {
@@ -289,6 +295,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           image: uploadImage ?? koshary[id].image,
           describe: describe,
           oldPrice: oldPrice,
+          offerDetails: offerDetails,
+          offerState: offerState,
+          quantity: quantity,
         );
         if(koshary[id].image != '') {
           await firebase_storage.FirebaseStorage.instance.ref()
@@ -310,6 +319,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           image: uploadImage ?? mashweyat[id].image,
           describe: describe,
           oldPrice: oldPrice,
+          offerDetails: offerDetails,
+          offerState: offerState,
+          quantity: quantity,
         );
         if(mashweyat[id].image != '') {
           await firebase_storage.FirebaseStorage.instance.ref()
@@ -331,6 +343,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           image: uploadImage ?? halaweyat[id].image,
           describe: describe,
           oldPrice: oldPrice,
+          offerDetails: offerDetails,
+          offerState: offerState,
+          quantity: quantity,
         );
         if(halaweyat[id].image != '') {
           await firebase_storage.FirebaseStorage.instance.ref()
