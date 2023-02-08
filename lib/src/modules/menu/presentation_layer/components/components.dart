@@ -92,7 +92,7 @@ Widget ItemProductGrid(ProductModel product, context, index) {
                         horizontal: 10.sp,
                       ),
                       child: Text(
-                        "${product.oldPrice}\$",
+                        "${product.newPrice} ج.م",
                         style: TextStyle(
                             color: ColorManager.black,
                             fontWeight: FontWeight.bold,

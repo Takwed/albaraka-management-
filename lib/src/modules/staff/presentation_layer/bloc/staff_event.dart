@@ -20,7 +20,6 @@ class ChangeVisibilityEvent extends StaffEvent {
 class ConfirmChangeVisibilityEvent extends StaffEvent {
   const ConfirmChangeVisibilityEvent();
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 

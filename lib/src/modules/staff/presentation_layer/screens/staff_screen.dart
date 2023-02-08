@@ -140,7 +140,7 @@ class StaffScreen extends StatelessWidget {
                               labelText: 'تأكيد الباسورد'),
                           validator: (value) {
                             if (value!.isEmpty || passwordController != confirmPasswordController) {
-                              return 'من فضلك اكتب الباسورد تاني';
+                              return 'من فضلك تأكد من كتابة الباسورد تاني';
                             }
                             return null;
                           },
