@@ -41,14 +41,7 @@ class ChangeVisibilityStaffState extends StaffState {
   @override
   List<Object> get props => [isVisible];
 }
-class ConfirmChangeVisibilityStaffState extends StaffState {
-  final bool isVisible;
 
-  const ConfirmChangeVisibilityStaffState({required this.isVisible});
-
-  @override
-  List<Object> get props => [isVisible];
-}
 class GetAllStaffSuccessfulState extends StaffState {
   List<MemberModel> staffModel;
 

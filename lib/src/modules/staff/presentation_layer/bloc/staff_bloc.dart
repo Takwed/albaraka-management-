@@ -25,18 +25,10 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
   bool currentVisibility = false;
   IconData currentSuffix = Icons.visibility;
   TextInputType type = TextInputType.visiblePassword;
-  bool confirmCurrentVisibility = false;
-  IconData confirmCurrentSuffix = Icons.visibility;
-  TextInputType confirmType = TextInputType.visiblePassword;
   void changeVisibilityVoid() {
     currentVisibility = !currentVisibility;
     currentSuffix = !currentVisibility ? Icons.visibility : Icons.visibility_off;
     type = !currentVisibility ? TextInputType.text : TextInputType.visiblePassword;
-  }
-  void confirmChangeVisibilityVoid() {
-    confirmCurrentVisibility = !confirmCurrentVisibility;
-    confirmCurrentSuffix = !confirmCurrentVisibility ? Icons.visibility : Icons.visibility_off;
-    confirmType = !confirmCurrentVisibility ? TextInputType.text : TextInputType.visiblePassword;
   }
   StaffBloc(StaffInitial staffInitial) : super(StaffInitial()) {
     on<StaffEvent>((event, emit) async{
@@ -49,10 +41,6 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
         changeVisibilityVoid();
         emit(ChangeVisibilityStaffState(isVisible: currentVisibility));
       }
-      else if (event is ConfirmChangeVisibilityEvent) {
-        confirmChangeVisibilityVoid();
-        emit(ConfirmChangeVisibilityStaffState(isVisible: confirmCurrentVisibility));
-      }
       else if (event is AddMemberEvent) {
         final result = await addMemberWithEmailAndPassUseCase(sl()).excute(
             email: event.email, password: event.password, name: event.name, phone: event.phone);
@@ -60,7 +48,7 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
         result.fold((l) {
           errorToast(msg: l.message!);
         }, (r)  {
-          defaultToast(msg: "Account Created Successfully");
+          defaultToast(msg: "تم إنشاء حساب بنجاح");
           emit(AddMemberSuccessfulStaffState());
         });
       }
@@ -69,7 +57,7 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
        result.fold((l){
          errorToast(msg: l.message!);
        } , (r) {
-         defaultToast(msg: "Account Deleted Successfully");
+         defaultToast(msg: "تم حذف ${event.name} بنجاح ");
          emit(DeleteMemberState(email: event.email,password: event.email));
        });
       }

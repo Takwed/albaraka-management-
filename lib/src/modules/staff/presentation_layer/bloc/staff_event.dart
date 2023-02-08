@@ -17,12 +17,6 @@ class ChangeVisibilityEvent extends StaffEvent {
   @override
   List<Object?> get props => [];
 }
-class ConfirmChangeVisibilityEvent extends StaffEvent {
-  const ConfirmChangeVisibilityEvent();
-  @override
-  List<Object?> get props => [];
-}
-
 class GetAllStaffEvent extends StaffEvent {
 
   const GetAllStaffEvent();
@@ -44,9 +38,10 @@ class AddMemberEvent extends StaffEvent {
 
 class DeleteMemberEvent extends StaffEvent {
   final String email;
+  final String name;
   final String password;
 
-  const DeleteMemberEvent({required this.email,required this.password});
+  const DeleteMemberEvent({required this.email,required this.password,required this.name});
   @override
-  List<Object?> get props => [email,password];
+  List<Object?> get props => [email,password,name];
 }

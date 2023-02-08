@@ -9,10 +9,11 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  String name = "";
   emailController.text = bloc.members[index].email;
+  name = bloc.members[index].name;
   return BlocBuilder<StaffBloc, StaffState>(
     builder: (context, state) {
-      bool isVisible = bloc.currentVisibility;
       return InkWell(
         onLongPress: () {
           showDialog(
@@ -84,7 +85,7 @@ Widget ItemStaffGrid(MemberModel item, BuildContext context, int index) {
                 TextButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      bloc.add(DeleteMemberEvent(email: emailController.text,password: passwordController.text));
+                      bloc.add(DeleteMemberEvent(name: name, email: emailController.text,password: passwordController.text));
                       bloc.add(const GetAllStaffEvent());
                       passwordController.clear();
                       Navigator.pop(context);
