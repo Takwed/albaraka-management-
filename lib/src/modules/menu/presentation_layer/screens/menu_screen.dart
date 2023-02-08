@@ -62,7 +62,8 @@ class MenuScreen extends StatelessWidget {
                     if (bloc.selectProducts.isNotEmpty && bloc.isSelected)
                         IconButton(
                             onPressed: () {
-                              showDialog(
+                              showDialog
+                                (
                                   context: context,
                                   builder: (BuildContext context) {
                                     return BlocBuilder<MenuBloc, MenuState>(

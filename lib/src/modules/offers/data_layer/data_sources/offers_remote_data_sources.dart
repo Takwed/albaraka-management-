@@ -182,10 +182,10 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
             .then((value) {
           value.docs.forEach((element) {
             ProductModel productModel = ProductModel.fromJson(element.data());
-            if (productModel.offerState != null) {
+
               koshary.add(productModel);
               kosharyId.add(element.id);
-            }
+
           });
         });
 
@@ -203,10 +203,10 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
             .then((value) {
           value.docs.forEach((element) {
             ProductModel productModel = ProductModel.fromJson(element.data());
-            if (productModel.offerState != null) {
+
               mashweyat.add(productModel);
               mashweyatId.add(element.id);
-            }
+
           });
         });
 
@@ -224,10 +224,10 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
             .then((value) {
           value.docs.forEach((element) {
             ProductModel productModel = ProductModel.fromJson(element.data());
-            if (productModel.offerState != null) {
+
               halaweyat.add(productModel);
               halaweyatId.add(element.id);
-            }
+
           });
         });
 

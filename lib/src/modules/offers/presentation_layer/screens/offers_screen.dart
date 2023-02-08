@@ -1,153 +1,161 @@
 import 'package:albaraka_management/src/core/utils/color_manager.dart';
-import 'package:albaraka_management/src/core/utils/font_manager.dart';
-import 'package:albaraka_management/src/modules/menu/data_layer/models/product_model.dart';
+import 'package:albaraka_management/src/core/utils/navigation_manager.dart';
+import 'package:albaraka_management/src/modules/offers/presentation_layer/screens/no_offers_page.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
-
+import '../../../../core/utils/font_manager.dart';
 import '../../../menu/presentation_layer/components/components.dart';
+import '../bloc/offers_bloc.dart';
+import '../components/components.dart';
+
+const List<String> list = <String>['كشري', 'مشويات', 'حلويات'];
 
 class OffersScreen extends StatelessWidget
 {
   const OffersScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context)
-  {
-    return Scaffold
-      (
-      appBar: AppBar (),
-      body: Center (
-        child: Column (
-          children: [
-         SizedBox(height: 22.sp,),
-            SizedBox (
-              width: double.infinity,
-              height: 130.sp,
-              child: Padding (
-                padding:  EdgeInsets.symmetric
-                  (
-                    horizontal: 10.0.sp ,
-                vertical: 3.sp),
-                child: Card (
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: ColorManager.grey1,
-                  elevation: 7,
-                         child: Column
-                           (
-                           children: [
-                             SizedBox(height: 3.sp,),
-                             Expanded (
-                               child: Row (
-                                 children: [
-                                   CircleAvatar(
-                                    backgroundImage:AssetImage('assets/images/logo.svg') ,
-                                     radius: 15.w,
-                                   ),
-                                   Padding (
-                                     padding: const EdgeInsets.all(.50),
-                                     child: SizedBox (
-                                       width: 1,
-                                       height: double.infinity,
-                                       child: ListView.separated(itemBuilder: (context , index) =>
-                                           Container (
-                                         height: 4.sp,
-                                         width: 1,
-                                         color: ColorManager.black,
-                                       ), separatorBuilder: ( context  , index)=> Container(
-                                         height: 1.sp,
-                                         color: ColorManager.white,
-                                       ), itemCount: 100),
+  Widget build(BuildContext context) {
+    int i = 0;
+    var bloc = OffersBloc.get(context)..add(GetKosharyEvent());
 
-                                     ),
-                                   ) ,
-                                   SizedBox(width: 10.sp,),
-                                   Expanded(child: Column (
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       Text('البركــة' , style: TextStyle(fontSize: 13.sp ,
-                                           fontWeight: FontWeightManager.bold),)
-                                        ,Row (
-                                         crossAxisAlignment: CrossAxisAlignment.end,
-                                          children:
-                                          [
-                                            Text('كود خصم',style: TextStyle(fontWeight:
-                                            FontWeightManager.bold, fontSize: 11.sp),),
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Text('%' ,
-                                                  style: TextStyle( fontWeight: FontWeightManager.maxWeight ,
-                                                      fontSize: 12.sp, color: ColorManager.error ),),
-                                                Text('10' ,
-                                       style: TextStyle( fontWeight: FontWeightManager.maxWeight ,
-                                           fontSize: 20.sp, color: ColorManager.error ),),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                       ,
-                                       Row(
-                                         children: [
-                                           Text ('صالح حتى:' , style: TextStyle( fontWeight:
-                                           FontWeightManager.bold , fontSize: 11.sp ),),
-                                           Text ('22/5/2023',
-                                             style: TextStyle( fontWeight: FontWeightManager.bold , fontSize: 11.sp ),),
-                                         ],
-                                       ) ,
+    return DefaultTabController(
+      initialIndex: 0, //optional, starts from 0, select the tab by default
+      length: 3,
+      child: BlocBuilder <OffersBloc, OffersState>(
+            builder: (context, state) {
+              if(i == 1){
+                bloc.add( GetMashweyatEvent());
+              }
+              i = 0;
+              return Scaffold (
+                  appBar: AppBar(
+                    leading:  const BackButton(),
+                    title: Row (
+                      children: [
+                        const Text("عروض و كوبونات"),
+                      ],
 
-                                     ],
-                                   )),
-                                 ],
-                               ),
-                             ),
-                             Align(
-                               alignment: AlignmentDirectional.bottomEnd,
-                               child: SizedBox (
-                                 width: 90.w,
-                                 height: 30.sp,
-                                 child: TextField (
-                                   decoration: InputDecoration
-                                     (
-                                     suffix: IconButton(onPressed: () {
-                                     },
-                                     icon: Icon(Icons.copy, size: 15.sp,),),
-                                     enabled: false,
-                                     border: OutlineInputBorder (
-                                       borderRadius: BorderRadius.circular(5),
-                                       gapPadding: 0,
+                    ),
+                    actions: [
+                      TextButton(onPressed: (){}, child: Text('كوبونات' , style: TextStyle(color: ColorManager.white),))
+                    ],
+                  ),
+                  floatingActionButton: FloatingActionButton(
+                      onPressed: () {
+                     NavigationManager.push(context, const NoOffersScreen());
+                      },
+                      child: const Icon(Icons.add)),
+                  body: ContainedTabBarView (
+                    initialIndex: 0,
+                    onChange: (index){
+                      if(index == 0) {
+                        bloc.add( GetKosharyEvent());
+                      }
+                      else if (index == 1) {
+                        bloc.add( GetMashweyatEvent());
+                      }
+                      else {
+                        bloc.add( GetHalaweyatEvent());
+                      }
 
-                                     ),
-
-
-
-                                   ),
-                                   maxLines: 1,
-                                   style: TextStyle(fontWeight: FontWeightManager.bold),
-                                   enabled: true,
-                                   readOnly: true,
-                                   controller: TextEditingController(text: 'Albaraka22' ,),
-                                   textDirection: TextDirection.ltr,
-                                 ),
-                               ),
-                             ) ,
-                             SizedBox (
-                               height: 5.sp,
-                             )
-
-                           ],
-                         ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-
-      );
+                      bloc.add(ChangeTabBarEvent(index: index));
+                    },
+                    tabs: [
+                      Text("كشري",style: TextStyle(color: ColorManager.black),),
+                      Text("مشويات",style: TextStyle(color: ColorManager.black),),
+                      Text("حلويات",style: TextStyle(color: ColorManager.black),),
+                    ],
+                    views: [
+                      state is! GetKosharyLoadingState ?
+                      RefreshIndicator(
+                        onRefresh: ()async{
+                          bloc.kosharyOffers.clear();
+                          bloc.koshary.clear();
+                          bloc.add(GetKosharyEvent());
+                        },
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: GridView.count(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            mainAxisSpacing: 20.sp,
+                            padding: EdgeInsets.all(22.sp),
+                            crossAxisCount: 2,
+                            childAspectRatio: 6.5.sp / 9.0.sp,
+                            crossAxisSpacing: 20.sp,
+                            children:
+                            List.generate(bloc.kosharyOffers.length, (index) {
+                              return offerItemBuilder(bloc.kosharyOffers[index], context, index, bloc, true, );
+                            }),
+                          ),
+                        ),
+                      ):
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      state is! GetMashweyatLoadingState ?
+                      RefreshIndicator(
+                        onRefresh: ()async{
+                          bloc.mashweyat.clear();
+                          bloc.mashweyatOffers.clear();
+                          bloc.add( GetMashweyatEvent());
+                        },
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: GridView.count(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            mainAxisSpacing: 20.sp,
+                            padding: EdgeInsets.all(22.sp),
+                            crossAxisCount: 2,
+                            childAspectRatio: 6.5.sp / 9.0.sp,
+                            crossAxisSpacing: 20.sp,
+                            children:  List.generate(bloc.mashweyatOffers.length, (index) {
+                              return offerItemBuilder(bloc.mashweyatOffers[index], context, index, bloc, true, );
+                            }),
+                          ),
+                        ),
+                      ):
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      state is! GetHalaweyatLoadingState ?
+                      RefreshIndicator(
+                        onRefresh: ()async{
+                          bloc.halaweyat.clear();
+                          bloc.halaweyatOffers.clear();
+                          bloc.add( GetHalaweyatEvent());
+                        },
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: GridView.count(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            mainAxisSpacing: 20.sp,
+                            padding: EdgeInsets.all(22.sp),
+                            crossAxisCount: 2,
+                            childAspectRatio: 6.5.sp / 9.0.sp,
+                            crossAxisSpacing: 20.sp,
+                            children:   List.generate(bloc.halaweyatOffers.length, (index) {
+                              return offerItemBuilder(bloc.halaweyatOffers[index], context, index, bloc, true, );
+                            }),
+                          ),
+                        ),):
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  ));
+            },
+          ) ,
+    );
   }
 }
-Widget coupon = Padding( padding: EdgeInsets.all(15.sp),
+Widget coupon = Padding ( padding: EdgeInsets.all(15.sp),
   child: Center (
       child:  Row(
         children: [
@@ -195,27 +203,26 @@ Widget coupon = Padding( padding: EdgeInsets.all(15.sp),
                         children: [
                           Row
                             (
-                            children: [
+                            children: const [
                               Text('نص الكوبون: ' , style: TextStyle( fontWeight: FontWeightManager.bold  ),) ,
                               Text('TextOfCoupon'),
                             ],
                           ),
                           Row
                             (
-                            children: [
-                              Text('تاريخ الصلاحية: ' , style: TextStyle( fontWeight: FontWeightManager.bold  ),) ,
+                            children: const
+                            [
+                              Text('تاريخ الصلاحية: ' , style: TextStyle( fontWeight: FontWeightManager.bold  ),),
+
                             ],
 
                           ),
-                          Text ('23/2/2023 : 23/3/2023'  ,maxLines: 2 ,  overflow: TextOverflow.ellipsis),
+                          const Text ('23/2/2023 : 23/3/2023'  ,maxLines: 2 ,  overflow: TextOverflow.ellipsis),
                         ],
                       )
                       ),
-
-                    ) ,
-
-                    Expanded(child: Icon(Icons.discount_rounded))
-
+                    ),
+                    const Expanded(child: Icon(Icons.discount_rounded))
                   ],
                 ),
               ),

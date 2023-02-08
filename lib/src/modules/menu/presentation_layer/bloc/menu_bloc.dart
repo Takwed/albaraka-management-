@@ -79,7 +79,6 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         }, (r) {
           imageFile = r;
           emit(ImagePickedSuccessfullyState(imageFile!));
-
         });
       }
       else if (event is AddProductEvent) {

@@ -1,48 +1,170 @@
 part of 'offers_bloc.dart';
 
 @immutable
-abstract class OffersState {
+abstract class OffersState extends Equatable {
 
 }
 
-class OffersInitial extends OffersState {}
+class OffersInitial extends OffersState {
+  @override
+  List<Object?> get props => [];
+}
+class ChangeTabBarState extends OffersState {
+  final int TabIndex;
+  ChangeTabBarState({required this.TabIndex});
+  @override
+  List<Object?> get props => [TabIndex];
+}
+class ChangeOfferTypeState extends OffersState {
+   int index;
+ ChangeOfferTypeState(this.index);
+  @override
+  List<Object?> get props => [index];
 
-class AddCouponLoadingState extends OffersState {}
-class AddCouponSuccessState extends OffersState {}
-class AddCouponErrorState extends OffersState {}
+}
+
+class AddCouponLoadingState extends OffersState {
+  @override
+  List<Object?> get props => [];
+}
+class AddCouponSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class AddCouponErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
 
 
-class AddDiscountLoadingState extends OffersState {}
-class AddDiscountSuccessState extends OffersState {}
-class AddDiscountErrorState extends OffersState {}
+class AddDiscountLoadingState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class AddDiscountSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class AddDiscountErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
 
 
 
-class AddFreeProductLoadingState extends OffersState {}
-class AddFreeProductSuccessState extends OffersState {}
-class AddFreeProductErrorState extends OffersState {}
+class AddFreeProductLoadingState extends OffersState {
 
-class GetCouponsLoadingState extends OffersState {}
-class GetCouponsSuccessState extends OffersState {}
-class GetCouponsErrorState extends OffersState {}
+  @override
+  List<Object?> get props => [];
+}
+class AddFreeProductSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class AddFreeProductErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetCouponsLoadingState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class GetCouponsSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class GetCouponsErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
 
 
-class GetHalaweyatLoadingState extends OffersState {}
-class GetHalaweyatSuccessState extends OffersState {}
-class GetHalaweyatErrorState extends OffersState {}
+class GetHalaweyatLoadingState extends OffersState {
 
-class GetKosharyLoadingState extends OffersState {}
-class GetKosharySuccessState extends OffersState {}
-class GetKosharyErrorState extends OffersState {}
+  @override
+  List<Object?> get props => [];
+}
+class GetHalaweyatSuccessState extends OffersState {
 
-class GetMashweyatLoadingState extends OffersState {}
-class GetMashweyatSuccessState extends OffersState {}
-class GetMashweyatErrorState extends OffersState {}
+  @override
+  List<Object?> get props => [];
+}
+class GetHalaweyatErrorState extends OffersState {
 
-class RemoveCouponLoadingState extends OffersState {}
-class RemoveCouponSuccessState extends OffersState {}
-class RemoveCouponErrorState extends OffersState {}
+  @override
+  List<Object?> get props => [];
+}
 
-class RemoveOfferLoadingState extends OffersState {}
-class RemoveOfferSuccessState extends OffersState {}
-class RemoveOfferErrorState extends OffersState {}
+class GetKosharyLoadingState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class GetKosharySuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class GetKosharyErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetMashweyatLoadingState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class GetMashweyatSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class GetMashweyatErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+
+class RemoveCouponLoadingState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class RemoveCouponSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class RemoveCouponErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+
+class RemoveOfferLoadingState extends OffersState {
+  @override
+  List<Object?> get props => [];
+}
+class RemoveOfferSuccessState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}
+class RemoveOfferErrorState extends OffersState {
+
+  @override
+  List<Object?> get props => [];
+}

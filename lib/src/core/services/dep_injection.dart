@@ -41,10 +41,10 @@ class ServiceLocator {
 
     /// offers & coupons
     BaseOffersRemoteDataSource  baseOffersRemoteDataSource=  OffersRemoteDataSource();
-    sl.registerLazySingleton(() => baseMenuRemoteDataSource);
+    sl.registerLazySingleton(() => baseOffersRemoteDataSource);
 
     BaseOffersRepository baseOffersRepository = OffersRepository(sl());
-    sl.registerLazySingleton(() => baseMenuRepository);
+    sl.registerLazySingleton(() => baseOffersRepository);
   }
 }
 
