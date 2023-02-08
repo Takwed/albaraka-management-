@@ -47,6 +47,7 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
           errorToast(msg: l.message!);
         }, (r) {
           emit(AddCouponsSuccessState());
+          add(GetCouponsEvent());
         });
       } else if (event is AddDiscountEvent)
       {
@@ -100,13 +101,19 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
       } else if (event is GetCouponsEvent)
       {
         coupons.clear();
+        emit(GetCouponsLoadingState());
         var result = await GetCouponsUseCase(sl()).call();
         result.fold((l) {
+          GetCouponsErrorState();
           errorToast(msg: l.message!);
         }, (r) {
+
+          coupons.clear();
           r.forEach((element) {
+
             coupons.add(element);
           });
+          GetCouponsSuccessState(coupons);
         });
       } else if (event is GetHalaweyatEvent)
       {
@@ -175,10 +182,19 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
       } else if (event is RemoveCouponEvent) {
         RemoveCouponUseCase(sl()).call(id: event.id);
       } else if (event is RemoveOfferEvent) {
-        RemoveOfferUseCase(sl()).call(
+        emit(RemoveCouponLoadingState());
+      var result = await  RemoveOfferUseCase(sl()).call(
             id: event.id,
             productModel: event.productModel,
             collectionIndex: event.collectionIndex);
+      result.fold((l)  {
+        emit(RemoveCouponErrorState());
+        errorToast(msg: l.message!);
+      }, (r) {
+        defaultToast(msg: 'تم حذف الكوبون ');
+        emit(RemoveCouponSuccessState());
+        add(GetCouponsEvent());
+      });
       } else if (event is ChangeTabBarEvent) {
         tabIndex = event.index;
         emit(ChangeTabBarState(TabIndex: tabIndex));

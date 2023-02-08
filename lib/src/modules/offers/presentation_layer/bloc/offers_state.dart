@@ -79,7 +79,8 @@ class GetCouponsLoadingState extends OffersState {
   List<Object?> get props => [];
 }
 class GetCouponsSuccessState extends OffersState {
-
+List coupons  ;
+GetCouponsSuccessState(this.coupons);
   @override
   List<Object?> get props => [];
 }

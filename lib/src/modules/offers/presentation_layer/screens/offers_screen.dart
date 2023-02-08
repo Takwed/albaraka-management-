@@ -1,5 +1,6 @@
 import 'package:albaraka_management/src/core/utils/color_manager.dart';
 import 'package:albaraka_management/src/core/utils/navigation_manager.dart';
+import 'package:albaraka_management/src/modules/offers/presentation_layer/screens/coupons_page.dart';
 import 'package:albaraka_management/src/modules/offers/presentation_layer/screens/no_offers_page.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class OffersScreen extends StatelessWidget
     return BlocBuilder <OffersBloc, OffersState>(
             builder: (context, state) {
               if(i == 1){
-                bloc.add( GetMashweyatEvent());
+             //   bloc.add( GetMashweyatEvent());
               }
               i = 0;
               return Scaffold (
@@ -52,7 +53,11 @@ class OffersScreen extends StatelessWidget
 
                     ),
                     actions: [
-                      TextButton(onPressed: (){}, child: Text('كوبونات' , style: TextStyle(color: ColorManager.white),))
+                      TextButton(onPressed: (){
+
+                       NavigationManager.push(context, CouponsScreen(bloc: bloc));
+
+                        }, child: Text('كوبونات' , style: TextStyle(color: ColorManager.white),))
                     ],
                   ),
                   floatingActionButton: FloatingActionButton(
@@ -62,17 +67,8 @@ class OffersScreen extends StatelessWidget
                       child: const Icon(Icons.add)),
                   body: ContainedTabBarView (
                     initialIndex: 0,
-                    onChange: (index){
-                      if(index == 0) {
-                        bloc.add( GetKosharyEvent());
-                      }
-                      else if (index == 1) {
-                        bloc.add( GetMashweyatEvent());
-                      }
-                      else {
-                        bloc.add( GetHalaweyatEvent());
-                      }
-
+                    onChange: (index)
+                    {
                       bloc.add(ChangeTabBarEvent(index: index));
                     },
                     tabs: [

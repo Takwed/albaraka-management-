@@ -28,6 +28,7 @@ class ProductDetails extends StatelessWidget {
         priceProduct.text = price.toString();
         double points = product.points;
         pointsProduct.text = points.toString();
+
         return SafeArea(
           child: Scaffold(
             body: SingleChildScrollView(

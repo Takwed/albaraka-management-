@@ -62,16 +62,8 @@ List koshary = bloc.koshary ;
               //     child: const Icon(Icons.add)),
               body: ContainedTabBarView (
                 initialIndex: 0,
-                onChange: (index){
-                  if(index == 0 || bloc.koshary.isEmpty) {
-                    bloc.add( GetKosharyEvent());
-                  }
-                  else if (index == 1 || bloc.mashweyat.isEmpty) {
-                    bloc.add( GetMashweyatEvent());
-                  }
-                  else if (index == 2 || bloc.mashweyat.isEmpty) {
-                    bloc.add( GetHalaweyatEvent());
-                  }
+                onChange: (index)
+                {
                   bloc.add(ChangeTabBarEvent(index: index));
                 },
                 tabs: [

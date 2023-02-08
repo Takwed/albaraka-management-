@@ -5,8 +5,8 @@ import 'package:sizer/sizer.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../bloc/menu_bloc.dart';
 
-Widget ItemProductGrid(ProductModel product, context, index) {
-  var bloc = MenuBloc.get(context);
+Widget ItemProductGrid(ProductModel product, context, index, MenuBloc bloc )  {
+
   return BlocBuilder<MenuBloc, MenuState>(
     builder: (context, state) {
       return InkWell(
@@ -87,16 +87,19 @@ Widget ItemProductGrid(ProductModel product, context, index) {
                             fontSize: 17.sp),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.sp,
-                      ),
-                      child: Text(
-                        "${product.newPrice} ج.م",
-                        style: TextStyle(
-                            color: ColorManager.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.sp),
+                    Expanded
+                      (
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.sp,
+                        ),
+                        child: Text(
+                          "${product.newPrice} ج.م",
+                          style: TextStyle(
+                              color: ColorManager.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.sp),
+                        ),
                       ),
                     ),
                   ],

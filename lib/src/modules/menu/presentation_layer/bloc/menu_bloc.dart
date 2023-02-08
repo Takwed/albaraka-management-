@@ -184,7 +184,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
             newPrice: event.newPrice,
             oldPrice: event.oldPrice);
         res.fold((l) {
-          errorToast(msg: 'msg');
+          errorToast(msg: l.toString());
           emit(const EditProductErrorStates());
         }, (r) {
           defaultToast(msg: "Product Updated Successfully");

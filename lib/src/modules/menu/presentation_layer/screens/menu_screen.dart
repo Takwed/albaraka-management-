@@ -360,7 +360,7 @@ class MenuScreen extends StatelessWidget {
                     children:
                     List.generate(bloc.koshary.length, (index) {
                       return ItemProductGrid(
-                          bloc.koshary[index], context, index);
+                          bloc.koshary[index], context, index , bloc);
                     }),
                   ),
                 ),
@@ -386,7 +386,7 @@ class MenuScreen extends StatelessWidget {
                     children: List.generate(bloc.mashweyat.length,
                             (index) {
                           return ItemProductGrid(bloc.mashweyat[index],
-                              context, index);
+                              context, index , bloc);
                         }),
                   ),
                 ),
@@ -412,7 +412,7 @@ class MenuScreen extends StatelessWidget {
                   children: List.generate(bloc.halaweyat.length,
                           (index) {
                         return ItemProductGrid(bloc.halaweyat[index],
-                            context, index);
+                            context, index, bloc );
                       }),
                 ),
               ),):
