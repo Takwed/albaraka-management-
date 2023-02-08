@@ -7,7 +7,8 @@ class GetMashweyatUseCase {
   BaseOffersRepository baseOffersRepository;
 
   GetMashweyatUseCase(this.baseOffersRepository);
-  Future<Either<Exception, List<ProductModel>>> call() {
-    return baseOffersRepository.getMashweyat();
+  Future<Either<Exception, List<ProductModel>>> call() async {
+    var result  =await baseOffersRepository.getMashweyat();
+    return result;
   }
 }

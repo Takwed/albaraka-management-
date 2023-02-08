@@ -4,6 +4,7 @@ import 'offer.dart';
 
 class FreeProduct extends Offer {
   final ProductModel product;
+
   final String offerDetails;
   int quantity;
 

@@ -41,8 +41,9 @@ class OffersRepository extends BaseOffersRepository {
   }
 
   @override
-  Future<Either<Exception, List<ProductModel>>> getHalaweyat() {
-    return baseOffersRemoteDataSource.getHalaweyat();
+  Future<Either<Exception, List<ProductModel>>> getHalaweyat() async {
+    print ('getHalaweyat repo ');
+    return await baseOffersRemoteDataSource.getHalaweyat();
   }
 
   @override
@@ -52,7 +53,7 @@ class OffersRepository extends BaseOffersRepository {
 
   @override
   Future<Either<Exception, List<ProductModel>>> getMashweyat() {
-    return baseOffersRemoteDataSource.getHalaweyat();
+    return baseOffersRemoteDataSource.getMashweyat();
   }
 
   @override

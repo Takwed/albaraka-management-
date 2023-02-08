@@ -14,19 +14,26 @@ const List<String> list = <String>['كشري', 'مشويات', 'حلويات'];
 
 class NoOffersScreen extends StatelessWidget
 {
-  const NoOffersScreen ({Key? key}) : super(key: key);
+  OffersBloc bloc ;
+   NoOffersScreen ({Key? key , required this.bloc }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int i = 0;
-    var bloc = OffersBloc.get(context);
 
+List mashweyat = bloc.mashweyat ;
+List halaweyat = bloc.halaweyat ;
+List koshary = bloc.koshary ;
     return DefaultTabController(
       initialIndex: 0, //optional, starts from 0, select the tab by default
       length: 3,
       child: BlocBuilder <OffersBloc, OffersState>(
+        buildWhen: (context , state )
+        {
+     return (koshary != bloc.koshary || mashweyat != bloc.mashweyat  || halaweyat != bloc.halaweyat );
+        },
         builder: (context, state) {
-          if(i == 1){
+          if(i == 1 && mashweyat.isNotEmpty){
             bloc.add( GetMashweyatEvent());
           }
           i = 0;
@@ -92,7 +99,7 @@ class NoOffersScreen extends StatelessWidget
                         crossAxisSpacing: 20.sp,
                         children:
                         List.generate(bloc.koshary.length, (index) {
-                          return offerItemBuilder(bloc.koshary[index], context, index, bloc, false, );
+                          return offerItemBuilder(bloc.koshary[index], context, index, bloc, false, 0);
                         }),
                       ),
                     ),
@@ -120,7 +127,7 @@ class NoOffersScreen extends StatelessWidget
                           childAspectRatio: 6.5.sp / 9.0.sp,
                           crossAxisSpacing: 20.sp,
                           children:  List.generate(bloc.mashweyat.length, (index) {
-                            return offerItemBuilder(bloc.mashweyat[index], context, index, bloc, false, );
+                            return offerItemBuilder(bloc.mashweyat[index], context, index, bloc, false,1 );
                           }),
                         ),
                       ),
@@ -147,7 +154,7 @@ class NoOffersScreen extends StatelessWidget
                         childAspectRatio: 6.5.sp / 9.0.sp,
                         crossAxisSpacing: 20.sp,
                         children:   List.generate(bloc.halaweyat.length, (index) {
-                          return offerItemBuilder(bloc.halaweyat[index], context, index, bloc, false, );
+                          return offerItemBuilder(bloc.halaweyat[index], context, index, bloc, false,2 );
                         }),
                       ),
                     ),):
