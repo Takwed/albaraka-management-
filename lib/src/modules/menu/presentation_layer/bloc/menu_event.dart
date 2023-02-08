@@ -101,6 +101,9 @@ class EditProductEvent extends MenuEvent {
   final double points;
   final double newPrice;
   final int id;
+  final String offerDetails;
+  final String offerState;
+  final int quantity;
   final int collectionIndex;
   final BuildContext context;
   EditProductEvent(
@@ -109,12 +112,15 @@ class EditProductEvent extends MenuEvent {
       required this.newPrice,
       required this.points,
       required this.describe,
+      required this.offerDetails,
+      required this.offerState,
+      required this.quantity,
       required this.collectionIndex,
       required this.id,
       required this.context});
 
   @override
-  List<Object?> get props => [name, describe,collectionIndex, oldPrice, newPrice, points,id, context];
+  List<Object?> get props => [name, describe,collectionIndex, oldPrice, newPrice, points,id, context,offerDetails,offerState,quantity];
 }
 
 class IsEditProductEvent extends MenuEvent {
