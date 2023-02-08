@@ -40,10 +40,11 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
     discount.productModel.offerState = ' خصم ${discount.discount}%';
 
     discount.productModel.newPrice =
-        discount.productModel.oldPrice - (discount.discount / 100);
+        discount.productModel.oldPrice - (  discount.productModel.oldPrice  * (discount.discount / 100));
+    discount.productModel.offerDetails = 'اشتري ${discount.productModel.name} و احصل على ${discount.discount} % خصم';
     try {
       _updateProduct(collectionIndex, discount.productModel, id);
-
+   print ('discount from data source ' + discount.productModel.toString());
       return const Right(0);
     } on FirebaseException catch (e) {
       return Left(e);
@@ -57,6 +58,7 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
       required int collectionIndex}) async {
     try {
       productModel.offerState = null;
+      productModel.offerDetails = null ;
       productModel.newPrice = productModel.oldPrice;
       productModel.quantity = null;
 
@@ -111,13 +113,14 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
   }
 
   @override
-  Future<Either<FirebaseException, dynamic>> addFreeProduct(
+  Future<Either<FirebaseException, dynamic>> addFreeProduct (
       {required FreeProduct freeProduct,
       required int id,
       required int collectionIndex}) async {
-    freeProduct.product.offerDetails = freeProduct.offerDetails;
-    freeProduct.state = '${freeProduct.quantity} +هدية ';
-    freeProduct.product.offerDetails = freeProduct.offerDetails;
+
+    freeProduct.product.offerState = '${freeProduct.quantity} +هدية ';
+
+    freeProduct.product.offerDetails = 'اشتري ${freeProduct.quantity} و احصل على ${freeProduct.offerDetails}';
     freeProduct.product.quantity = freeProduct.quantity;
     try {
       await _updateProduct(collectionIndex, freeProduct.product, id);
@@ -146,6 +149,7 @@ class OffersRemoteDataSource extends BaseOffersRemoteDataSource {
   }
 
   Future<Either<Exception, List<ProductModel>>> getHalaweyat() async {
+    print ('getHalaweyat data source ');
     return _getCollection(collectionIndex: 2);
   }
 

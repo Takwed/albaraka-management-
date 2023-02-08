@@ -28,95 +28,149 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
   List<ProductModel> koshary = [];
   List<ProductModel> mashweyat = [];
   List<ProductModel> halaweyat = [];
-  List<ProductModel> kosharyOffers =[] ;
-  List<ProductModel> mashweyatOffers =[];
-  List<ProductModel> halaweyatOffers =[];
-  List <Coupon> coupons = [];
-  int  selectedOfferTypeIndex = 0 ;
+  List<ProductModel> kosharyOffers = [];
+  List<ProductModel> mashweyatOffers = [];
+  List<ProductModel> halaweyatOffers = [];
+  List<Coupon> coupons = [];
+  int selectedOfferTypeIndex = 0;
 
- static OffersBloc get(BuildContext context) => BlocProvider.of<OffersBloc>(context);
+  static OffersBloc get(BuildContext context) =>
+      BlocProvider.of<OffersBloc>(context);
   OffersBloc(OffersInitial offersInitial) : super(OffersInitial()) {
     on<OffersEvent>((event, emit) async {
       if (event is AddCouponEvent) {
-        AddCouponUseCase(sl()).call(couponModel: event.couponModel);
-      }
-      else if (event is AddDiscountEvent) {
-        AddDiscountUseCase(sl()).call(
+        emit(AddCouponsLoadingState());
+        var result =
+            await AddCouponUseCase(sl()).call(couponModel: event.couponModel);
+        result.fold((l) {
+          emit(AddCouponsErrorState());
+          errorToast(msg: l.message!);
+        }, (r) {
+          emit(AddCouponsSuccessState());
+        });
+      } else if (event is AddDiscountEvent)
+      {
+        emit(AddDiscountLoadingState());
+        var result = await AddDiscountUseCase(sl()).call(
             id: event.id,
             discount: event.discount,
             collectionIndex: event.collectionIndex);
-      }
-      else if (event is AddFreeProductEvent) {
+        result.fold((l) {
+          emit(AddDiscountErrorState());
+          errorToast(msg: l.message!);
 
-        AddFreeProductUseCase(sl()).call(
+        }, (r) {
+          defaultToast(msg: 'تم إضافة العرض بنجاح');
+          emit(AddDiscountSuccessState());
+          switch (event.collectionIndex) {
+            case 0:
+              add(GetKosharyEvent());
+              break;
+            case 1:
+              add(GetMashweyatEvent());
+              break;
+            default:
+              add(GetHalaweyatEvent());
+          }
+        });
+      } else if (event is AddFreeProductEvent)
+      {
+        emit(AddFreeProductLoadingState());
+       var result = await AddFreeProductUseCase(sl()).call(
             id: event.id,
             freeProduct: event.freeProduct,
             collectionIndex: event.collectionIndex);
-      }
-      else if (event is GetCouponsEvent) {
+       result.fold((l) {
+         emit(AddFreeProductErrorState());
+         errorToast(msg: l.message!);
+       }, (r) {
+         emit(AddFreeProductSuccessState());
+         defaultToast(msg: 'تم إضافة العرض بنجاح');
+         switch (event.collectionIndex) {
+           case 0:
+             add(GetKosharyEvent());
+             break;
+           case 1:
+             add(GetMashweyatEvent());
+             break;
+           default:
+             add(GetHalaweyatEvent());
+         }
+       });
+      } else if (event is GetCouponsEvent)
+      {
         coupons.clear();
-      var result = await GetCouponsUseCase(sl()).call();
-      result.fold((l) {
-        errorToast(msg: l.message!);
-      }, (r) {
-         r.forEach((element)
-         {
-           coupons.add(element);
-         });
-      });
-      } else if (event is GetHalaweyatEvent) {
-        halaweyatOffers =[];
-        halaweyat =[];
-    var result = await  GetHalaweyatUseCase(sl()).call();
-    result.fold((l){
-      errorToast(msg: l.toString());
-    }, (r) => {
-      r.forEach((element) {
-        if (element.offerState != null)
-        {
-          halaweyatOffers.add(element);
-        }
-        else {
-          halaweyat.add(element);
-        }
-      }
-
-      )
-    }) ;
-      } else if (event is GetKosharyEvent) {
-
-        var result = await   GetKosharyUseCase(sl()).call();
+        var result = await GetCouponsUseCase(sl()).call();
         result.fold((l) {
-          errorToast(msg: l.toString());
+          errorToast(msg: l.message!);
         }, (r) {
           r.forEach((element) {
-            koshary =[];
-            kosharyOffers = [];
-            if (element.offerState != null)
-            {
-              kosharyOffers.add(element);
+            coupons.add(element);
+          });
+        });
+      } else if (event is GetHalaweyatEvent)
+      {
+        halaweyatOffers = [];
+        halaweyat = [];
+        emit(GetHalaweyatLoadingState());
+        var result = await GetHalaweyatUseCase(sl()).call();
+        result.fold((l) {
+          emit(GetHalaweyatErrorState());
+          errorToast(msg: l.toString());
+        }, (r) {
+          print(state);
+          halaweyatOffers = [];
+          halaweyat = [];
+
+          r.forEach((element) {
+            print(element);
+            if (element.offerState != null) {
+              halaweyatOffers.add(element);
+            } else {
+              halaweyat.add(element);
             }
-            else {
+          });
+          emit(GetHalaweyatSuccessState(halaweyat, halaweyatOffers));
+        });
+      } else if (event is GetKosharyEvent)
+      {
+        emit(GetKosharyLoadingState());
+        var result = await GetKosharyUseCase(sl()).call();
+        result.fold((l) {
+          emit(GetKosharyErrorState());
+          errorToast(msg: l.toString());
+        }, (r) {
+          koshary = [];
+          kosharyOffers = [];
+
+          r.forEach((element) {
+            if (element.offerState != null) {
+              kosharyOffers.add(element);
+            } else {
               koshary.add(element);
             }
-          } ) ;
+          });
+          emit(GetKosharySuccessState(koshary, kosharyOffers));
         });
-      } else if (event is GetMashweyatEvent) {
-        mashweyat =[];
-        mashweyatOffers =[];
-        var result = await      GetMashweyatUseCase(sl()).call();
+      } else if (event is GetMashweyatEvent)
+      {
+        emit(GetMashweyatLoadingState());
+        var result = await GetMashweyatUseCase(sl()).call();
         result.fold((l) {
+          emit(GetMashweyatErrorState());
           errorToast(msg: l.toString());
         }, (r) {
+          mashweyat = [];
+          mashweyatOffers = [];
+
           r.forEach((element) {
-            if (element.offerState != null)
-            {
+            if (element.offerState != null) {
               mashweyatOffers.add(element);
-            }
-            else {
+            } else {
               mashweyat.add(element);
             }
-          } ) ;
+          });
+          emit(GetMashweyatSuccessState(mashweyat, mashweyatOffers));
         });
       } else if (event is RemoveCouponEvent) {
         RemoveCouponUseCase(sl()).call(id: event.id);
@@ -125,12 +179,10 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
             id: event.id,
             productModel: event.productModel,
             collectionIndex: event.collectionIndex);
-      }
-      else if (event is ChangeTabBarEvent) {
+      } else if (event is ChangeTabBarEvent) {
         tabIndex = event.index;
-        emit(ChangeTabBarState( TabIndex: tabIndex));
-      }
-      else if (event is ChangeOfferTypeEvent) {
+        emit(ChangeTabBarState(TabIndex: tabIndex));
+      } else if (event is ChangeOfferTypeEvent) {
         emit(ChangeOfferTypeState(selectedOfferTypeIndex));
         selectedOfferTypeIndex = event.index;
         emit(ChangeOfferTypeState(selectedOfferTypeIndex));

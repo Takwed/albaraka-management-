@@ -20,12 +20,23 @@ class OffersScreen extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     int i = 0;
-    var bloc = OffersBloc.get(context)..add(GetKosharyEvent());
-
+    var bloc = OffersBloc.get(context)..add(GetKosharyEvent())..add(GetMashweyatEvent())..add(GetHalaweyatEvent());
+    List mashweyat = bloc.mashweyat ;
+    List halaweyat = bloc.halaweyat ;
+    List koshary = bloc.koshary ;
     return DefaultTabController(
       initialIndex: 0, //optional, starts from 0, select the tab by default
       length: 3,
-      child: BlocBuilder <OffersBloc, OffersState>(
+      child: BlocConsumer<OffersBloc, OffersState>(
+  listener: (context, state) {
+
+  }, buildWhen: (context , state )
+        {
+          return (koshary != bloc.koshary || mashweyat != bloc.mashweyat  || halaweyat != bloc.halaweyat );
+        },
+  builder: (context, state) {
+
+    return BlocBuilder <OffersBloc, OffersState>(
             builder: (context, state) {
               if(i == 1){
                 bloc.add( GetMashweyatEvent());
@@ -46,7 +57,7 @@ class OffersScreen extends StatelessWidget
                   ),
                   floatingActionButton: FloatingActionButton(
                       onPressed: () {
-                     NavigationManager.push(context, const NoOffersScreen());
+                     NavigationManager.push(context,  NoOffersScreen(bloc: bloc,));
                       },
                       child: const Icon(Icons.add)),
                   body: ContainedTabBarView (
@@ -89,7 +100,8 @@ class OffersScreen extends StatelessWidget
                             crossAxisSpacing: 20.sp,
                             children:
                             List.generate(bloc.kosharyOffers.length, (index) {
-                              return offerItemBuilder(bloc.kosharyOffers[index], context, index, bloc, true, );
+                              return offerItemBuilder(bloc.kosharyOffers[index], context,
+                                  index, bloc, true, 0);
                             }),
                           ),
                         ),
@@ -115,7 +127,7 @@ class OffersScreen extends StatelessWidget
                             childAspectRatio: 6.5.sp / 9.0.sp,
                             crossAxisSpacing: 20.sp,
                             children:  List.generate(bloc.mashweyatOffers.length, (index) {
-                              return offerItemBuilder(bloc.mashweyatOffers[index], context, index, bloc, true, );
+                              return offerItemBuilder(bloc.mashweyatOffers[index], context, index, bloc, true,1 );
                             }),
                           ),
                         ),
@@ -141,7 +153,7 @@ class OffersScreen extends StatelessWidget
                             childAspectRatio: 6.5.sp / 9.0.sp,
                             crossAxisSpacing: 20.sp,
                             children:   List.generate(bloc.halaweyatOffers.length, (index) {
-                              return offerItemBuilder(bloc.halaweyatOffers[index], context, index, bloc, true, );
+                              return offerItemBuilder(bloc.halaweyatOffers[index], context, index, bloc, true, 2 );
                             }),
                           ),
                         ),):
@@ -151,7 +163,9 @@ class OffersScreen extends StatelessWidget
                     ],
                   ));
             },
-          ) ,
+          );
+  },
+) ,
     );
   }
 }

@@ -7,7 +7,12 @@ class GetHalaweyatUseCase {
   BaseOffersRepository baseOffersRepository;
 
   GetHalaweyatUseCase(this.baseOffersRepository);
-  Future<Either<Exception, List<ProductModel>>> call() {
-    return baseOffersRepository.getHalaweyat();
+  Future<Either<Exception, List<ProductModel>>> call() async {
+
+var result  =await baseOffersRepository.getHalaweyat();
+print ('getHalaweyat use case ' +result.toString());
+    return result;
+
+
   }
 }

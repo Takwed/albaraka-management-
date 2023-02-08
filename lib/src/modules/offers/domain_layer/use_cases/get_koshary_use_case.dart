@@ -7,7 +7,8 @@ class GetKosharyUseCase {
   BaseOffersRepository baseOffersRepository;
 
   GetKosharyUseCase(this.baseOffersRepository);
-  Future<Either<Exception, List<ProductModel>>> call() {
-    return baseOffersRepository.getKoshary();
+  Future<Either<Exception, List<ProductModel>>> call() async {
+    var result  =await baseOffersRepository.getKoshary();
+    return result ;
   }
 }

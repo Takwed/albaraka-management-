@@ -97,8 +97,11 @@ class GetHalaweyatLoadingState extends OffersState {
 }
 class GetHalaweyatSuccessState extends OffersState {
 
+  List <ProductModel> products ;
+  List <ProductModel> productsOffers ;
+  GetHalaweyatSuccessState(this.products , this.productsOffers);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [products , productsOffers];
 }
 class GetHalaweyatErrorState extends OffersState {
 
@@ -108,13 +111,16 @@ class GetHalaweyatErrorState extends OffersState {
 
 class GetKosharyLoadingState extends OffersState {
 
+
   @override
   List<Object?> get props => [];
 }
 class GetKosharySuccessState extends OffersState {
-
+  List <ProductModel> products ;
+  List <ProductModel> productsOffers ;
+  GetKosharySuccessState(this.products , this.productsOffers);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [products , productsOffers];
 }
 class GetKosharyErrorState extends OffersState {
 
@@ -128,9 +134,11 @@ class GetMashweyatLoadingState extends OffersState {
   List<Object?> get props => [];
 }
 class GetMashweyatSuccessState extends OffersState {
-
+  List <ProductModel> products ;
+  List <ProductModel> productsOffers ;
+  GetMashweyatSuccessState(this.products , this.productsOffers);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [products , productsOffers];
 }
 class GetMashweyatErrorState extends OffersState {
 
@@ -167,4 +175,22 @@ class RemoveOfferErrorState extends OffersState {
 
   @override
   List<Object?> get props => [];
+}
+class AddCouponsLoadingState extends OffersState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
+}
+class AddCouponsSuccessState extends OffersState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
+}
+class AddCouponsErrorState extends OffersState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
 }

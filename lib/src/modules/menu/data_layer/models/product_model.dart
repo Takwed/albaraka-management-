@@ -20,7 +20,11 @@ class ProductModel extends Product {
         describe: json['describe'],
         points: json['points'],
         oldPrice: json['oldPrice'],
-        newPrice: json['newPrice']);
+        newPrice: json['newPrice'],
+    offerState: json['offerState'],
+      offerDetails: json['offerDetails'],
+      quantity: json['quantity'],
+    );
   }
   Map<String, dynamic> toJson(){
     return {
@@ -31,6 +35,9 @@ class ProductModel extends Product {
       'oldPrice' : oldPrice,
       'points' : points,
       'newPrice' : newPrice,
+      'offerState' : offerState,
+      'offerDetails' : offerDetails,
+      'quantity' : quantity
     };
   }
 }
