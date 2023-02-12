@@ -42,8 +42,8 @@ abstract class BaseMenuRemoteDataSource {
 
 class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
   File? imageFiled;
-  String? uploadImage;
-  String? imagePaths;
+  String? uploadImage = '';
+  String? imagePaths = '';
   @override
   Future<Either<Exception, File>?> addImagePicker(source, context) async {
     try {
@@ -71,6 +71,7 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
             .child('koshary/${Uri.file(imageFiled!.path).pathSegments.last}');
         await ref.putFile(imageFiled!);
         await ref.getDownloadURL().then((value) async {
+          print("storage success");
           uploadImage = value;
           imagePaths = imageFiled!.path;
         });
@@ -114,9 +115,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
     try {
       if (imageFiled != null) {
         await uploadProductImage(collectionIndex);
-      } else {
-        uploadImage = '';
-        imagePaths = '';
       }
       ProductModel productModel = ProductModel(
         points: points,
@@ -285,37 +283,44 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
       if (imageFiled != null) {
         await uploadProductImage(collectionIndex);
       }
-
       if (collectionIndex == 0) {
-        ProductModel productUpdate = ProductModel(
-          points: points,
-          imagePaths:  imageFiled != null ? imagePaths : '',
-          newPrice: newPrice,
-          name: name,
-          image: uploadImage ?? koshary[id].image,
-          describe: describe,
-          oldPrice: oldPrice,
-          offerDetails: offerDetails,
-          offerState: offerState,
-          quantity: quantity,
-        );
-        if(koshary[id].image != '') {
+        if(koshary[id].image != uploadImage) {
           await firebase_storage.FirebaseStorage.instance.ref()
               .child('koshary/${Uri
               .file(koshary[id].imagePaths!)
               .pathSegments
               .last}').delete();
         }
+        ProductModel productUpdate = ProductModel(
+          points: points,
+          imagePaths: imagePaths?? koshary[id].imagePaths,
+          newPrice: newPrice,
+          name: name,
+          image: uploadImage?? koshary[id].image,
+          describe: describe,
+          oldPrice: oldPrice,
+          offerDetails: offerDetails,
+          offerState: offerState,
+          quantity: quantity,
+        );
         FirebaseFirestore.instance
             .collection("koshary")
             .doc(kosharyId[id])
             .update(productUpdate.toJson());
       }
       else if (collectionIndex == 1) {
+        if(mashweyat[id].image != uploadImage) {
+          await firebase_storage.FirebaseStorage.instance.ref()
+              .child('mashweyat/${Uri
+              .file(mashweyat[id].imagePaths!)
+              .pathSegments
+              .last}').delete();
+        }
         ProductModel productUpdate = ProductModel(
           newPrice: newPrice,
           points: points,
           name: name,
+          imagePaths: imagePaths?? mashweyat[id].imagePaths,
           image: uploadImage ?? mashweyat[id].image,
           describe: describe,
           oldPrice: oldPrice,
@@ -323,23 +328,24 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           offerState: offerState,
           quantity: quantity,
         );
-        if(mashweyat[id].image != '') {
-          await firebase_storage.FirebaseStorage.instance.ref()
-              .child('mashweyat/${Uri
-              .file(mashweyat[id].imagePaths!)
-              .pathSegments
-              .last}').delete();
-        }
         FirebaseFirestore.instance
             .collection("mashweyat")
             .doc(mashweyatId[id])
             .update(productUpdate.toJson());
       }
       else if (collectionIndex == 2) {
+        if(halaweyat[id].image != uploadImage) {
+          await firebase_storage.FirebaseStorage.instance.ref()
+              .child('halaweyat/${Uri
+              .file(halaweyat[id].imagePaths!)
+              .pathSegments
+              .last}').delete();
+        }
         ProductModel productUpdate = ProductModel(
           newPrice: newPrice,
           points: points,
           name: name,
+          imagePaths: imagePaths?? halaweyat[id].imagePaths,
           image: uploadImage ?? halaweyat[id].image,
           describe: describe,
           oldPrice: oldPrice,
@@ -347,13 +353,6 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
           offerState: offerState,
           quantity: quantity,
         );
-        if(halaweyat[id].image != '') {
-          await firebase_storage.FirebaseStorage.instance.ref()
-              .child('halaweyat/${Uri
-              .file(halaweyat[id].imagePaths!)
-              .pathSegments
-              .last}').delete();
-        }
         FirebaseFirestore.instance
             .collection("halaweyat")
             .doc(halaweyatId[id])

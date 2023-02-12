@@ -29,6 +29,8 @@ class MenuScreen extends StatelessWidget {
         builder: (context, state) {
           if(i == 1){
             bloc.add(const GetKosharyEvent());
+            bloc.add(const GetMashweyatEvent());
+            bloc.add(const GetHalaweyatEvent());
           }
           i = 0;
           return Scaffold(
@@ -144,14 +146,13 @@ class MenuScreen extends StatelessWidget {
                                       children: [
                                         MaterialButton(
                                             onPressed: () {
-                                              bloc.imageFile = null;
                                               bloc.add(ImagePickedEvent(
                                                   source:
                                                       ImageSource.gallery,
                                                   context: context));
                                             },
                                             child: bloc.imageFile == null
-                                                ? const Text("Add image ")
+                                                ? const Text("إضافة صورة")
                                                 : Image.file(
                                                     bloc.imageFile!)),
                                         DropdownButton<String>(
@@ -305,12 +306,14 @@ class MenuScreen extends StatelessWidget {
                                               name: nameProduct.text,
                                             ));
                                             describeProduct.clear();
-                                            bloc.imageFile = null ;
                                             priceProduct.clear();
                                             pointsProduct.clear();
                                             nameProduct.clear();
                                             Navigator.pop(context);
                                           }
+                                          if( bloc.imageFile != null)
+                                            print("ahmed");
+                                          else print("object");
                                         },
                                         child: const Text("اضافة")),
                                   ],
@@ -324,15 +327,6 @@ class MenuScreen extends StatelessWidget {
               body: ContainedTabBarView(
             initialIndex: 0,
             onChange: (changeTab){
-              if(changeTab == 0) {
-                bloc.add(const GetKosharyEvent());
-              }
-              else if (changeTab == 1) {
-                bloc.add(const GetMashweyatEvent());
-              }
-              else {
-              bloc.add(const GetHalaweyatEvent());
-              }
               if (bloc.isSelected && bloc.changeTab >= 0) bloc.selectProducts = [];
               bloc.add(ChangeTabBarEvent(changeTab: changeTab));
             },

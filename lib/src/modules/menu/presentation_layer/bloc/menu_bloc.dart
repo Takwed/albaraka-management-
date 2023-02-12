@@ -78,6 +78,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
           emit(ImagePickedErrorState(l.toString()));
         }, (r) {
           imageFile = r;
+          print("Success");
           emit(ImagePickedSuccessfullyState(imageFile!));
         });
       }
@@ -181,16 +182,16 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
             collectionIndex: event.collectionIndex,
             name: event.name,
             describe: event.describe,
-            offerDetails: event.offerDetails,
-            offerState: event.offerState,
-            quantity: event.quantity,
+            offerDetails: event.offerDetails!,
+            offerState: event.offerState!,
+            quantity: event.quantity!,
             newPrice: event.newPrice,
             oldPrice: event.oldPrice);
         res.fold((l) {
           errorToast(msg: l.toString());
           emit(const EditProductErrorStates());
         }, (r) {
-          defaultToast(msg: "Product Updated Successfully");
+          defaultToast(msg: "تم تعديل المنتج بنجاح");
           emit(EditProductSuccessfullyStates(
               name: event.name,
               oldPrice: event.oldPrice,
@@ -198,9 +199,9 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
               describe: event.describe,
               points: event.points,
               collectionIndex: event.collectionIndex,
-              offerDetails: event.offerDetails,
-              offerState: event.offerState,
-              quantity: event.quantity,
+              offerDetails: event.offerDetails!,
+              offerState: event.offerState!,
+              quantity: event.quantity!,
               id: event.id));
         });
         if (event.collectionIndex == 0) {

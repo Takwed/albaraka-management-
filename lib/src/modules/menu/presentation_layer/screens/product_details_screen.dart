@@ -142,7 +142,7 @@ class ProductDetails extends StatelessWidget {
                               labelText: 'السعر ',
                             ),
                           )
-                        : Text("${product.oldPrice}\$",
+                        : Text("${product.oldPrice} ج.م ",
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w800)),
                     SizedBox(
@@ -170,22 +170,34 @@ class ProductDetails extends StatelessWidget {
                       height: 20.sp,
                     ),
                     bloc.isEdit
-                        ? TextFormField(
-                            controller: pointsProduct,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.sp)),
-                              prefixIcon: const Icon(Icons.point_of_sale),
-                              labelText: 'النقاط ',
+                        ? Column(
+                          children: [
+                            TextFormField(
+                                controller: pointsProduct,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15.sp)),
+                                  prefixIcon: const Icon(Icons.point_of_sale),
+                                  labelText: 'النقاط ',
+                                ),
+                              ),
+                            SizedBox(
+                              height: 30.sp,
                             ),
-                          )
-                        : Text("تحصل علي ${product.points} من النقاط عند حصولك علي ${product.name}",
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      height: 30.sp,
-                    ),
+                          ],
+                        )
+                        : product.points != 0? Column(
+                          children: [
+                            Text("تحصل علي ${product.points} من النقاط عند حصولك علي ${product.name}",
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              height: 30.sp,
+                            ),
+                          ],
+                        ):Container(),
+
                     bloc.isEdit
                         ? state is! EditProductLoadingStates
                             ? Container(
@@ -205,9 +217,9 @@ class ProductDetails extends StatelessWidget {
                                       oldPrice: prc,
                                       newPrice: prc,
                                       points: pts,
-                                      quantity: product.quantity!,
-                                      offerState: product.offerState!,
-                                      offerDetails: product.offerDetails!,
+                                      quantity: product.quantity??0,
+                                      offerState: product.offerState??'',
+                                      offerDetails: product.offerDetails??'',
                                       describe: describeProduct.text,
                                       id: index,
                                       collectionIndex: collectionIndex,

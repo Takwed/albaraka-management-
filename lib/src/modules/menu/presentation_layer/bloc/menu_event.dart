@@ -101,9 +101,9 @@ class EditProductEvent extends MenuEvent {
   final double points;
   final double newPrice;
   final int id;
-  final String offerDetails;
-  final String offerState;
-  final int quantity;
+  String? offerDetails;
+  String? offerState;
+  int? quantity;
   final int collectionIndex;
   final BuildContext context;
   EditProductEvent(
