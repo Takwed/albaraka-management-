@@ -48,6 +48,10 @@ class ProductDetails extends StatelessWidget {
                               height: 320.sp,
                               decoration: product.image != ''
                                   ? BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10.sp),
+                                  bottomLeft: Radius.circular(10.sp),
+                                ),
                                       color: ColorManager.card,
                                       image: bloc.imageFile == null
                                           ? DecorationImage(
@@ -59,7 +63,11 @@ class ProductDetails extends StatelessWidget {
                                               fit: BoxFit.cover),
                                     )
                                   : BoxDecoration(
-                                      color: ColorManager.card,
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10.sp),
+                                  bottomLeft: Radius.circular(10.sp),
+                                ),
+                                color: ColorManager.card,
                                       image: bloc.imageFile == null
                                           ? null
                                           : DecorationImage(
@@ -203,7 +211,7 @@ class ProductDetails extends StatelessWidget {
                             ? Container(
                                 decoration: BoxDecoration(
                                     color: ColorManager.primary,
-                                    borderRadius: BorderRadius.circular(10)),
+                                    borderRadius: BorderRadius.circular(20.sp)),
                                 width: double.infinity,
                                 child: MaterialButton(
                                   onPressed: () {
@@ -238,7 +246,7 @@ class ProductDetails extends StatelessWidget {
                         : Container(
                             decoration: BoxDecoration(
                                 color: ColorManager.primary,
-                                borderRadius: BorderRadius.circular(10)),
+                                borderRadius: BorderRadius.circular(20.sp)),
                             width: double.infinity,
                             child: MaterialButton(
                               onPressed: () {

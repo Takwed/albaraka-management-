@@ -292,14 +292,13 @@ class MenuScreen extends StatelessWidget {
                                         onPressed: () {
                                           if (formKey.currentState!
                                               .validate()) {
-                                            double s = double.parse(
-                                                priceProduct.text);
-                                            double points = double.parse(
-                                                pointsProduct.text);
                                             bloc.add(AddProductEvent(
-                                              oldPrice: s,
-                                              newPrice: s,
-                                              points: points,
+                                              oldPrice: double.parse(
+                                                  priceProduct.text),
+                                              newPrice: double.parse(
+                                                  priceProduct.text),
+                                              points: double.parse(
+                                                  pointsProduct.text),
                                               describe: describeProduct.text,
                                               collectionIndex:
                                                   collectionIndex,
@@ -311,9 +310,7 @@ class MenuScreen extends StatelessWidget {
                                             nameProduct.clear();
                                             Navigator.pop(context);
                                           }
-                                          if( bloc.imageFile != null)
-                                            print("ahmed");
-                                          else print("object");
+                                          bloc.imageFile != null;
                                         },
                                         child: const Text("اضافة")),
                                   ],

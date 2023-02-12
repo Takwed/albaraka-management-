@@ -2,7 +2,6 @@ import 'package:albaraka_management/src/core/utils/navigation_manager.dart';
 import 'package:albaraka_management/src/modules/authenticaion/presentation_layer/components/components.dart';
 import 'package:albaraka_management/src/modules/offers/domain_layer/entities/discount.dart';
 import 'package:albaraka_management/src/modules/offers/domain_layer/entities/free_product.dart';
-import 'package:bloc/bloc.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,32 +12,32 @@ import '../../../menu/data_layer/models/product_model.dart';
 import '../../domain_layer/entities/coupon.dart';
 import '../bloc/offers_bloc.dart';
 
-Widget couponBuilder({required Coupon coupon , required context , required OffersBloc bloc}) {
+Widget couponBuilder(
+    {required Coupon coupon, required context, required OffersBloc bloc}) {
   return InkWell(
-    onLongPress: ()
-    {
+    onLongPress: () {
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return BlocBuilder<OffersBloc, OffersState>(
                 builder: (context, state) {
-                  return AlertDialog(
-                    content: const Text("سيتم حذف هذا الكوبون "),
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("الغاء")),
-                      TextButton(
-                          onPressed: () {
-                             bloc.add(RemoveCouponEvent(coupon.text));
-                            Navigator.pop(context);
-                          },
-                          child: const Text("تأكيد")),
-                    ],
-                  );
-                });
+              return AlertDialog(
+                content: const Text("سيتم حذف هذا الكوبون "),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("الغاء")),
+                  TextButton(
+                      onPressed: () {
+                        bloc.add(RemoveCouponEvent(coupon.text));
+                        Navigator.pop(context);
+                      },
+                      child: const Text("تأكيد")),
+                ],
+              );
+            });
           });
     },
     child: SizedBox(
@@ -59,11 +58,12 @@ Widget couponBuilder({required Coupon coupon , required context , required Offer
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: const AssetImage('assets/images/logo.svg'),
+                      backgroundImage:
+                          const AssetImage('assets/images/logo.svg'),
                       radius: 15.w,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(.50),
+                    const Padding(
+                      padding: EdgeInsets.all(.50),
                       child: SizedBox(
                         width: 1,
                         height: double.infinity,
@@ -75,115 +75,115 @@ Widget couponBuilder({required Coupon coupon , required context , required Offer
                     ),
                     Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'البركــة',
+                          style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeightManager.bold),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              'البركــة',
+                              'كود خصم',
                               style: TextStyle(
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeightManager.bold),
+                                  fontWeight: FontWeightManager.bold,
+                                  fontSize: 11.sp),
                             ),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'كود خصم',
+                                  '%',
                                   style: TextStyle(
-                                      fontWeight: FontWeightManager.bold,
-                                      fontSize: 11.sp),
+                                      fontWeight: FontWeightManager.maxWeight,
+                                      fontSize: 12.sp,
+                                      color: ColorManager.error),
                                 ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '%',
-                                      style: TextStyle(
-                                          fontWeight: FontWeightManager.maxWeight,
-                                          fontSize: 12.sp,
-                                          color: ColorManager.error),
-                                    ),
-                                    Text(
-                                      '${coupon.discount}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeightManager.maxWeight,
-                                          fontSize: 20.sp,
-                                          color: ColorManager.error),
-                                    ),
-                                  ],
+                                Text(
+                                  '${coupon.discount}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeightManager.maxWeight,
+                                      fontSize: 20.sp,
+                                      color: ColorManager.error),
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'صالح حتى:',
-                                  style: TextStyle(
-                                      fontWeight: FontWeightManager.bold,
-                                      fontSize: 11.sp),
-                                ),
-                                Text(
-                                  '${coupon.date}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeightManager.bold,
-                                      fontSize: 11.sp),
-                                ),
-                              ],
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'صالح حتى:',
+                              style: TextStyle(
+                                  fontWeight: FontWeightManager.bold,
+                                  fontSize: 11.sp),
                             ),
-                            Padding (
-                              padding:  EdgeInsetsDirectional.only(end: 10.sp),
-                              child: Align(
-                                alignment: AlignmentDirectional.bottomCenter,
-                                child: SizedBox (
-                                  width: 90.w,
-                                  height: 30.sp,
-                                  child: InkWell(
-                                    onLongPress: (){
-                                      FlutterClipboard.copy(coupon.text).then((value) {
-                                        defaultToast(msg: 'تم النسخ الى الحافظة');
-                                      });
-                                    },
-                                    child: TextField(
-                                      enableInteractiveSelection: false,
-                                      decoration: InputDecoration(
-
-                                        prefix: IconButton (
-
-                                          onPressed: () {
-                                            FlutterClipboard.copy(coupon.text).then((value) {
-                                              defaultToast(msg: 'تم النسخ الى الحافظة');
-                                            });
-                                          },
-                                          icon: Icon(
-                                            Icons.copy,
-                                            size: 15.sp,
-                                          ),
-                                        ),
-                                        enabled: false,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(5),
-                                          gapPadding: 0,
-                                        ),
+                            Text(
+                              '${coupon.date}',
+                              style: TextStyle(
+                                  fontWeight: FontWeightManager.bold,
+                                  fontSize: 11.sp),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.only(end: 10.sp),
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: SizedBox(
+                              width: 90.w,
+                              height: 30.sp,
+                              child: InkWell(
+                                onLongPress: () {
+                                  FlutterClipboard.copy(coupon.text)
+                                      .then((value) {
+                                    defaultToast(msg: 'تم النسخ الى الحافظة');
+                                  });
+                                },
+                                child: TextField(
+                                  enableInteractiveSelection: false,
+                                  decoration: InputDecoration(
+                                    prefix: IconButton(
+                                      onPressed: () {
+                                        FlutterClipboard.copy(coupon.text)
+                                            .then((value) {
+                                          defaultToast(
+                                              msg: 'تم النسخ الى الحافظة');
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.copy,
+                                        size: 15.sp,
                                       ),
-                                      maxLines: 1,
-                                      style: const TextStyle(fontWeight: FontWeightManager.bold),
-                                      enabled: false,
-                                      readOnly: true,
-                                      controller: TextEditingController(
-                                        text: '${coupon.text}',
-                                      ),
-                                      textDirection: TextDirection.ltr,
+                                    ),
+                                    enabled: false,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      gapPadding: 0,
                                     ),
                                   ),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeightManager.bold),
+                                  enabled: false,
+                                  readOnly: true,
+                                  controller: TextEditingController(
+                                    text: '${coupon.text}',
+                                  ),
+                                  textDirection: TextDirection.ltr,
                                 ),
                               ),
-                            )
-                          ],
-                        )),
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
                   ],
                 ),
               ),
-
-
             ],
           ),
         ),
@@ -191,6 +191,7 @@ Widget couponBuilder({required Coupon coupon , required context , required Offer
     ),
   );
 }
+
 /*
 
  */
@@ -305,24 +306,21 @@ Widget offerItemBuilder(ProductModel product, context, index, OffersBloc bloc,
                           )),
                           MaterialButton(
                             onPressed: () {
-
-                                NavigationManager.pop(context);
-                                showOfferDialog(
+                              NavigationManager.pop(context);
+                              showOfferDialog(
                                   context: context,
                                   bloc: bloc,
                                   collectionIndex: collectionIndex,
                                   product: product,
                                   id: index,
-                                  offerType: bloc.selectedOfferTypeIndex
-                                );
-
+                                  offerType: bloc.selectedOfferTypeIndex);
                             },
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text('التالي'),
-                                const Icon(Icons.arrow_forward)
+                                Text('التالي'),
+                                Icon(Icons.arrow_forward)
                               ],
                             ),
                           ),
@@ -397,14 +395,20 @@ Widget offerItemBuilder(ProductModel product, context, index, OffersBloc bloc,
                   ],
                 ),
               ),
-             product.offerState != null ? Align(
-               alignment: AlignmentDirectional.topStart,
-               child: Container(
-                decoration: BoxDecoration(  color:  ColorManager.error,
-                borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(10.sp) , bottomEnd: Radius.circular(10.sp) )),
-                  child: Text('  ${product.offerState}  ' , style: TextStyle(color: ColorManager.white)),
-                ),
-             ) : const SizedBox()
+              product.offerState != null
+                  ? Align(
+                      alignment: AlignmentDirectional.topStart,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: ColorManager.error,
+                            borderRadius: BorderRadiusDirectional.only(
+                                topEnd: Radius.circular(10.sp),
+                                bottomEnd: Radius.circular(10.sp))),
+                        child: Text('  ${product.offerState}  ',
+                            style: TextStyle(color: ColorManager.white)),
+                      ),
+                    )
+                  : const SizedBox()
             ],
           ),
         ),
@@ -418,213 +422,216 @@ showOfferDialog(
     required ProductModel product,
     required OffersBloc bloc,
     required int id,
-    required int collectionIndex , 
-  required  int offerType }) {
-switch (offerType) {
-  case 0 : {
-    showDialog(
-        context: context,
-        builder: (context) {
-          TextEditingController discountController = TextEditingController();
-
-          TextEditingController newPriceController = TextEditingController();
-          return AlertDialog(
-            content: Text(
-              'قبل الخصم : ${product.oldPrice} جنيه',
-              style:
-              TextStyle(fontWeight: FontWeightManager.bold, fontSize: 17.sp),
-              textAlign: TextAlign.center,
-            ),
-            actions: [
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'قيمة الخصم',
-                      style: TextStyle(fontSize: 17.sp),
-                      textAlign: TextAlign.center,
-                    ),
-                    const Spacer(),
-                    SizedBox(
-                        height: 25.sp,
-                        width: 15.w,
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            newPriceController.text = (product.oldPrice -
-                                (product.oldPrice *
-                                    double.parse(value) /
-                                    100))
-                                .toString();
-                          },
-                          controller: discountController,
-                        )),
-                    Text(
-                      ' % ',
-                      style: TextStyle(
-                          fontWeight: FontWeightManager.bold, fontSize: 18.sp),
-                    )
-                  ],
+    required int collectionIndex,
+    required int offerType}) {
+  switch (offerType) {
+    case 0:
+      {
+        showDialog(
+            context: context,
+            builder: (context) {
+              TextEditingController discountController =
+                  TextEditingController();
+              TextEditingController newPriceController =
+                  TextEditingController();
+              return AlertDialog(
+                content: Text(
+                  'قبل الخصم : ${product.oldPrice} جنيه',
+                  style: TextStyle(
+                      fontWeight: FontWeightManager.bold, fontSize: 17.sp),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'السعر بعد الخصم',
-                    style: TextStyle(fontSize: 17.sp),
-                    textAlign: TextAlign.center,
+                actions: [
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'قيمة الخصم',
+                          style: TextStyle(fontSize: 17.sp),
+                          textAlign: TextAlign.center,
+                        ),
+                        const Spacer(),
+                        SizedBox(
+                            height: 25.sp,
+                            width: 15.w,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                newPriceController.text = (product.oldPrice -
+                                        (product.oldPrice *
+                                            double.parse(value) /
+                                            100))
+                                    .toString();
+                              },
+                              controller: discountController,
+                            )),
+                        Text(
+                          ' % ',
+                          style: TextStyle(
+                              fontWeight: FontWeightManager.bold,
+                              fontSize: 18.sp),
+                        )
+                      ],
+                    ),
                   ),
-                  const Spacer(),
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(start: 20.sp),
-                    child: SizedBox(
-                        height: 25.sp,
-                        width: 15.w,
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          controller: newPriceController,
-                          onChanged: (value) {
-                            discountController.text = ((-100 *
-                                (double.parse(value) -
-                                    product.oldPrice)) /
-                                product.oldPrice)
-                                .toString();
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'السعر بعد الخصم',
+                        style: TextStyle(fontSize: 17.sp),
+                        textAlign: TextAlign.center,
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 20.sp),
+                        child: SizedBox(
+                            height: 25.sp,
+                            width: 15.w,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              controller: newPriceController,
+                              onChanged: (value) {
+                                discountController.text = ((-100 *
+                                            (double.parse(value) -
+                                                product.oldPrice)) /
+                                        product.oldPrice)
+                                    .toString();
+                              },
+                            )),
+                      ),
+                      Text(
+                        'ج.م',
+                        style: TextStyle(
+                            fontWeight: FontWeightManager.bold,
+                            fontSize: 16.sp),
+                      )
+                    ],
+                  ),
+                  bloc.state is! AddDiscountLoadingState
+                      ? MaterialButton(
+                          onPressed: () {
+                            Discount discount = Discount(
+                                discount: double.parse(discountController.text)
+                                    .toInt(),
+                                productModel: product,
+                                state: discountController.text + ' % ');
+                            bloc.add(AddDiscountEvent(
+                                discount: discount,
+                                id: id,
+                                collectionIndex: collectionIndex));
+                            print(bloc.state);
+                            if (bloc.state is AddDiscountSuccessState)
+                              NavigationManager.pop(context);
                           },
-                        )),
+                          child: Text(
+                            'تأكيد',
+                            style: TextStyle(color: ColorManager.white),
+                          ),
+                          color: ColorManager.primary,
+                        )
+                      : const CircularProgressIndicator()
+                ],
+              );
+            });
+        break;
+      }
+    case 1:
+      {
+        showDialog(
+            context: context,
+            builder: (context) {
+              TextEditingController quantityController =
+                  TextEditingController();
+              TextEditingController giftController = TextEditingController();
+              return AlertDialog(
+                title: const Text('اضافة هدية'),
+                //   alignment: AlignmentDirectional.centerStart,
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'الكمية',
+                        style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeightManager.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.sp),
+                        child: SizedBox(
+                            height: 30.sp,
+                            width: 15.w,
+                            child: TextField(
+                              maxLines: 1,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                              keyboardType: TextInputType.number,
+                              controller: quantityController,
+                            )),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'ج.م',
-                    style: TextStyle(
-                        fontWeight: FontWeightManager.bold, fontSize: 16.sp),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'الهدية',
+                        style: TextStyle(
+                            fontSize: 17.sp,
+                            fontWeight: FontWeightManager.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.sp),
+                          child: SizedBox(
+                              height: 30.sp,
+                              child: TextField(
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  //      hintText: 'الكمية المطلوبة للحصول على الهدية '
+                                ),
+                                keyboardType: TextInputType.text,
+                                controller: giftController,
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      FreeProduct freeProduct = FreeProduct(
+                          product: product,
+                          quantity: int.parse(quantityController.text),
+                          state: '',
+                          offerDetails: giftController.text);
+                      bloc.add(AddFreeProductEvent(
+                          id: id,
+                          freeProduct: freeProduct,
+                          collectionIndex: collectionIndex));
+                      if (bloc.state is AddFreeProductSuccessState)
+                        NavigationManager.pop(context);
+                    },
+                    child: Text(
+                      'تأكيد',
+                      style: TextStyle(color: ColorManager.white),
+                    ),
+                    color: ColorManager.primary,
                   )
                 ],
-              ),
-              bloc.state is! AddDiscountLoadingState
-                  ? MaterialButton(
-                onPressed: () {
-
-                  Discount discount = Discount(
-                      discount: double.parse(discountController.text).toInt(),
-                      productModel: product,
-                      state: discountController.text + ' % ');
-                  bloc.add(AddDiscountEvent(
-                      discount: discount,
-                      id: id,
-                      collectionIndex: collectionIndex));
-                  print (bloc.state);
-                  if (bloc.state is AddDiscountSuccessState)
-                    NavigationManager.pop(context);
-                },
-                child: Text(
-                  'تأكيد',
-                  style: TextStyle(color: ColorManager.white),
-                ),
-                color: ColorManager.primary,
-              )
-                  : const CircularProgressIndicator()
-            ],
-          );
-        });
-    break;
-  } 
-  case 1 : {
-    showDialog(context: context, builder: (context) {
-      TextEditingController quantityController = TextEditingController();
-       TextEditingController giftController = TextEditingController();
-      return AlertDialog (
-        title: const Text('اضافة هدية'),
-     //   alignment: AlignmentDirectional.centerStart,
-        actions: [
-
-          Row (
-            mainAxisAlignment: MainAxisAlignment.start,
-             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text (
-                'الكمية',
-                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeightManager.bold),
-                textAlign: TextAlign.center,
-              ),
-              
-              Padding(
-                padding:  EdgeInsets.all(10.sp),
-                child: SizedBox
-                  (
-                    height: 30.sp,
-                    width: 15.w,
-                    child: TextField(
-                      maxLines: 1,
-                      decoration: const InputDecoration(border: OutlineInputBorder(
-
-                      ),
-
-
-                      ),
-
-                      keyboardType: TextInputType.number,
-                      controller : quantityController,
-                    )),
-              ),
-           
-            ],
-          ) ,
-          Row (
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'الهدية',
-                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeightManager.bold),
-                textAlign: TextAlign.center,
-              ),
-
-              Expanded (
-                child: Padding(
-                  padding:  EdgeInsets.all(10.sp),
-                  child: SizedBox
-                    (
-                      height: 30.sp,
-
-                      child: TextField(
-                        decoration: const InputDecoration(border: OutlineInputBorder(
-
-                        ),
-                          //      hintText: 'الكمية المطلوبة للحصول على الهدية '
-
-                        ),
-
-                        keyboardType: TextInputType.text,
-                        controller : giftController,
-                      )),
-                ),
-              ),
-
-            ],
-          ) ,
-          MaterialButton (
-            onPressed: () {
-                 FreeProduct freeProduct = FreeProduct(product: product, quantity: int.parse(quantityController.text),
-                     state: '',
-                     offerDetails: giftController.text);
-                 bloc.add(AddFreeProductEvent(id: id, freeProduct: freeProduct, collectionIndex: collectionIndex));
-                 if (bloc.state is AddFreeProductSuccessState)
-                   NavigationManager.pop(context);
-            },
-            child: Text(
-              'تأكيد',
-              style: TextStyle(color: ColorManager.white),
-            ),
-            color: ColorManager.primary,
-          )
-        ],
-      );
-    }) ;
+              );
+            });
+      }
   }
 }
-}
-Widget old =    Card (
+
+Widget old = Card(
   elevation: 7,
   color: ColorManager.card,
   child: Stack(
@@ -635,13 +642,11 @@ Widget old =    Card (
         decoration: BoxDecoration(
           color: ColorManager.white,
           borderRadius: const BorderRadiusDirectional.only(
-              bottomEnd: Radius.circular(8),
-              bottomStart: Radius.circular(8)),
+              bottomEnd: Radius.circular(8), bottomStart: Radius.circular(8)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
@@ -670,9 +675,8 @@ Widget old =    Card (
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.watch_later_outlined) ,
+                    const Icon(Icons.watch_later_outlined),
                     Expanded(
-
                       child: Text(
                         " }",
                         maxLines: 2,
@@ -689,7 +693,6 @@ Widget old =    Card (
           ],
         ),
       ),
-
     ],
   ),
 );

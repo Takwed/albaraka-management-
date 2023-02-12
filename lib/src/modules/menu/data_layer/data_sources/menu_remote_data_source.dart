@@ -144,6 +144,8 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
             .set(productModel.toJson());
       }
       imageFiled = null;
+      imagePaths = '';
+      uploadImage = '';
       return const Right('true');
     } on Exception catch (error) {
       return Left(error);
@@ -284,7 +286,8 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
         await uploadProductImage(collectionIndex);
       }
       if (collectionIndex == 0) {
-        if(koshary[id].image != uploadImage) {
+        if(koshary[id].image != uploadImage && koshary[id].image != '') {
+          print("deleted");
           await firebase_storage.FirebaseStorage.instance.ref()
               .child('koshary/${Uri
               .file(koshary[id].imagePaths!)
@@ -309,7 +312,7 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
             .update(productUpdate.toJson());
       }
       else if (collectionIndex == 1) {
-        if(mashweyat[id].image != uploadImage) {
+        if(mashweyat[id].image != uploadImage && mashweyat[id].image != '') {
           await firebase_storage.FirebaseStorage.instance.ref()
               .child('mashweyat/${Uri
               .file(mashweyat[id].imagePaths!)
@@ -334,7 +337,7 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
             .update(productUpdate.toJson());
       }
       else if (collectionIndex == 2) {
-        if(halaweyat[id].image != uploadImage) {
+        if(halaweyat[id].image != uploadImage && halaweyat[id].image != '') {
           await firebase_storage.FirebaseStorage.instance.ref()
               .child('halaweyat/${Uri
               .file(halaweyat[id].imagePaths!)
@@ -358,6 +361,9 @@ class MenuRemoteDataSource extends BaseMenuRemoteDataSource {
             .doc(halaweyatId[id])
             .update(productUpdate.toJson());
       }
+      imageFiled = null;
+      imagePaths = '';
+      uploadImage = '';
       return Right(true);
     } on Exception catch (error) {
       return Left(error);

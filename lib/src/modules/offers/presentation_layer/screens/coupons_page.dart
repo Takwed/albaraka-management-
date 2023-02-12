@@ -140,11 +140,11 @@ class CouponsScreen extends StatelessWidget {
                                   NavigationManager.pop(context);
                                 }
                               },
+                              color: ColorManager.primary,
                               child: Text(
                                 'تأكيد',
                                 style: TextStyle(color: ColorManager.white),
                               ),
-                              color: ColorManager.primary,
                             )
                           ],
                         ),
