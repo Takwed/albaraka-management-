@@ -201,7 +201,7 @@ Widget offerItemBuilder(ProductModel product, context, index, OffersBloc bloc,
     builder: (context, state) {
       return InkWell(
         onLongPress: () {
-          if (containOffer) {
+            if (containOffer) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -516,20 +516,22 @@ showOfferDialog(
                                 discount: double.parse(discountController.text)
                                     .toInt(),
                                 productModel: product,
-                                state: discountController.text + ' % ');
+                                state: '${discountController.text} % ');
                             bloc.add(AddDiscountEvent(
                                 discount: discount,
                                 id: id,
                                 collectionIndex: collectionIndex));
-                            print(bloc.state);
-                            if (bloc.state is AddDiscountSuccessState)
-                              NavigationManager.pop(context);
+                            // print(bloc.state);
+                            // if (bloc.state is AddDiscountSuccessState) {
+                            //   NavigationManager.pop(context);
+                            // }
+                            NavigationManager.pop(context);
                           },
+                          color: ColorManager.primary,
                           child: Text(
                             'تأكيد',
                             style: TextStyle(color: ColorManager.white),
                           ),
-                          color: ColorManager.primary,
                         )
                       : const CircularProgressIndicator()
                 ],
@@ -615,14 +617,17 @@ showOfferDialog(
                           id: id,
                           freeProduct: freeProduct,
                           collectionIndex: collectionIndex));
-                      if (bloc.state is AddFreeProductSuccessState)
-                        NavigationManager.pop(context);
+                      // if (bloc.state is AddFreeProductSuccessState) {
+                      //   NavigationManager.pop(context);
+                      // }
+                      NavigationManager.pop(context);
+
                     },
+                    color: ColorManager.primary,
                     child: Text(
                       'تأكيد',
                       style: TextStyle(color: ColorManager.white),
                     ),
-                    color: ColorManager.primary,
                   )
                 ],
               );

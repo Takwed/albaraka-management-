@@ -57,51 +57,68 @@ Widget ItemProductGrid(ProductModel product, context, index, MenuBloc bloc )  {
                       bottomEnd: Radius.circular(8),
                       bottomStart: Radius.circular(8)),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    Container(
-                      height: 105.sp,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: ColorManager.card,
-                        image: product.image == ''
-                            ? null
-                            : DecorationImage(
-                                image: NetworkImage(
-                                  product.image!,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.sp),
-                      child: Text(
-                        product.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: ColorManager.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17.sp),
-                      ),
-                    ),
-                    Expanded
-                      (
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10.sp,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 105.sp,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: ColorManager.card,
+                            image: product.image == ''
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(
+                                      product.image!,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
                         ),
-                        child: Text(
-                          "${product.newPrice} ج.م",
-                          style: TextStyle(
-                              color: ColorManager.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.sp),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                          child: Text(
+                            product.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: ColorManager.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17.sp),
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.sp,
+                            ),
+                            child: Text(
+                              "${product.newPrice} ج.م",
+                              style: TextStyle(
+                                  color: ColorManager.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                    product.offerState != null
+                        ? Align(
+                      alignment: AlignmentDirectional.topStart,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: ColorManager.error,
+                            borderRadius: BorderRadiusDirectional.only(
+                                topEnd: Radius.circular(10.sp),
+                                bottomEnd: Radius.circular(10.sp))),
+                        child: Text('  ${product.offerState}  ',
+                            style: TextStyle(color: ColorManager.white)),
+                      ),
+                    )
+                        : const SizedBox()
                   ],
                 ),
               ),

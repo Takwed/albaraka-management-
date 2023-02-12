@@ -20,7 +20,6 @@ class OffersScreen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    int i = 0;
     var bloc = OffersBloc.get(context)..add(GetKosharyEvent())..add(GetMashweyatEvent())..add(GetHalaweyatEvent());
     List mashweyat = bloc.mashweyat ;
     List halaweyat = bloc.halaweyat ;
@@ -39,16 +38,12 @@ class OffersScreen extends StatelessWidget
 
     return BlocBuilder <OffersBloc, OffersState>(
             builder: (context, state) {
-              if(i == 1){
-             //   bloc.add( GetMashweyatEvent());
-              }
-              i = 0;
               return Scaffold (
                   appBar: AppBar(
                     leading:  const BackButton(),
-                    title: Row (
+                    title: const Row (
                       children: [
-                        const Text("عروض و كوبونات"),
+                        Text("عروض و كوبونات"),
                       ],
 
                     ),
@@ -200,12 +195,12 @@ Widget coupon = Padding ( padding: EdgeInsets.all(15.sp),
             child: SizedBox (
               height: 80.sp,
               width: double.infinity,
-              child: Card (
+              child: const Card (
                 elevation: 7,
                 child: Row (
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Expanded (child:
                       Column
                         (
@@ -213,26 +208,25 @@ Widget coupon = Padding ( padding: EdgeInsets.all(15.sp),
                         children: [
                           Row
                             (
-                            children: const [
+                            children: [
                               Text('نص الكوبون: ' , style: TextStyle( fontWeight: FontWeightManager.bold  ),) ,
                               Text('TextOfCoupon'),
                             ],
                           ),
                           Row
                             (
-                            children: const
-                            [
+                            children: [
                               Text('تاريخ الصلاحية: ' , style: TextStyle( fontWeight: FontWeightManager.bold  ),),
 
                             ],
 
                           ),
-                          const Text ('23/2/2023 : 23/3/2023'  ,maxLines: 2 ,  overflow: TextOverflow.ellipsis),
+                          Text ('23/2/2023 : 23/3/2023'  ,maxLines: 2 ,  overflow: TextOverflow.ellipsis),
                         ],
                       )
                       ),
                     ),
-                    const Expanded(child: Icon(Icons.discount_rounded))
+                    Expanded(child: Icon(Icons.discount_rounded))
                   ],
                 ),
               ),

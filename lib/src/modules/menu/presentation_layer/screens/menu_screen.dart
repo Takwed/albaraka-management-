@@ -14,25 +14,18 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int i = 1;
     int collectionIndex = 0;
     var nameProduct = TextEditingController();
     var describeProduct = TextEditingController();
     var priceProduct = TextEditingController();
     var pointsProduct = TextEditingController();
     var formKey = GlobalKey<FormState>();
-    var bloc = MenuBloc.get(context);
+    var bloc = MenuBloc.get(context)..add(const GetKosharyEvent())..add(const GetMashweyatEvent())..add(const GetHalaweyatEvent());
     return DefaultTabController(
       initialIndex: 0, //optional, starts from 0, select the tab by default
       length: 3,
       child: BlocBuilder<MenuBloc, MenuState>(
         builder: (context, state) {
-          if(i == 1){
-            bloc.add(const GetKosharyEvent());
-            bloc.add(const GetMashweyatEvent());
-            bloc.add(const GetHalaweyatEvent());
-          }
-          i = 0;
           return Scaffold(
               appBar: AppBar(
                 leading: bloc.isSelected
