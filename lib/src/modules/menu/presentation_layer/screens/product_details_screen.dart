@@ -215,6 +215,7 @@ class ProductDetails extends StatelessWidget {
                                 width: double.infinity,
                                 child: MaterialButton(
                                   onPressed: () {
+                                    print(product.offerDetails);
                                     double prc =
                                         double.parse(priceProduct.text);
                                     double pts =

@@ -105,8 +105,9 @@ Widget ItemProductGrid(ProductModel product, context, index, MenuBloc bloc )  {
                         ),
                       ],
                     ),
-                    product.offerState != null
-                        ? Align(
+                    product.offerState == '' || product.offerState == null
+                        ? Container()
+                        :Align(
                       alignment: AlignmentDirectional.topStart,
                       child: Container(
                         decoration: BoxDecoration(
@@ -118,7 +119,6 @@ Widget ItemProductGrid(ProductModel product, context, index, MenuBloc bloc )  {
                             style: TextStyle(color: ColorManager.white)),
                       ),
                     )
-                        : const SizedBox()
                   ],
                 ),
               ),

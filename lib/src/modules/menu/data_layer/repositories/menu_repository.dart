@@ -48,11 +48,11 @@ class MenuRepository extends BaseMenuRepository{
     required int collectionIndex,
     required double oldPrice,
     required double points,
-    required String offerDetails,
-    required String offerState,
-    required int quantity,
+    String? offerDetails,
+    String? offerState,
+    int? quantity,
     required double newPrice,}) async{
-    return await baseMenuRemoteDataSource.editProduct(id: id, name: name, describe: describe, oldPrice: oldPrice, points: points, newPrice: newPrice, collectionIndex: collectionIndex, offerDetails: offerDetails, offerState: offerState, quantity: quantity);
+    return await baseMenuRemoteDataSource.editProduct(id: id, name: name, describe: describe, oldPrice: oldPrice, points: points, newPrice: newPrice, collectionIndex: collectionIndex, offerDetails: offerDetails!, offerState: offerState!, quantity: quantity!);
   }
 
 }
